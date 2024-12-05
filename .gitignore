@@ -12,5 +12,4 @@ tests/
 .venv/
 .vercel/
 .env/
-dockerfile/
 venv_akkiai/
