@@ -95,7 +95,6 @@ class Akkiai():
             config=self.tasks_config['finding_target_audience'],
             output_format='json',
             output_file='output/target_audience.json',
-            human_input=True
         )
 
     #task2
@@ -107,7 +106,6 @@ class Akkiai():
             input_file='output/target_audience.json',
             output_file='output/buyer_persona.json',
             context= [self.TargetAudienceAgent_task],
-            human_input=True
         )
 
     #task3
@@ -118,8 +116,7 @@ class Akkiai():
             output_format='json',
             #input_file='persona_input.txt',
             output_file='output/b2c_persona_output.json',
-            context= [self.TargetAudienceAgent_task,self.BuyerPersonaAgent_task],
-            human_input=True
+            context= [self.TargetAudienceAgent_task,self.BuyerPersonaAgent_task]
         )
 
     #task4
@@ -131,7 +128,6 @@ class Akkiai():
             output_format='json',
             output_file='output/b2b_persona_output.json',
             context= [self.TargetAudienceAgent_task,self.BuyerPersonaAgent_task],
-            human_input=True 
         )
  
     #task5
@@ -143,7 +139,6 @@ class Akkiai():
             input_file='output/buyer_persona.json',
             output_file='output/jtbd_output.json',
             context= [self.TargetAudienceAgent_task,self.BuyerPersonaAgent_task],
-            human_input=True
         )
     
     #task6
@@ -155,7 +150,6 @@ class Akkiai():
             input_file='output/jtbd_output.json',
             output_file='output/awareness_output.json',
             context= [self.TargetAudienceAgent_task,self.BuyerPersonaAgent_task,self.JTBDAnalysisAgent_task],
-            human_input=True
         )
 
     #task7
@@ -167,7 +161,6 @@ class Akkiai():
             input_file='output/awareness_output.json',
             output_file='output/tg_output.json',
             context= [self.TargetAudienceAgent_task,self.BuyerPersonaAgent_task,self.JTBDAnalysisAgent_task,self.StagesofAwarenessAgent_task],
-            human_input=True
         )
 
     @crew

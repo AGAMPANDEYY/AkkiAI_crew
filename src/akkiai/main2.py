@@ -1,7 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from fastapi.staticfiles import StaticFiles
-from fastapi.middleware.cors import CORSMiddleware
 #from src.akkiai.crew import Akkiai
 from crew import Akkiai
 from pathlib import Path
@@ -17,25 +16,12 @@ class TrainInputs(BaseModel):
     BUSINESS_DETAILS: str
     PRODUCT_DESCRIPTION: str
     n_iterations: int
-    filename: str
 
 class TestInputs(BaseModel):
     BUSINESS_DETAILS: str
     PRODUCT_DESCRIPTION: str
     n_iterations: int
     openai_model_name: str
-
-class HumanInputs(BaseModel):
-    input_text: str
-    
-@app.post("/human_input")
-async def human_input(inputs: HumanInputs):
-    akkiai_instance = Akkiai()
-    crew_instance = akkiai_instance.crew()
-    if crew_instance is None:
-            raise ValueError("Failed to initialize Crew instance.")
-    print("Crew instance initialized successfully.")
-    return f"Received inputs for /human feedback ={inputs.input_text}"
 
 @app.post("/run")
 async def run(inputs: RunInputs):
@@ -52,10 +38,10 @@ async def run(inputs: RunInputs):
             "PRODUCT_DESCRIPTION": inputs.PRODUCT_DESCRIPTION
         })
         return {"result": result}
+    
     except Exception as e:
         print(f"Exception in /run: {e}")
         raise HTTPException(status_code=500, detail=f"Error running crew: {str(e)}")
-
 
 @app.post("/train")
 async def train(inputs: TrainInputs):
@@ -71,10 +57,10 @@ async def train(inputs: TrainInputs):
 
 @app.post("/replay")
 async def replay(task_id: str):
-    try:
+      try:
         Akkiai().crew().replay(task_id=task_id)
         return {"message": "Replay executed successfully!"}
-    except Exception as e:
+      except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error replaying crew: {str(e)}")
 
 @app.post("/test")
@@ -88,7 +74,7 @@ async def test(inputs: TestInputs):
         return {"message": "Test executed successfully!"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error testing crew: {str(e)}")
-
+    
 @app.get("/")
 async def root():
     return {"message": "Welcome to the CrewAI API!"}
