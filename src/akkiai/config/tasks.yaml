@@ -64,6 +64,7 @@ finding_target_audience:
     [Continue with additional secondary segments as needed]
     </target_audience_list>
   agent: TargetAudienceAgent
+
 creating_buyer_persona:
   description: >
     You are tasked with creating a detailed buyer persona based on the given
@@ -156,6 +157,7 @@ creating_buyer_persona:
     product_description: '{{PRODUCT_DESCRIPTION}}'
     b2b_persona_questions: '{{creating_b2b_persona.output}}'
     b2c_persona_questions: '{{creating_b2c_persona.output}}'
+
 creating_b2c_persona:
   description: >
     Imagine you are trying to understand your ideal customer for your product or
@@ -207,6 +209,7 @@ creating_b2c_persona:
     prefers to be communicated with and the preferred tone/style of
     communication.
   agent: B2CPersonaAnalystAgent
+
 creating_b2b_persona:
   description: >
     To build a clear and detailed Buyer Persona for your target audience, please
@@ -265,6 +268,7 @@ creating_b2b_persona:
     on their success. 8. Key Influencers: Influencers involved in the
     decision-making process and external influences affecting their decisions.
   agent: B2BPersonaAnalystAgent
+
 analysing_jtbd:
   description: >
     You are tasked with creating a brief statement using the Jobs to be Done
@@ -325,6 +329,7 @@ analysing_jtbd:
     business_details: '{{BUSINESS_DETAILS}}'
     product_description: '{{PRODUCT_DESCRIPTION}}'
     buyer_persona: '{{creating_buyer_persona.output}}'
+
 analysing_stages_of_awareness:
   description: >
     You are tasked with conducting a Stages of Awareness analysis based on the
@@ -392,6 +397,7 @@ analysing_stages_of_awareness:
     target_audience: '{{creating_target_audience.output}}'
     buyer_persona: '{{creating_buyer_persona.output}}'
     analysing_jtbd: '{{analysing_jtbd.output}}'
+    
 analysing_TG:
   description: >
     You will be given multiple documents, each containing information about

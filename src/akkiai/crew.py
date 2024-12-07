@@ -1,6 +1,11 @@
 from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task, before_kickoff, after_kickoff
+from crewai.tasks.task_output import TaskOutput
+from supabase import create_client, Client
 import os
+import kickoff_ids
+import uuid
+
 #from langchain_anthropic import ChatAnthropic
 
 # Uncomment the following line to use an example of a custom tool
@@ -9,14 +14,36 @@ import os
 # Check our tools documentations for more information on how to use them
 # from crewai_tools import SerperDevTool
 
+
 @CrewBase
 class Akkiai():
     """Akkiai crew"""
 
     agents_config = 'config/agents.yaml'
     tasks_config = 'config/tasks.yaml'
-    claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-5-sonnet-20240620",stream=True)
+    claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-5-sonnet-20240620")
     
+    def task_output_callback(self,task_output: TaskOutput,task_input=None):
+        """
+            Pushes the task output to the database.
+
+            Args:
+                task_id (Optional[str]): Unique identifier for the task. If not provided, a new UUID will be generated.
+                task_input (Optional[Any]): Input data for the task.
+                output (TaskOutput): The output of the task.
+
+            Returns:
+                None
+        """
+
+        url: str= os.environ.get("SUPABASE_URL")
+        key: str= os.environ.get("SUPABASE_KEY")
+        kickoff_id= kickoff_ids.kickoff_id
+        task_id=str(uuid.uuid4())
+        supabase: Client= create_client(url, key)
+        supabase.table("run_details").insert({"kickoff_id": kickoff_id,'task_id':task_id, 'input':task_input,'output':task_output.raw}).execute()
+
+
     @before_kickoff # Optional hook to be executed before the crew starts
     def pull_data_example(self, inputs):
         # Example of pulling data from an external API, dynamically changing the inputs
@@ -28,7 +55,7 @@ class Akkiai():
         # Example of logging results, dynamically changing the output
         print(f"Results: {output}")
         return output
-    
+        
     #Agent1
     @agent
     def TargetAudienceAgent(self) -> Agent:
@@ -95,6 +122,7 @@ class Akkiai():
             config=self.tasks_config['finding_target_audience'],
             output_format='json',
             output_file='output/target_audience.json',
+            callback=self.task_output_callback
         )
 
     #task2
@@ -105,7 +133,8 @@ class Akkiai():
             output_format='json',
             input_file='output/target_audience.json',
             output_file='output/buyer_persona.json',
-            context= [self.TargetAudienceAgent_task],
+            context= [self.TargetAudienceAgent_task()],
+            callback=self.task_output_callback
         )
 
     #task3
@@ -116,7 +145,8 @@ class Akkiai():
             output_format='json',
             #input_file='persona_input.txt',
             output_file='output/b2c_persona_output.json',
-            context= [self.TargetAudienceAgent_task,self.BuyerPersonaAgent_task]
+            context= [self.TargetAudienceAgent_task(),self.BuyerPersonaAgent_task()],
+            callback=self.task_output_callback
         )
 
     #task4
@@ -127,7 +157,8 @@ class Akkiai():
             #input_file='persona_input.txt',
             output_format='json',
             output_file='output/b2b_persona_output.json',
-            context= [self.TargetAudienceAgent_task,self.BuyerPersonaAgent_task],
+            context= [self.TargetAudienceAgent_task(),self.BuyerPersonaAgent_task()],
+            callback=self.task_output_callback
         )
  
     #task5
@@ -138,7 +169,8 @@ class Akkiai():
             output_format='json',
             input_file='output/buyer_persona.json',
             output_file='output/jtbd_output.json',
-            context= [self.TargetAudienceAgent_task,self.BuyerPersonaAgent_task],
+            context= [self.TargetAudienceAgent_task(),self.BuyerPersonaAgent_task()],
+            callback=self.task_output_callback
         )
     
     #task6
@@ -149,7 +181,8 @@ class Akkiai():
             output_format='json',
             input_file='output/jtbd_output.json',
             output_file='output/awareness_output.json',
-            context= [self.TargetAudienceAgent_task,self.BuyerPersonaAgent_task,self.JTBDAnalysisAgent_task],
+            context= [self.TargetAudienceAgent_task(),self.BuyerPersonaAgent_task(),self.JTBDAnalysisAgent_task()],
+            callback=self.task_output_callback
         )
 
     #task7
@@ -160,7 +193,8 @@ class Akkiai():
             output_format='json',
             input_file='output/awareness_output.json',
             output_file='output/tg_output.json',
-            context= [self.TargetAudienceAgent_task,self.BuyerPersonaAgent_task,self.JTBDAnalysisAgent_task,self.StagesofAwarenessAgent_task],
+            context= [self.TargetAudienceAgent_task(),self.BuyerPersonaAgent_task(),self.JTBDAnalysisAgent_task(),self.StagesofAwarenessAgent_task()],
+            callback=self.task_output_callback
         )
 
     @crew
