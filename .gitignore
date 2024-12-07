@@ -13,3 +13,4 @@ tests/
 .vercel/
 .env/
 venv_akkiai/
+src/akkiai/notes_hosting.txt
