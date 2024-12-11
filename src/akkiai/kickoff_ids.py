@@ -1,1 +1,1 @@
-kickoff_id=None
+kickoff_id_temp="a"

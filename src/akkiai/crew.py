@@ -5,15 +5,8 @@ from supabase import create_client, Client
 import os
 import kickoff_ids
 import uuid
-
-#from langchain_anthropic import ChatAnthropic
-
-# Uncomment the following line to use an example of a custom tool
-# from akkiai.tools.custom_tool import MyCustomTool
-
-# Check our tools documentations for more information on how to use them
-# from crewai_tools import SerperDevTool
-
+import yaml 
+import task_names
 
 @CrewBase
 class Akkiai():
@@ -21,14 +14,15 @@ class Akkiai():
 
     agents_config = 'config/agents.yaml'
     tasks_config = 'config/tasks.yaml'
-    claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-5-sonnet-20240620")
+    claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307",max_tokens=100)
     
-    def task_output_callback(self,task_output: TaskOutput,task_input=None):
+    def task_output_callback(self, task_output: TaskOutput, task_input=None):
         """
             Pushes the task output to the database.
 
             Args:
                 task_id (Optional[str]): Unique identifier for the task. If not provided, a new UUID will be generated.
+                task_name(Optional[str]): Name of the task. 
                 task_input (Optional[Any]): Input data for the task.
                 output (TaskOutput): The output of the task.
 
@@ -38,10 +32,13 @@ class Akkiai():
 
         url: str= os.environ.get("SUPABASE_URL")
         key: str= os.environ.get("SUPABASE_KEY")
-        kickoff_id= kickoff_ids.kickoff_id
-        task_id=str(uuid.uuid4())
+        kickoff_id= kickoff_ids.kickoff_id_temp
+        job_id=str(uuid.uuid4())
+        task_name=task_output.name
+        print(f"Job ID: {job_id}")
         supabase: Client= create_client(url, key)
-        supabase.table("run_details").insert({"kickoff_id": kickoff_id,'task_id':task_id, 'input':task_input,'output':task_output.raw}).execute()
+        print(f"kickoff_id: {kickoff_id}, job_id: {job_id}, task_input: {task_input}, task_output: {task_output.raw}")
+        supabase.table("run_details").insert({"kickoff_id": kickoff_id,'task_name':task_name,'job_id':job_id, 'input':task_input,'output':task_output.raw}).execute()
 
 
     @before_kickoff # Optional hook to be executed before the crew starts
@@ -123,11 +120,12 @@ class Akkiai():
             output_format='json',
             output_file='output/target_audience.json',
             callback=self.task_output_callback
+            #callback=self.task_output_callback(task_name=list(self.task_dict.keys())[0])
         )
-
     #task2
     @task
     def BuyerPersonaAgent_task(self) -> Task:
+
         return Task(
             config=self.tasks_config['creating_buyer_persona'],
             output_format='json',
@@ -135,11 +133,13 @@ class Akkiai():
             output_file='output/buyer_persona.json',
             context= [self.TargetAudienceAgent_task()],
             callback=self.task_output_callback
+            #callback=self.task_output_callback(task_name=list(self.task_dict.keys())[1])
         )
 
     #task3
     @task
     def B2CPersonaAnalystAgent_task(self) -> Task:
+
         return Task(
             config=self.tasks_config['creating_b2c_persona'],
             output_format='json',
@@ -147,11 +147,12 @@ class Akkiai():
             output_file='output/b2c_persona_output.json',
             context= [self.TargetAudienceAgent_task(),self.BuyerPersonaAgent_task()],
             callback=self.task_output_callback
+            #callback=self.task_output_callback(task_name=list(self.task_dict.keys()[2]))
         )
-
     #task4
     @task
     def B2BPersonaAnalystAgent_task(self) -> Task:
+        
         return Task(
             config=self.tasks_config['creating_b2b_persona'],
             #input_file='persona_input.txt',
@@ -159,11 +160,13 @@ class Akkiai():
             output_file='output/b2b_persona_output.json',
             context= [self.TargetAudienceAgent_task(),self.BuyerPersonaAgent_task()],
             callback=self.task_output_callback
+            #callback=self.task_output_callback(task_name=list(self.task_dict.keys())[3])
         )
  
     #task5
     @task
     def JTBDAnalysisAgent_task(self) -> Task:
+        
         return Task(
             config=self.tasks_config['analysing_jtbd'],
             output_format='json',
@@ -171,6 +174,7 @@ class Akkiai():
             output_file='output/jtbd_output.json',
             context= [self.TargetAudienceAgent_task(),self.BuyerPersonaAgent_task()],
             callback=self.task_output_callback
+            #callback=self.task_output_callback(task_name=list(self.task_dict.keys())[4])
         )
     
     #task6
@@ -183,6 +187,7 @@ class Akkiai():
             output_file='output/awareness_output.json',
             context= [self.TargetAudienceAgent_task(),self.BuyerPersonaAgent_task(),self.JTBDAnalysisAgent_task()],
             callback=self.task_output_callback
+            #callback=self.task_output_callback(task_name=list(self.task_dict.keys())[5])
         )
 
     #task7
@@ -195,6 +200,7 @@ class Akkiai():
             output_file='output/tg_output.json',
             context= [self.TargetAudienceAgent_task(),self.BuyerPersonaAgent_task(),self.JTBDAnalysisAgent_task(),self.StagesofAwarenessAgent_task()],
             callback=self.task_output_callback
+            #callback=self.task_output_callback(task_name=list(self.task_dict.keys())[6])
         )
 
     @crew
