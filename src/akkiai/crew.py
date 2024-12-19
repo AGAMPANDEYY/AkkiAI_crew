@@ -7,6 +7,7 @@ import kickoff_ids
 import uuid
 import yaml 
 import task_names
+import requests
 
 @CrewBase
 class Akkiai():
@@ -37,9 +38,30 @@ class Akkiai():
         task_name=task_output.name
         print(f"Job ID: {job_id}")
         supabase: Client= create_client(url, key)
-        print(f"kickoff_id: {kickoff_id}, job_id: {job_id}, task_input: {task_input}, task_output: {task_output.raw}")
         supabase.table("run_details").insert({"kickoff_id": kickoff_id,'task_name':task_name,'job_id':job_id, 'input':task_input,'output':task_output.raw}).execute()
 
+        '''
+        Pushing the {kickoff_id, tak_name, task_output} to the Webhook URL with POST request
+        '''
+        webhook_url =os.environ.get("WEBHOOK_URL")
+        
+        try:
+            response=requests.post(
+                webhook_url,
+                json={
+                    "kickoff_id": kickoff_id,
+                    "task_name": task_name,
+                    "task_output": task_output.raw
+                },
+                timeout=10
+                )
+            response.raise_for_status()  # Raise an exception for HTTP errors (4xx or 5xx)
+            # Log the success
+            print(f"Webhook sent successfully: {response.status_code}, {response.json()}")
+
+        except requests.exceptions.RequestException as e:
+            # Log any errors during the webhook call
+            print(f"Error sending webhook: {str(e)}")
 
     @before_kickoff # Optional hook to be executed before the crew starts
     def pull_data_example(self, inputs):

@@ -37,7 +37,6 @@ class TestInputs(BaseModel):
 @app.post("/run")
 async def run(inputs: RunInputs):
     try:
-        print("Endpoint /run started", flush=True)
         akkiai_instance = Akkiai()
         crew_instance = akkiai_instance.crew()
         
@@ -55,17 +54,19 @@ async def run(inputs: RunInputs):
         job_status = "on"
 
         supabase.table("kickoff_details").insert({"kickoff_id": kickoff_id, "job_status": job_status, "create_date":create_date, "update_date":update_date}).execute()
-        print(f"Received inputs for /run: BUSINESS_DETAILS={inputs.BUSINESS_DETAILS}, PRODUCT_DESCRIPTION={inputs.PRODUCT_DESCRIPTION}")
+        
+
         # Pass the inputs to the backend agent (replace with your actual logic)
-        result = crew_instance.kickoff(inputs={
+        result = await crew_instance.kickoff_async(inputs={
             "BUSINESS_DETAILS": inputs.BUSINESS_DETAILS,
             "PRODUCT_DESCRIPTION": inputs.PRODUCT_DESCRIPTION
         })
+        
         job_status = "off"
         update_date =  datetime.utcnow().isoformat()
         supabase.table("kickoff_details").update({'job_status':job_status, 'update_date':update_date}).eq("kickoff_id",kickoff_ids.kickoff_id_temp).execute()
-        print(f"Kickoff result: {result}, type: {type(result)}")
-        return {"result": result}
+
+        return {"kickoff_id": kickoff_id}
     
     except Exception as e:
         error_details = traceback.format_exc()

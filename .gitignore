@@ -14,3 +14,5 @@ tests/
 .env/
 venv_akkiai/
 src/akkiai/notes_hosting.txt
+ec2-akkiai-key.pem/
+ec2-akkiai-key.pem/
