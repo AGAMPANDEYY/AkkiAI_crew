@@ -5,8 +5,6 @@ from supabase import create_client, Client
 import os
 import kickoff_ids
 import uuid
-import yaml 
-import task_names
 import requests
 
 @CrewBase
@@ -223,6 +221,223 @@ class Akkiai():
             context= [self.TargetAudienceAgent_task(),self.BuyerPersonaAgent_task(),self.JTBDAnalysisAgent_task(),self.StagesofAwarenessAgent_task()],
             callback=self.task_output_callback
             #callback=self.task_output_callback(task_name=list(self.task_dict.keys())[6])
+        )
+
+    @crew
+    def crew(self) -> Crew:
+        """Creates the AkkiAi crew"""
+        return Crew(
+            agents=self.agents, # Automatically created by the @agent decorator
+            tasks=self.tasks, # Automatically created by the @task decorator
+            process=Process.sequential,
+            verbose=True,
+            # process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
+        )
+    
+@CrewBase
+class crew2():
+    
+    """Akkiai crew"""
+    agents_config = 'config/agents2.yaml'
+    tasks_config = 'config/tasks2.yaml'
+    claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307",max_tokens=100)
+    
+    def task_output_callback(self, task_output: TaskOutput, task_input=None):
+        """
+            Pushes the task output to the database.
+
+            Args:
+                task_id (Optional[str]): Unique identifier for the task. If not provided, a new UUID will be generated.
+                task_name(Optional[str]): Name of the task. 
+                task_input (Optional[Any]): Input data for the task.
+                output (TaskOutput): The output of the task.
+
+            Returns:
+                None
+        """
+
+        url: str= os.environ.get("SUPABASE_URL")
+        key: str= os.environ.get("SUPABASE_KEY")
+        kickoff_id= kickoff_ids.kickoff_id_temp
+        job_id=str(uuid.uuid4())
+        task_name=task_output.name
+        print(f"Job ID: {job_id}")
+        supabase: Client= create_client(url, key)
+        supabase.table("run_details").insert({"kickoff_id": kickoff_id,'task_name':task_name,'job_id':job_id, 'input':task_input,'output':task_output.raw}).execute()
+
+        '''
+        Pushing the {kickoff_id, tak_name, task_output} to the Webhook URL with POST request
+        '''
+        webhook_url =os.environ.get("WEBHOOK_URL")
+        
+        try:
+            response=requests.post(
+                webhook_url,
+                json={
+                    "kickoff_id": kickoff_id,
+                    "task_name": task_name,
+                    "task_output": task_output.raw
+                },
+                timeout=10
+                )
+            response.raise_for_status()  # Raise an exception for HTTP errors (4xx or 5xx)
+            # Log the success
+            print(f"Webhook sent successfully: {response.status_code}, {response.json()}")
+
+        except requests.exceptions.RequestException as e:
+            # Log any errors during the webhook call
+            print(f"Error sending webhook: {str(e)}")
+
+    @before_kickoff # Optional hook to be executed before the crew starts
+    def pull_data_example(self, inputs):
+        # Example of pulling data from an external API, dynamically changing the inputs
+        inputs['extra_data'] = "This is extra data"
+        return inputs
+
+    @after_kickoff # Optional hook to be executed after the crew has finished
+    def log_results(self, output):
+        # Example of logging results, dynamically changing the output
+        print(f"Results: {output}")
+        return output
+        
+    #Agent1
+    @agent
+    def MarketDataCollector1(self) -> Agent:
+        return Agent(
+            config=self.agents_config['MarketDataCollector1'],
+            llm=self.claude_llm,
+            verbose=True
+        )
+
+    #Agent2
+    @agent
+    def MarketDataAnalyser1(self) -> Agent:
+        return Agent(
+            config=self.agents_config['MarketDataAnalyser1'],
+            llm=self.claude_llm,
+            verbose=True
+        )
+    
+    #task1
+    @task
+    def MarketDataCollector1Agent_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['collect_market_data_task1'],
+            output_format='json',
+            output_file='output/target_audience.json',
+            callback=self.task_output_callback
+        )
+    #task2
+    @task
+    def MarketDataAnalyserAgent_task(self) -> Task:
+
+        return Task(
+            config=self.tasks_config['analyze_insights_task1'],
+            output_format='json',
+            input_file='output/target_audience.json',
+            output_file='output/buyer_persona.json',
+            context= [self.MarketDataCollector1Agent_task()],
+            callback=self.task_output_callback
+        )
+
+    @crew
+    def crew(self) -> Crew:
+        """Creates the AkkiAi crew"""
+        return Crew(
+            agents=self.agents, # Automatically created by the @agent decorator
+            tasks=self.tasks, # Automatically created by the @task decorator
+            process=Process.sequential,
+            verbose=True,
+            # process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
+        )
+
+
+@CrewBase
+class crew3():
+    '''
+    This is a third crew class that inherits from CrewBase. It contains the same agents and tasks as crew1, but with different configurations.
+    '''
+
+    """Akkiai crew"""
+    agents_config = 'config/agents3.yaml'
+    tasks_config = 'config/tasks3.yaml'
+    claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307",max_tokens=100)
+    
+    def task_output_callback(self, task_output: TaskOutput, task_input=None):
+        """
+            Pushes the task output to the database.
+
+            Args:
+                task_id (Optional[str]): Unique identifier for the task. If not provided, a new UUID will be generated.
+                task_name(Optional[str]): Name of the task. 
+                task_input (Optional[Any]): Input data for the task.
+                output (TaskOutput): The output of the task.
+
+            Returns:
+                None
+        """
+
+        url: str= os.environ.get("SUPABASE_URL")
+        key: str= os.environ.get("SUPABASE_KEY")
+        kickoff_id= kickoff_ids.kickoff_id_temp
+        job_id=str(uuid.uuid4())
+        task_name=task_output.name
+        print(f"Job ID: {job_id}")
+        supabase: Client= create_client(url, key)
+        supabase.table("run_details").insert({"kickoff_id": kickoff_id,'task_name':task_name,'job_id':job_id, 'input':task_input,'output':task_output.raw}).execute()
+
+        '''
+        Pushing the {kickoff_id, tak_name, task_output} to the Webhook URL with POST request
+        '''
+        webhook_url =os.environ.get("WEBHOOK_URL")
+        
+        try:
+            response=requests.post(
+                webhook_url,
+                json={
+                    "kickoff_id": kickoff_id,
+                    "task_name": task_name,
+                    "task_output": task_output.raw
+                },
+                timeout=10
+                )
+            response.raise_for_status()  # Raise an exception for HTTP errors (4xx or 5xx)
+            # Log the success
+            print(f"Webhook sent successfully: {response.status_code}, {response.json()}")
+
+        except requests.exceptions.RequestException as e:
+            # Log any errors during the webhook call
+            print(f"Error sending webhook: {str(e)}")
+
+    @before_kickoff # Optional hook to be executed before the crew starts
+    def pull_data_example(self, inputs):
+        # Example of pulling data from an external API, dynamically changing the inputs
+        inputs['extra_data'] = "This is extra data"
+        return inputs
+
+    @after_kickoff # Optional hook to be executed after the crew has finished
+    def log_results(self, output):
+        # Example of logging results, dynamically changing the output
+        print(f"Results: {output}")
+        return output
+        
+    #Agent1
+    @agent
+    def MarketDataInsightCollector2(self) -> Agent:
+        return Agent(
+            config=self.agents_config['MarketDataInsightCollector2'],
+            llm=self.claude_llm,
+            verbose=True
+        )
+    
+    #task1
+    @task
+    def MarketDataInsightCollector2Agent_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['collect_market_data_insight_task2'],
+            output_format='json',
+            output_file='output/target_audience.json',
+            callback=self.task_output_callback
         )
 
     @crew

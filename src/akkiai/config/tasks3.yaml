@@ -1,0 +1,8 @@
+---
+collect_market_data_insight_task2:
+  description: 'Search the {MARKET_DATA_URL} for relevant market research data, focusing
+    on the specific area of interest: Gather the most insightful
+    data points that can inform the analysis.'
+  expected_output: A concise line collection of insightful market research data 
+    sourced from {MARKET_DATA_URL}.
+  agent: MarketDataInsightCollector2

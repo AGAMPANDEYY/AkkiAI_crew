@@ -72,3 +72,11 @@ MoM 13th
 6. Push it to activepieces webhook. (Read more about) 
 7. create Status/kickoff_id/task_name end points should show response of status and final outputs. (Will act as a backup)
 8. 3 major things to work on.
+
+19th Dec 
+
+1. Have 3 different classes do the run then in that pass the input only which solution to choose 
+1 2 3 
+2. Get kickoff_id evyerthing and
+3. call with only 
+4. challenges that you could face-- everytime the same class is running  

@@ -3,7 +3,7 @@ from supabase import create_client, Client
 from pydantic import BaseModel
 from fastapi.staticfiles import StaticFiles
 #from src.akkiai.crew import Akkiai
-from crew import Akkiai
+from crew import Akkiai, crew2, crew3
 import kickoff_ids
 from pathlib import Path
 import os 
@@ -20,8 +20,11 @@ supabase: Client= create_client(url, key)
 
 # Define input models for endpoints
 class RunInputs(BaseModel):
-    BUSINESS_DETAILS: str
-    PRODUCT_DESCRIPTION: str
+    SOLUTION_ID: int #added extra input for choosing the solution id 
+    INPUT_1: str
+    INPUT_2: str
+    INPUT_3: str
+    INPUT_4: str
 
 class TrainInputs(BaseModel):
     BUSINESS_DETAILS: str
@@ -37,7 +40,19 @@ class TestInputs(BaseModel):
 @app.post("/run")
 async def run(inputs: RunInputs):
     try:
-        akkiai_instance = Akkiai()
+        solution_id=inputs.SOLUTION_ID
+        if solution_id == 1:
+           akkiai_instance = Akkiai()
+
+        elif solution_id == 2:
+           akkiai_instance = crew2()
+
+        elif solution_id == 3:
+            akkiai_instance = crew3()
+
+        else:
+            return f"Solution id must be 1-3"
+        
         crew_instance = akkiai_instance.crew()
         
         if crew_instance is None:
@@ -55,12 +70,26 @@ async def run(inputs: RunInputs):
 
         supabase.table("kickoff_details").insert({"kickoff_id": kickoff_id, "job_status": job_status, "create_date":create_date, "update_date":update_date}).execute()
         
+        if solution_id == 1:
+             # Pass the inputs to the backend agent (replace with your actual logic)
+            result = await crew_instance.kickoff_async(inputs={
+                "BUSINESS_DETAILS": inputs.INPUT_1,
+                "PRODUCT_DESCRIPTION": inputs.INPUT_2
+            })
 
-        # Pass the inputs to the backend agent (replace with your actual logic)
-        result = await crew_instance.kickoff_async(inputs={
-            "BUSINESS_DETAILS": inputs.BUSINESS_DETAILS,
-            "PRODUCT_DESCRIPTION": inputs.PRODUCT_DESCRIPTION
-        })
+        elif solution_id == 2:
+             # Pass the inputs to the backend agent (replace with your actual logic)
+            result = await crew_instance.kickoff_async(inputs={
+                "MARKET_DATA_URL": inputs.INPUT_1,
+                "RESEARCH_FOCUS": inputs.INPUT_2
+            })
+
+        elif solution_id == 3:
+            # Pass the inputs to the backend agent (replace with your actual logic)
+            result = await crew_instance.kickoff_async(inputs={
+                "MARKET_DATA_URL": inputs.INPUT_1
+            })
+      
         
         job_status = "off"
         update_date =  datetime.utcnow().isoformat()
