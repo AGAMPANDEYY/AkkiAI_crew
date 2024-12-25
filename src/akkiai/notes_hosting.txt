@@ -74,4 +74,20 @@ Upload the local files to the ec2 instances (using pem file)
 }
 
 
+MoM 21st 
 
+1. Kickoff_id should  be shown immediately 
+2. Agent def agent_name shoudl be same as the agent name defined in the agents.yaml config
+3. Create 4 crews basically 4 different crew classes 
+4. We need to normalise agent names 
+5. taking inputs--- take inputs based on each crew (no need to take N number of inputs only inputs relevant to 
+the crew)
+
+MoM 22nd 
+
+1. New set of prompts and agents for new flows 
+2. One thing to do is when we are running crew, the crew is submit a job to anthropic using our api (Crew code how they 
+are calling anthropic api)
+3. What is the job id from crew? It is given by anthropic api when crew calls it --- find it out 
+4. How crew and anthropic call interact each other? (We will just be keeping that job id)
+5. Taking human inputs in between crew runs how to do that? make endpoint ffrom the github function for human input  

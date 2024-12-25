@@ -1,8 +1,262 @@
----
-collect_market_data_insight_task2:
-  description: 'Search the {MARKET_DATA_URL} for relevant market research data, focusing
-    on the specific area of interest: Gather the most insightful
-    data points that can inform the analysis.'
-  expected_output: A concise line collection of insightful market research data 
-    sourced from {MARKET_DATA_URL}.
-  agent: MarketDataInsightCollector2
+product_audience_fit:
+  description: >
+    You will be creating a Value Proposition Canvas to understand the target audience and align a product or service with their needs. Follow these steps carefully:
+    First, you will be given information about the target audience:
+    <target_audience>
+    {{TARGET_AUDIENCE}}
+    </target_audience>
+
+    Next, you will be given information about the product or service:
+    <product_description>
+    {{PRODUCT_DESCRIPTION}}
+    </product_description>
+
+    Now, create the Value Proposition Canvas by following these steps:
+
+    1. Customer Profile:
+      a. Customer Jobs: Identify 3-5 key tasks or jobs the target audience is trying to accomplish. Include functional, emotional, and social jobs if applicable.
+      b. Customer Pains: List 3-5 main frustrations, challenges, or risks the target audience faces while trying to complete these jobs.
+      c. Customer Gains: Describe 3-5 positive outcomes or benefits the target audience is seeking.
+
+    2. Value Map:
+      a. Pain Relievers: Explain how the product or service alleviates 3-5 of the identified customer pains.
+      b. Gain Creators: Describe how the product or service delivers 3-5 of the desired customer gains.
+      c. Products & Services: List the key features or aspects of the product or service that help customers get their jobs done, relieve pains, or create gains.
+
+    3. Fit Evaluation:
+      Analyze how well the product or service fits with the customer's needs by comparing the Pain Relievers and Gain Creators to the identified Pains and Gains.
+
+  expected_output: >
+     Present your Value Proposition Canvas in the following format:
+      <value_proposition_canvas>
+      <customer_profile>
+      <customer_jobs>
+      [List 3-5 customer jobs]
+      </customer_jobs>
+      <customer_pains>
+      [List 3-5 customer pains]
+      </customer_pains>
+      <customer_gains>
+      [List 3-5 customer gains]
+      </customer_gains>
+      </customer_profile>
+
+      <value_map>
+      <pain_relievers>
+      [List 3-5 pain relievers]
+      </pain_relievers>
+      <gain_creators>
+      [List 3-5 gain creators]
+      </gain_creators>
+      <products_and_services>
+      [List key features or aspects of the product/service]
+      </products_and_services>
+      </value_map>
+
+      <fit_evaluation>
+      [Provide a brief analysis of how well the product/service fits with the customer's needs]
+      </fit_evaluation>
+      </value_proposition_canvas>
+
+      Ensure that your analysis is thorough, insightful, and directly relates to the provided target audience and product/service information.
+   
+  agent: ProductAudienceFitAgent
+
+marketing_4p_analysis:
+  description: >
+   You are a marketing analyst tasked with applying the 4Ps of Marketing framework (Product, Price, Place, Promotion) to help understand a target audience and how a product/service aligns with their needs. You will be provided with information about the target audience and the product/service, and you should use this information to answer a series of questions about each of the 4Ps.
+
+    First, carefully read and analyze the following information about the target audience:
+
+    <target_audience>
+    {{TARGET_AUDIENCE}}
+    </target_audience>
+
+    Next, carefully read and analyze the following information about the product/service:
+
+    <product_description>
+    {{PRODUCT_DESCRIPTION}}
+    </product_description>
+
+    Using the provided information, answer the following questions for each of the 4Ps. Be sure to base your answers on the specific details given about the target audience and product/service. If there isn't enough information to answer a question fully, make reasonable assumptions based on the available data and clearly state that you are making an assumption.
+
+
+  expected_output: >
+    For each of the 4Ps, provide your analysis inside the corresponding XML tags (<product>, <price>, <place>, and <promotion>). Within each section, use subheadings (e.g., ) to separate your answers to individual questions.
+
+    <product>
+    Problem Solved
+    [Analyze what problem the product/service solves for the target audience]
+
+    Competitive Advantage
+    [Explain how the product/service stands out compared to competitors' offerings]
+
+    Key Features/Benefits
+    [Identify the key features or benefits that are most important to the target audience]
+    </product>
+
+    <price>
+    Pricing Model
+    [Recommend a pricing model that would appeal most to the target audience]
+
+    Perceived Value
+    [Analyze how the target audience perceives the value of the product/service relative to its price]
+
+    Price Sensitivities
+    [Identify any specific price sensitivities within the target audience]
+    </price>
+
+    <place>
+    Solution-Seeking Behavior
+    [Describe where the target audience typically seeks solutions like this product/service]
+
+    Distribution Channels
+    [Recommend which distribution channels or platforms would best reach the target audience]
+
+    Accessibility
+    [Suggest how to make the product/service easily accessible to the target audience]
+    </place>
+
+    <promotion>
+    Marketing Messages
+    [Describe what types of marketing messages and content would resonate most with the target audience]
+
+    Advertising Channels
+    [Recommend which advertising channels should be focused on to capture the target audience's attention]
+
+    Messaging Style
+    [Suggest what tone, style, or language should be used in messaging to appeal to the target audience]
+    </promotion>
+
+    After completing your analysis, provide a brief summary of your key findings and recommendations inside <summary> tags.
+
+    Remember to base all your answers on the provided information about the target audience and product/service. If you need to make any assumptions, clearly state them in your analysis.
+
+  agent: Market4PAnalysisAgent
+
+swot_analysis:
+  description: >
+   You are tasked with conducting a SWOT (Strengths, Weaknesses, Opportunities, Threats) analysis for a target audience. This analysis will help create more targeted and effective marketing strategies. Follow these instructions carefully to complete the task.
+
+    First, here is the description of the target audience you will be analyzing:
+
+    <target_audience>
+    {{TARGET_AUDIENCE}}
+    </target_audience>
+
+    Now, follow these steps to conduct the SWOT analysis:
+
+    1. Carefully read and analyze the target audience description.
+
+    2. For each component of the SWOT analysis, consider the following:
+
+      a) Strengths:
+      - Identify key strengths of the target audience that align with a product or service.
+      - Determine what motivates them to buy (e.g., high purchasing power, brand loyalty).
+      - Note positive behaviors that make them ideal customers.
+
+      b) Weaknesses:
+      - Identify weaknesses or pain points of the target audience.
+      - Consider potential challenges or objections they might have when considering a product/service.
+      - Note any barriers to purchasing (e.g., limited budget, lack of trust, long decision-making process).
+
+      c) Opportunities:
+      - Identify opportunities in the market that could help engage with this audience better.
+      - Consider unmet needs or trends that could be leveraged (e.g., digital adoption, desire for sustainability).
+      - Look for growing demands or underserved niches within this audience.
+
+      d) Threats:
+      - Identify external threats that could affect the ability to reach or convert this audience.
+      - Consider competitors that might be better positioned to meet their needs.
+      - Note any industry shifts, regulations, or market trends that could negatively impact the relationship with this audience.
+      3. Based on your analysis, fill out the following SWOT table:
+
+      <swot_table>
+      | SWOT Component | Insights for Target Audience |
+      |-----------------|------------------------------|
+      | Strengths       |                              |
+      | Weaknesses      |                              |
+      | Opportunities   |                              |
+      | Threats         |                              |
+      </swot_table>
+
+      4. For each component in the SWOT table, provide at least three detailed insights based on the target audience description. Ensure that each insight is specific, relevant, and actionable.
+
+      5. After completing the table, provide a brief summary (2-3 sentences) of the key findings from your SWOT analysis and how they can be used to create more targeted and effective marketing strategies.
+
+
+  expected_output: >
+    Present your completed SWOT analysis, including the filled table and summary, within <swot_analysis> tags.
+   
+  agent: SWOTAnalysisAgent
+
+mapping_buyer_journey:
+  description: >
+    You are tasked with mapping out the Buyer's Journey for a specific target audience and product/service. Your goal is to provide insights into how the target audience moves through each stage of the journey, from becoming aware of their problem to purchasing the product/service and beyond.
+
+    First, review the following information:
+
+    <target_audience>
+    {{TARGET_AUDIENCE}}
+    </target_audience>
+
+    <product_description>
+    {{PRODUCT_DESCRIPTION}}
+    </product_description>
+
+    Now, follow these steps to complete the Buyer's Journey mapping:
+
+    1. Awareness Stage:
+      - Identify common challenges or pain points the target audience faces.
+      - Describe how they typically discover they have this problem.
+      - List where they seek information about their problem.
+      - Provide examples of questions they might ask at this stage.
+
+    2. Consideration Stage:
+      - List potential solutions the audience might consider, including competitors.
+      - Identify key decision-making criteria for the audience.
+      - Describe concerns or hesitations they may have about choosing a solution.
+      - Suggest how to position the product/service to meet their criteria.
+
+    3. Decision Stage:
+      - Identify final information or reassurance the audience needs before committing.
+      - List factors that could push them to choose the product/service.
+      - Specify the desired action for the audience to take.
+      - Suggest ways to make the buying process easier for them.
+
+    4. Post-Purchase Stage:
+      - Describe the experience or result the audience expects after purchasing.
+      - Suggest ways to ensure customer satisfaction or exceed expectations.
+      - Identify opportunities for encouraging repeat business or referrals.
+
+    For each stage, provide at least one key insight that can be used in a lead generation strategy.
+
+
+  expected_output: >
+     Present your findings in the following format:
+
+      <buyers_journey>
+      <awareness_stage>
+      [Include your analysis and insights for the Awareness Stage here]
+      </awareness_stage>
+
+      <consideration_stage>
+      [Include your analysis and insights for the Consideration Stage here]
+      </consideration_stage>
+
+      <decision_stage>
+      [Include your analysis and insights for the Decision Stage here]
+      </decision_stage>
+
+      <post_purchase_stage>
+      [Include your analysis and insights for the Post-Purchase Stage here]
+      </post_purchase_stage>
+
+      <key_insights>
+      [List at least one key insight for each stage that can be used in a lead generation strategy]
+      </key_insights>
+      </buyers_journey>
+
+      Ensure that your analysis is specific to the provided target audience and product/service. Use the information given to make informed assumptions and provide actionable insights.
+
+  agent: MappingBuyerJourneyAgent
