@@ -43,21 +43,21 @@ finding_target_audience:
     business
   expected_output: >
     Present your target audience list in the following format:
-    <target_audience_list> 1. [Primary Audience Segment 1]
+    <target_audience_list> 1. Primary_TG1
       - Specific characteristics
       - Reasons why this segment is a good fit
 
-    2. [Primary Audience Segment 2]
+    2. Primary_TG2
       - Specific characteristics
       - Reasons why this segment is a good fit
 
     [Continue with additional primary segments as needed]
 
-    Secondary Audiences: 1. [Secondary Audience Segment 1]
+    Secondary Audiences: 1. Secondary_TG1
       - Specific characteristics
       - Reasons why this segment is relevant
 
-    2. [Secondary Audience Segment 2]
+    2. Secondary_TG2
       - Specific characteristics
       - Reasons why this segment is relevant
 
