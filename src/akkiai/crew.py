@@ -8,13 +8,20 @@ import uuid
 import requests
 import asyncio
 from pydantic import BaseModel
+from typing import List, Optional, Dict, Any
 
 
 '''
 The output pydantic models for eachg task
 '''
+
+class TargetGroupsPydantic(BaseModel):
+    characteristics: str
+    reasons: str
+
+# Define the main model that contains target_audience as a key
 class Task11Pydantic(BaseModel):
-    target_audience_list: str
+    target_audience: Dict[str,TargetGroupsPydantic]
 
 class Task21Pydantic(BaseModel):
     buyer_persona:str
@@ -245,7 +252,8 @@ class crew1():
         '''
         Pushing the {kickoff_id, tak_name, task_output} to the Webhook URL with POST request
         '''
-        webhook_url =os.environ.get("WEBHOOK_URL")
+        #webhook_url =os.environ.get("WEBHOOK_URL")
+        webhook_url="https://cloud.activepieces.com/api/v1/webhooks/CunXIWXcF1eGV3tl5hukx"
         
         try:
             response=requests.post(
@@ -253,7 +261,7 @@ class crew1():
                 json={
                     "kickoff_id": kickoff_id,
                     "task_name": task_name,
-                    "task_output": task_output.raw
+                    "task_output": task_output.json_dict
                 },
                 timeout=10
                 )
@@ -279,10 +287,10 @@ class crew1():
     def TargetAudienceAgent_task(self) -> Task:
         return Task(
             config=self.tasks_config['finding_target_audience'],
-            output_format='json',
             output_file='output/target_audience.json',
             #human_input=True,
-            output_pydantic=Task11Pydantic,
+            #output_pydantic=Task11Pydantic,
+            output_json=Task11Pydantic,
             callback=self.task_output_callback
         )
   

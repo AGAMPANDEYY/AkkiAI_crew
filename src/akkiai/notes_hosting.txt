@@ -91,3 +91,54 @@ are calling anthropic api)
 3. What is the job id from crew? It is given by anthropic api when crew calls it --- find it out 
 4. How crew and anthropic call interact each other? (We will just be keeping that job id)
 5. Taking human inputs in between crew runs how to do that? make endpoint ffrom the github function for human input  
+
+
+
+
+
+
+task1 exp output
+Present your output in the following JSON format along with respective headings and the details about
+    description given below each audience segment 1. Top 3 specific characteristics of the Target Group 
+    2. Reasons summary why this segment is a good fit:
+    <target_audience_list>
+    <Primary_TG1>
+    1. Primary Audiences Target Group 1
+      - Top 3 specific characteristics of the Primary Audiences Target Group 1
+      - Reasons summary why this segment is a good fit
+    </Primary_TG1>
+
+    <Primary_TG2>
+    2. Primary Audiences Target Group 2
+      - Top 3 specific characteristics of the Primary Audiences Target Group 2
+      - Reasons summary why this segment is a good fit
+    </Primary_TG2>
+
+    <Primary_TG3>
+    2. Primary Audiences Target Group 3
+      - Top 3 specific characteristics of the Primary Audiences Target Group 3
+      - Reasons summary why this segment is a good fit
+    </Primary_TG3>
+
+    [Continue with additional primary segments as needed]
+
+    <Secondary_TG1>
+    Secondary Audiences Target Group 1: 
+      - Top 3 specific characteristics of the Secondary Audiences Target Group 1
+      - Reasons why this segment is relevant
+    </Secondary_TG1>
+
+    <Secondary_TG2>
+    Secondary Audiences Target Group 2: 
+      - Top 3 specific characteristics of the Secondary Audiences Target Group 2
+      - Reasons why this segment is relevant
+    </Secondary_TG2>
+
+    <Secondary_TG3>
+    Secondary Audiences Target Group 3: 
+      - Top 3 specific characteristics of the Secondary Audiences Target Group 3
+      - Reasons why this segment is relevant
+    </Secondary_TG3>
+
+    [Continue with additional secondary segments as needed]
+    </target_audience_list>

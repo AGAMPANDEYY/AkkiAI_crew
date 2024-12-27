@@ -38,29 +38,42 @@ finding_target_audience:
     Remember to be as detailed and specific as possible when describing each
     audience segment.  Avoid broad, generic categories and instead focus on
     well-defined niches that align closely with the business and its offerings. 
-    Aim to provide at least 3-5 primary audience segments and 2-3 secondary
+    Aim to provide at least 3 primary audience segments and 3 secondary
     audience segments, but adjust based on the complexity and scope of the
     business
   expected_output: >
-    Present your target audience list in the following format:
-    <target_audience_list> 1. Primary_TG1
-      - Specific characteristics
-      - Reasons why this segment is a good fit
-
-    2. Primary_TG2
-      - Specific characteristics
-      - Reasons why this segment is a good fit
-
+    <target_audience>
+    <Primary_TG1>
+    Primary Audiences Target Group 1
+    Top 3 specific characteristics of the Primary Audiences Target Group 1
+    Reasons summary why this segment is a good fit
+    </Primary_TG1>
+    <Primary_TG2>
+    2. Primary Audiences Target Group 2
+    Top 3 specific characteristics of the Primary Audiences Target Group 2
+    Reasons summary why this segment is a good fit
+    </Primary_TG2>
+    <Primary_TG3>
+    3. Primary Audiences Target Group 3
+    Top 3 specific characteristics of the Primary Audiences Target Group 3
+    Reasons summary why this segment is a good fit
+    </Primary_TG3>
     [Continue with additional primary segments as needed]
-
-    Secondary Audiences: 1. Secondary_TG1
-      - Specific characteristics
-      - Reasons why this segment is relevant
-
-    2. Secondary_TG2
-      - Specific characteristics
-      - Reasons why this segment is relevant
-
+    <Secondary_TG1>
+    Secondary Audiences Target Group 1:
+    Top 3 specific characteristics of the Secondary Audiences Target Group 1
+    Reasons why this segment is relevant
+    </Secondary_TG1>
+    <Secondary_TG2>
+    Secondary Audiences Target Group 2:
+    Top 3 specific characteristics of the Secondary Audiences Target Group 2
+    Reasons why this segment is relevant
+    </Secondary_TG2>
+    <Secondary_TG3>
+    Secondary Audiences Target Group 3:
+    Top 3 specific characteristics of the Secondary Audiences Target Group 3
+    Reasons why this segment is relevant
+    </Secondary_TG3>
     [Continue with additional secondary segments as needed]
-    </target_audience_list>
+    </target_audience>
   agent: TargetAudienceAgent
