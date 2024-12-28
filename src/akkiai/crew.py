@@ -261,7 +261,7 @@ class crew1():
                 json={
                     "kickoff_id": kickoff_id,
                     "task_name": task_name,
-                    "task_output": task_output.json_dict
+                    "task_output": str(task_output.json_dict) #This will now send strings
                 },
                 timeout=10
                 )
