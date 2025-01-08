@@ -1,7 +1,9 @@
 # Akkiai_crew
-This brnach has 4 crew class and different corresponding config files 
-Output pydantic validation model 
-CORS issue resolved 
-Custom methdos for human input (Not working but added)
 
-V4 has corrected Pydantic model-- updated on 27th december 2024
+This branch v5 updated on 8th January 2025
+
+1- Updated config files for output validation and fixed the activepieces flow
+2- updated crew.py for cre1, CORS mixed content http and https issue resolved. 
+3- Added Nginx to aws ec2 instance to act as reverse proxy for api.akki.ai http request
+4- added ssl certificate to https://api.akki.ai/
+5- All changes made to aws linux ec2 terminal
