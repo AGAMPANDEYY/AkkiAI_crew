@@ -95,8 +95,6 @@ are calling anthropic api)
 
 
 
-
-
 task1 exp output
 Present your output in the following JSON format along with respective headings and the details about
     description given below each audience segment 1. Top 3 specific characteristics of the Target Group 
@@ -142,3 +140,12 @@ Present your output in the following JSON format along with respective headings 
 
     [Continue with additional secondary segments as needed]
     </target_audience_list>
+
+MoM 2nd Jan 2025
+
+1. Agent configuration file issue is there check why and correct it.
+2. How to train agents to get context (Research work) 
+3. Agents should not hallucinate what to do Research
+4. Explore crewai training. 
+5. What will be the benefit of training faster ya better response? 
+6. In general there are some example prompts to prevent hallucination.

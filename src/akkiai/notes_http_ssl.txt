@@ -1,0 +1,37 @@
+1. Connect to aws linux terminal
+2. sudo dnf install nginx -y
+3. Enable nginx 
+4. sudo systemctl start nginx
+5. sudo systemctl enable nginx
+6. Now change the configuration file for nginx to act as a reverse proxy to your custom app (here fastapi app deployed 
+on ec2-instance at public_ip:port_no)
+7. sudo systemctl status nginx # to confim if the nginx is running
+8. create a custom configuration file and link it to the default ngingx configuration file and change the 
+default config file to include the custom configuration
+9. sudo mkdir -p /etc/nginx/sites-available
+[ec2-user@ip-172-31-31-106 ~]$ sudo mkdir -p /etc/nginx/sites-enabled
+[ec2-user@ip-172-31-31-106 ~]$ sudo nano /etc/nginx/sites-available/api.akki.ai
+[ec2-user@ip-172-31-31-106 ~]$ sudo ln -s /etc/nginx/sites-available/api.akki.ai /etc/nginx/sites-enabled/
+10. check status --- sudo nginx -t 
+11. sudo nano /etc/nginx/sites-available/api.akki.ai to make changes to config file
+12. In the custom file add following 
+13. 
+  GNU nano 5.8                                      /etc/nginx/sites-available/api.akki.ai                                                
+server {
+    listen 80;
+    server_name api.akki.ai; #server that is the dns for the ip which will access the backend codes of ours
+
+    location / {
+        proxy_pass http://3.87.154.144:8000/;  # FastAPI app running in Docker
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+
+14. now include this config file in the default config file 
+15. add this line in http block    
+    #include the site configurations from sites-enabled
+    include /etc/nginx/sites-enabled/*;
+16. sudo systemctl reload nginx 

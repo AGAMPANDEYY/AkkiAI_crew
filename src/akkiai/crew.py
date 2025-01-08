@@ -289,7 +289,6 @@ class crew1():
             config=self.tasks_config['finding_target_audience'],
             output_file='output/target_audience.json',
             #human_input=True,
-            #output_pydantic=Task11Pydantic,
             output_json=Task11Pydantic,
             callback=self.task_output_callback
         )

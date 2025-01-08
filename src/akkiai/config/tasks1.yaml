@@ -5,10 +5,15 @@ finding_target_audience:
     comprehensive and specific list that will help the business focus its
     marketing efforts effectively. First, you will be given details about the
     business and a description of its products, services, or solutions. Read
-    this information carefully: <business_details> {{BUSINESS_DETAILS}}
+    this information given by user as an input very carefully: 
+
+    <business_details> 
+    {BUSINESS_DETAILS}
     </business_details>
 
-    <product_description> {{PRODUCT_DESCRIPTION}} </product_description>
+    <product_description> 
+    {PRODUCT_DESCRIPTION} 
+    </product_description>
 
     Now, follow these steps to generate the target audience list:
 
