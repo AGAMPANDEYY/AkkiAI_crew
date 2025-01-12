@@ -35,3 +35,53 @@ server {
     #include the site configurations from sites-enabled
     include /etc/nginx/sites-enabled/*;
 16. sudo systemctl reload nginx 
+17. now go to the website api.akkiai.ai and you can access all the endpoints of the fastapi app
+
+
+SETTING UP SSL Certificates and HTTPS request resolve.
+
+AWS 2023 LINUX 
+
+1. Install the EPEL Repository
+First, let's install the Extra Packages for Enterprise Linux (EPEL) repository, which provides access to additional packages like Certbot:
+
+sudo dnf install epel-release -y
+
+2. Install the Certbot and Nginx Plugin
+Once the EPEL repository is enabled, you can install Certbot and the Nginx plugin:
+
+sudo dnf install certbot python3-certbot-nginx -y
+
+
+3. Obtain an SSL Certificate
+Now that Certbot and the Nginx plugin are installed, try running the Certbot command again to generate the SSL certificate:
+
+sudo dnf install 'dnf-plugins-core' -y
+sudo dnf config-manager --set-enabled epel
+sudo dnf install certbot python3-certbot-nginx -y
+sudo certbot --nginx -d api.akki.ai
+
+Certbot will automatically configure your Nginx server with the SSL certificate and redirect traffic from HTTP to HTTPS.
+
+4. Verify Nginx and SSL
+After Certbot runs successfully, ensure Nginx is running:
+
+sudo systemctl status nginx
+
+
+Then, you can check if the site is accessible securely:
+
+Visit https://api.akki.ai in a browser and check if the connection is secure (look for the padlock symbol).
+Verify your SSL configuration using:
+sudo certbot certificates
+
+5. Automate SSL Renewal
+Once everything is working, you can automate SSL certificate renewal:
+
+sudo dnf install cronie -y
+sudo systemctl start crond
+sudo systemctl enable crond
+sudo crontab -e
+0 0 * * * certbot renew --quiet && systemctl reload nginx
+sudo crontab -l  #Verify Cron Jobs You can verify that the cron job was added successfully by running:
+ 
