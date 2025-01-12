@@ -24,8 +24,8 @@ When pushing dockerfile change the relative paths
 
 Upload the local files to the ec2 instances (using pem file)
 1.Run the following command in your local terminal (VsCode Git Bash)
-2.chmod 600 akkiai_v1_kp.pem
-3.scp -i akkiai_v1_kp.pem Dockerfile main2.py crew.py (all local relevangt files) ec2-user@16.170.251.94:/home/ec2-user/downloads <path so use pwd and get > (Public IP after @)
+2.chmod 600 ec2-akkiai-key.pem
+3.scp -i ec2-akkiai-key.pem Dockerfile main2.py crew.py (all local relevangt files) ec2-user@16.170.251.94:/home/ec2-user/downloads <path so use pwd and get > (Public IP after @)
 4.Now build the docker image in the AWS-Linux terminal with commands
 5. sudo docker build -t image_name .
 
@@ -59,8 +59,8 @@ When pushing dockerfile change the relative paths
 
 Upload the local files to the ec2 instances (using pem file)
 1.Run the following command in your local terminal (VsCode Git Bash)
-2.chmod 600 akkiai_v1_kp.pem
-3.scp -i akkiai_v1_kp.pem Dockerfile main2.py crew.py (all local relevangt files) ec2-user@16.170.251.94:/home/ec2-user/downloads <path so use pwd and get > (Public IP after @)
+2.chmod 600 ec2-akkiai-key.pem
+3.scp -i ec2-akkiai-key.pem Dockerfile main2.py crew.py (all local relevangt files) ec2-user@16.170.251.94:/home/ec2-user/downloads <path so use pwd and get > (Public IP after @)
 4.Now build the docker image in the AWS-Linux terminal with commands
 5. sudo docker build -t image_name .
 5. run docker with environment variables "docker run -d -p 8000:8000 --env-file /path/to/.env akkiai-image2"
@@ -93,54 +93,6 @@ are calling anthropic api)
 5. Taking human inputs in between crew runs how to do that? make endpoint ffrom the github function for human input  
 
 
-
-
-task1 exp output
-Present your output in the following JSON format along with respective headings and the details about
-    description given below each audience segment 1. Top 3 specific characteristics of the Target Group 
-    2. Reasons summary why this segment is a good fit:
-    <target_audience_list>
-    <Primary_TG1>
-    1. Primary Audiences Target Group 1
-      - Top 3 specific characteristics of the Primary Audiences Target Group 1
-      - Reasons summary why this segment is a good fit
-    </Primary_TG1>
-
-    <Primary_TG2>
-    2. Primary Audiences Target Group 2
-      - Top 3 specific characteristics of the Primary Audiences Target Group 2
-      - Reasons summary why this segment is a good fit
-    </Primary_TG2>
-
-    <Primary_TG3>
-    2. Primary Audiences Target Group 3
-      - Top 3 specific characteristics of the Primary Audiences Target Group 3
-      - Reasons summary why this segment is a good fit
-    </Primary_TG3>
-
-    [Continue with additional primary segments as needed]
-
-    <Secondary_TG1>
-    Secondary Audiences Target Group 1: 
-      - Top 3 specific characteristics of the Secondary Audiences Target Group 1
-      - Reasons why this segment is relevant
-    </Secondary_TG1>
-
-    <Secondary_TG2>
-    Secondary Audiences Target Group 2: 
-      - Top 3 specific characteristics of the Secondary Audiences Target Group 2
-      - Reasons why this segment is relevant
-    </Secondary_TG2>
-
-    <Secondary_TG3>
-    Secondary Audiences Target Group 3: 
-      - Top 3 specific characteristics of the Secondary Audiences Target Group 3
-      - Reasons why this segment is relevant
-    </Secondary_TG3>
-
-    [Continue with additional secondary segments as needed]
-    </target_audience_list>
-
 MoM 2nd Jan 2025
 
 1. Agent configuration file issue is there check why and correct it.
@@ -149,3 +101,15 @@ MoM 2nd Jan 2025
 4. Explore crewai training. 
 5. What will be the benefit of training faster ya better response? 
 6. In general there are some example prompts to prevent hallucination.
+
+MoM 11th Jan 25
+1. bind it to IP jis ip se call aa rahi usi ip ka accept karna
+2. pass only api key to header and not secret 
+3. woh secret key ko use karke headings
+4. soln_id, inputs, hash 
+5. data 123 key abc secret key is with me and you have the key at server 
+6. generate hash xyz at frontend mujhe bheja 123 and xyz and i have to check 
+7. us api key ka secret key (private key), use secret key to encrypt and decrypt
+8. header me sirf api key hoga
+9. run me post call me hash input lena (sol id , input123 and hash)
+10. use inputs and hashing function to use with the secret key to generate  new hash compare it with the hash passed from thr frontend 

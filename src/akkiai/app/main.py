@@ -7,13 +7,13 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from fastapi import Depends, Header
 from fastapi.openapi.docs import get_swagger_ui_html, get_redoc_html
-from crew import crew1, crew2, crew3, crew4
-import kickoff_ids
+from crew import crew1, crew2, crew3, crew4, crew5, crew6, crew7, crew8, crew9
+import helpercodes.kickoff_ids as kickoff_ids
 from pathlib import Path
 import os 
 from datetime import datetime
 import secrets
-import traceback
+import traceback 
 import hmac
 import hashlib
 
@@ -154,9 +154,24 @@ async def run(inputs: RunInputs, background_tasks: BackgroundTasks):
 
             elif solution_id == "4":
                 akkiai_instance = crew4()
+            
+            elif solution_id == "5":
+                akkiai_instance = crew5()
+            
+            elif solution_id == "6":
+                akkiai_instance = crew6()
+
+            elif solution_id == "7":
+                akkiai_instance = crew7()
+            
+            elif solution_id == "8":
+                akkiai_instance = crew8()
+            
+            elif solution_id == "9":
+                akkiai_instance = crew9()
 
             else:
-                return f"Solution id must be 1-4"
+                return f"Solution id must be 1-9"
             
             crew_instance = akkiai_instance.crew()
             
