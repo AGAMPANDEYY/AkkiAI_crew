@@ -37,14 +37,14 @@ SECRET_KEY=os.getenv("SECRET_KEY")
 origins=[
     "https://nimble-gnome-f8228f.netlify.app/home",
     "http://localhost:5173",
-    "app.akki.ai",
-    "https://beta.akki.ai/"
+    "https://api.akki.ai/run",
+    "https://beta.akki.ai/",
+    "https://beta.akki.ai"
         ]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
-    #allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -5,104 +5,8 @@ from supabase import create_client, Client
 import helpercodes.kickoff_ids as kickoff_ids
 import uuid
 import requests
-from pydantic import BaseModel
-from typing import List, Optional, Dict, Any
+from custompydantics import *
 import os
-
-
-'''
-The output pydantic models for eachg task
-'''
-
-class TargetGroupsPydantic(BaseModel):
-    characteristics: str
-    reasons: str
-
-# Define the main model that contains target_audience as a key
-class Task11Pydantic(BaseModel):
-    target_audience: Dict[str,TargetGroupsPydantic]
-
-class Task21Pydantic(BaseModel):
-    buyer_persona:str
-    narrative:str
-    demographic_information:str 
-    psychographic_information:str
-    behavioral_information:str
-    buying_process:str
-    consumption_patterns:str 
-    aspirations:str
-
-class Task24Pydantic(BaseModel):
-    jtbd_statement:str
-
-class Task25Pydantic(BaseModel):
-    stages_of_awareness_analysis:str
-    unaware:str
-    problem_aware:str
-    solution_aware:str
-    product_aware:str
-    most_aware:str
-    summary_and_recommendations:str
-
-class Task31Pydantic(BaseModel):
-    value_proposition_canvas:str
-    customer_profile:str
-    customer_jobs:str
-    customer_pains:str
-    customer_gains:str
-    value_map:str
-    pain_relievers:str
-    gain_creators:str
-    products_and_services:str
-    fit_evaluation:str
-
-class Task32Pydantic(BaseModel):
-    product:str
-    price:str
-    place:str
-    promotion:str
-
-class Task33Pydantic(BaseModel):
-    swot_analysis:str
-
-class Task34Pydantic(BaseModel):
-    buyers_journey:str
-    awareness_stage:str
-    consideration_stage:str
-    decision_stage:str
-    post_purchase_stage:str
-    key_insights:str
-
-class Task35Pydantic(BaseModel):
-    market_analysis:str
-
-class Task41Pydantic(BaseModel):
-    brand_story:str
-    hero:str
-    problem:str
-    guide:str
-    call_to_action:str
-    result:str
-
-class Task42Pydantic(BaseModel):
-    aida_framework:str
-    summary:str
-
-class Task43Pydantic(BaseModel):
-    platform_recommendations:str
-
-class Task44Pydantic(BaseModel):
-    lead_stages:str
-    stage_name:str
-    audience_behavior:str
-    audience_thoughts:str
-    content_ideas:str
-    call_to_action:str
-    example_prompt:str
-
-class Task45Pydantic(BaseModel):
-    lead_qualification_checklist:str
-
 
 @CrewBase
 class crew1():
@@ -110,8 +14,8 @@ class crew1():
     Target Audience Specialist 
     """
     
-    agents_config = 'config/agents1.yaml'
-    tasks_config = 'config/tasks1.yaml'
+    agents_config = 'config/agents/agents1.yaml'
+    tasks_config = 'config/tasks/tasks1.yaml'
     claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
     
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
@@ -193,8 +97,8 @@ class crew2():
     """
     Customer Persona Journey Crew
     """
-    agents_config = 'config/agents2.yaml'
-    tasks_config = 'config/tasks2.yaml'
+    agents_config = 'config/agents/agents2.yaml'
+    tasks_config = 'config/tasks/tasks2.yaml'
     claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
     
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
@@ -346,15 +250,14 @@ class crew2():
             verbose=True,
         )
 
-
 @CrewBase
 class crew3():
     '''
      USP,Value Proposition Analysis Mult-Agent
     '''
 
-    agents_config = 'config/agents3.yaml'
-    tasks_config = 'config/tasks3.yaml'
+    agents_config = 'config/agents/agents3.yaml'
+    tasks_config = 'config/tasks/tasks3.yaml'
     claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
 
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
@@ -508,8 +411,8 @@ class crew4():
     '''
 
     """Akkiai crew"""
-    agents_config = 'config/agents4.yaml'
-    tasks_config = 'config/tasks4.yaml'
+    agents_config = 'config/agents/agents4.yaml'
+    tasks_config = 'config/tasks/tasks4.yaml'
     claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
 
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
@@ -583,6 +486,51 @@ class crew4():
             verbose=True
         )
 
+    #Agent4
+    @agent
+    def BABFrameworkAgent(self) -> Agent:
+        return Agent(
+            config=self.agents_config['BABFrameworkAgent'],
+            llm=self.claude_llm,
+            verbose=True
+        )
+    
+    #Agent5
+    @agent
+    def PASStoryFrameworkAgent(self) -> Agent:
+        return Agent(
+            config=self.agents_config['PASStoryFrameworkAgent'],
+            llm=self.claude_llm,
+            verbose=True
+        )
+
+    #Agent6
+    @agent
+    def STPAgent(self) -> Agent:
+        return Agent(
+            config=self.agents_config['STPAgent'],
+            llm=self.claude_llm,
+            verbose=True
+        )
+    
+    #Agent7
+    @agent
+    def CustomerJourneyMappingAgent(self) -> Agent:
+        return Agent(
+            config=self.agents_config['CustomerJourneyMappingAgent'],
+            llm=self.claude_llm,
+            verbose=True
+        )
+    
+    #Agent8
+    @agent
+    def BrandArchetypesModelAgent(self) -> Agent:
+        return Agent(
+            config=self.agents_config['BrandArchetypesModelAgent'],
+            llm=self.claude_llm,
+            verbose=True
+        )
+
     #task1
     @task
     def BrandStoryAgent_task(self) -> Task:
@@ -609,6 +557,51 @@ class crew4():
             output_pydantic=Task43Pydantic,
             callback=self.task_output_callback
         )
+    
+    #task4
+    @task
+    def BABFrameworkAgent_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['bab_framework'],
+            output_pydantic=Task44Pydantic,
+            callback=self.task_output_callback
+        )
+    
+    #task5
+    @task
+    def PASStoryFrameworkAgent_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['pas_story_framework'],
+            output_pydantic=Task45Pydantic,
+            callback=self.task_output_callback
+        )
+    
+    #task6
+    @task
+    def STPAgent_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['stp'],
+            output_pydantic=Task46Pydantic,
+            callback=self.task_output_callback
+        )
+    
+    #task7
+    @task
+    def CustomerJourneyMappingAgent_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['customer_journey_mapping'],
+            output_pydantic=Task47Pydantic,
+            callback=self.task_output_callback
+        )
+    
+    #task8
+    @task
+    def BrandArchetypesModelAgent_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['brand_archetypes_model'],
+            output_pydantic=Task48Pydantic,
+            callback=self.task_output_callback
+        )
 
     @crew
     def crew(self) -> Crew:
@@ -627,8 +620,8 @@ class crew5():
     '''
 
     """Akkiai crew"""
-    agents_config = 'config/agents5.yaml'
-    tasks_config = 'config/tasks5.yaml'
+    agents_config = 'config/agents/agents5.yaml'
+    tasks_config = 'config/tasks/tasks5.yaml'
     claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
 
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
@@ -764,8 +757,8 @@ class crew6():
     '''
 
     """Akkiai crew"""
-    agents_config = 'config/agents6.yaml'
-    tasks_config = 'config/tasks6.yaml'
+    agents_config = 'config/agents/agents6.yaml'
+    tasks_config = 'config/tasks/tasks6.yaml'
     claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
 
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
@@ -823,13 +816,58 @@ class crew6():
         )
     #Agent2
     @agent
-    def FutureCompetitorsAgent(self) -> Agent:
+    def FutureCompetitorsAnalysisAgent(self) -> Agent:
         return Agent(
-            config=self.agents_config['FutureCompetitorsAgent'],
+            config=self.agents_config['FutureCompetitorAnalysisAgent'],
             llm=self.claude_llm,
             verbose=True
         )
-
+    
+    #Agent3
+    @agent
+    def BottomUpAnalysisAgent(self) -> Agent:
+        return Agent(
+            config=self.agents_config['BottomUpAnalysisAgent'],
+            llm=self.claude_llm,
+            verbose=True
+        )
+    
+    #Agent4
+    @agent
+    def StrategicGroupAnalysisAgent(self) -> Agent:
+        return Agent(
+            config=self.agents_config['StrategicGroupAnalysisAgent'],
+            llm=self.claude_llm,
+            verbose=True
+        )
+    
+    #Agent5
+    @agent
+    def PorterFiveForcesAgent(self) -> Agent:
+        return Agent(
+            config=self.agents_config['PorterFiveForcesAgent'],
+            llm=self.claude_llm,
+            verbose=True
+        )
+    
+    #Agent6
+    @agent
+    def SWOTAnalysisAgent(self) -> Agent:
+        return Agent(
+            config=self.agents_config['SWOTAnalysisAgent'],
+            llm=self.claude_llm,
+            verbose=True
+        )
+    
+    #Agent7
+    @agent
+    def TopDownAnalysisAgent(self) -> Agent:
+        return Agent(
+            config=self.agents_config['TopDownAnalysisAgent'],
+            llm=self.claude_llm,
+            verbose=True
+        )
+    
     #task1
     @task
     def TamSamSomAgent_task(self) -> Task:
@@ -841,13 +879,58 @@ class crew6():
     
     #task2
     @task
-    def FutureCompetitorsAgent_task(self) -> Task:
+    def FutureCompetitorsAnalysisAgent_task(self) -> Task:
         return Task(
-            config=self.tasks_config['future_competitors'],
+            config=self.tasks_config['future_competitors_analysis'],
             output_pydantic=Task42Pydantic,
             callback=self.task_output_callback
         )
     
+    #task3
+    @task
+    def BottomUpAnalysisAgent_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['bottom_up_analysis'],
+            output_pydantic=Task42Pydantic,
+            callback=self.task_output_callback
+        )
+    
+    #task4
+    @task
+    def StrategicGroupAnalysisAgent_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['strategic_group_analysis'],
+            output_pydantic=Task42Pydantic,
+            callback=self.task_output_callback
+        )
+    
+    #task5
+    @task
+    def PorterFiveForcesAgent_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['porters_five_forces'],
+            output_pydantic=Task42Pydantic,
+            callback=self.task_output_callback
+        )
+    
+    #task6
+    @task
+    def SWOTAnalysisAgent_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['swot_analysis'],
+            output_pydantic=Task42Pydantic,
+            callback=self.task_output_callback
+        )
+    
+    #task7
+    @task
+    def TopDownAnalysisAgent_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['top_down_analysis'],
+            output_pydantic=Task42Pydantic,
+            callback=self.task_output_callback
+        )
+
     @crew
     def crew(self) -> Crew:
         """Creates the AkkiAi crew"""
@@ -865,8 +948,8 @@ class crew7():
     '''
 
     """Akkiai crew"""
-    agents_config = 'config/agents7.yaml'
-    tasks_config = 'config/tasks7.yaml'
+    agents_config = 'config/agents/agents7.yaml'
+    tasks_config = 'config/tasks/tasks7.yaml'
     claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
 
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
@@ -916,71 +999,71 @@ class crew7():
 
     #Agent1
     @agent
-    def YCPromptAgent(self) -> Agent:
+    def LeanCanvasMVPAgent(self) -> Agent:
         return Agent(
-            config=self.agents_config['YCPromptAgent'],
+            config=self.agents_config['LeanCanvasMVPAgent'],
             llm=self.claude_llm,
             verbose=True
         )
     #Agent2
     @agent
-    def VCFeedbackAgent(self) -> Agent:
+    def RoadmapMVPAgent(self) -> Agent:
         return Agent(
-            config=self.agents_config['VCFeedbackAgent'],
+            config=self.agents_config['RoadmapMVPAgent'],
             llm=self.claude_llm,
             verbose=True
         )
     
     #Agent3
     @agent
-    def TechTitanFeedbackAgent(self) -> Agent:
+    def PRDTemplateAgent(self) -> Agent:
         return Agent(
-            config=self.agents_config['TechTitanFeedbackAgent'],
+            config=self.agents_config['PRDTemplateAgent'],
             llm=self.claude_llm,
             verbose=True
         )
     
     #Agent4
     @agent
-    def UpdatedApplicationAgent(self) -> Agent:
+    def TechStackFrameworkAgent(self) -> Agent:
         return Agent(
-            config=self.agents_config['UpdatedApplicationAgent'],
+            config=self.agents_config['TechStackFrameworkAgent'],
             llm=self.claude_llm,
             verbose=True
         )
 
     #task1
     @task
-    def YCPromptAgent_task(self) -> Task:
+    def LeanCanvasMVPAgent_task(self) -> Task:
         return Task(
-            config=self.tasks_config['yc_prompt'],
+            config=self.tasks_config['lean_canvas_mvp'],
             output_pydantic=Task41Pydantic,
             callback=self.task_output_callback
         )
     
     #task2
     @task
-    def VCFeedbackAgent_task(self) -> Task:
+    def RoadmapMVPAgent_task(self) -> Task:
         return Task(
-            config=self.tasks_config['vc_feedback'],
+            config=self.tasks_config['roadmap_mvp'],
             output_pydantic=Task42Pydantic,
             callback=self.task_output_callback
         )
     
     #task3
     @task
-    def TechTitanFeedbackAgent_task(self) -> Task:
+    def PRDTemplateAgent_task(self) -> Task:
         return Task(
-            config=self.tasks_config['tech_titan_feedback'],
+            config=self.tasks_config['prd_template'],
             output_pydantic=Task43Pydantic,
             callback=self.task_output_callback
         )
     
     #task4
     @task
-    def UpdatedApplicationAgent_task(self) -> Task:
+    def TechStackFrameworkAgent_task(self) -> Task:
         return Task(
-            config=self.tasks_config['updated_application'],
+            config=self.tasks_config['techstack_framework'],
             output_pydantic=Task44Pydantic,
             callback=self.task_output_callback
         )
@@ -1001,8 +1084,8 @@ class crew8():
     YC Application prompt, VC Feedback Prompt, Revised Application, Tech Titan Feedback and Application Prompt
     '''
 
-    agents_config = 'config/agents8.yaml'
-    tasks_config = 'config/tasks8.yaml'
+    agents_config = 'config/agents/agents8.yaml'
+    tasks_config = 'config/tasks/tasks8.yaml'
     claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
 
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
@@ -1052,71 +1135,71 @@ class crew8():
 
     #Agent1
     @agent
-    def YCPromptAgent(self) -> Agent:
+    def ExperiencedStartupFounderSpecialistAgent(self) -> Agent:
         return Agent(
-            config=self.agents_config['YCPromptAgent'],
+            config=self.agents_config['ExperiencedStartupFounderSpecialistAgent'],
             llm=self.claude_llm,
             verbose=True
         )
     #Agent2
     @agent
-    def VCFeedbackAgent(self) -> Agent:
+    def SiliconValleyInvestorAgent(self) -> Agent:
         return Agent(
-            config=self.agents_config['VCFeedbackAgent'],
+            config=self.agents_config['SiliconValleyInvestorAgent'],
             llm=self.claude_llm,
             verbose=True
         )
     
     #Agent3
     @agent
-    def TechTitanFeedbackAgent(self) -> Agent:
+    def StartupSpecialistAgent(self) -> Agent:
         return Agent(
-            config=self.agents_config['TechTitanFeedbackAgent'],
+            config=self.agents_config['StartupSpecialistAgent'],
             llm=self.claude_llm,
             verbose=True
         )
     
     #Agent4
     @agent
-    def UpdatedApplicationAgent(self) -> Agent:
+    def FamousSiliconValleyTechTitan(self) -> Agent:
         return Agent(
-            config=self.agents_config['UpdatedApplicationAgent'],
+            config=self.agents_config['FamousSiliconValleyTechTitan'],
             llm=self.claude_llm,
             verbose=True
         )
 
     #task1
     @task
-    def YCPromptAgent_task(self) -> Task:
+    def ExperiencedStartupFounderSpecialistAgent_task(self) -> Task:
         return Task(
-            config=self.tasks_config['yc_prompt'],
+            config=self.tasks_config['experienced_startup_founder_specialist'],
             output_pydantic=Task41Pydantic,
             callback=self.task_output_callback
         )
     
     #task2
     @task
-    def VCFeedbackAgent_task(self) -> Task:
+    def SiliconValleyInvestorAgent_task(self) -> Task:
         return Task(
-            config=self.tasks_config['vc_feedback'],
+            config=self.tasks_config['silicon_valley_investor'],
             output_pydantic=Task42Pydantic,
             callback=self.task_output_callback
         )
     
     #task3
     @task
-    def TechTitanFeedbackAgent_task(self) -> Task:
+    def StartupSpecialistAgent_task(self) -> Task:
         return Task(
-            config=self.tasks_config['tech_titan_feedback'],
+            config=self.tasks_config['startup_specialist_agent'],
             output_pydantic=Task43Pydantic,
             callback=self.task_output_callback
         )
     
     #task4
     @task
-    def UpdatedApplicationAgent_task(self) -> Task:
+    def FamousSiliconValleyTechTitan_task(self) -> Task:
         return Task(
-            config=self.tasks_config['updated_application'],
+            config=self.tasks_config['famous_silicon_valley_tech_titan'],
             output_pydantic=Task44Pydantic,
             callback=self.task_output_callback
         )
@@ -1138,8 +1221,8 @@ class crew9():
     '''
 
     """Akkiai crew"""
-    agents_config = 'config/agents9.yaml'
-    tasks_config = 'config/tasks9.yaml'
+    agents_config = 'config/agents/agents9.yaml'
+    tasks_config = 'config/tasks/tasks9.yaml'
     claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
 
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
@@ -1189,89 +1272,107 @@ class crew9():
 
     #Agent1
     @agent
-    def BrandStoryAgent(self) -> Agent:
+    def SequoiaCapitalPitchDeckAgent(self) -> Agent:
         return Agent(
-            config=self.agents_config['BrandStoryAgent'],
+            config=self.agents_config['SequoiaCapitalPitchDeckAgent'],
             llm=self.claude_llm,
             verbose=True
         )
     #Agent2
     @agent
-    def MarketMessageAgent(self) -> Agent:
+    def GuyKawasaki102030RuleAgent(self) -> Agent:
         return Agent(
-            config=self.agents_config['MarketMessageAgent'],
+            config=self.agents_config['GuyKawasaki102030RuleAgent'],
             llm=self.claude_llm,
             verbose=True
         )
     
     #Agent3
     @agent
-    def PlatformSlecetionAgent(self) -> Agent:
+    def VentureCapitalMethodAgent(self) -> Agent:
         return Agent(
-            config=self.agents_config['PlatformSlecetionAgent'],
+            config=self.agents_config['VentureCapitalMethodAgent'],
             llm=self.claude_llm,
             verbose=True
         )
     
     #Agent4
     @agent
-    def LeadStagesAgent(self) -> Agent:
+    def FirstChicagoMethodAgent(self) -> Agent:
         return Agent(
-            config=self.agents_config['LeadStagesAgent'],
+            config=self.agents_config['FirstChicagoMethodAgent'],
             llm=self.claude_llm,
             verbose=True
         )
     
     #Agent5
     @agent
-    def LeadQualificationAgent(self) -> Agent:
+    def RiskFactorSummationMethodAgent(self) -> Agent:
         return Agent(
-            config=self.agents_config['LeadQualificationAgent'],
+            config=self.agents_config['RiskFactorSummationMethodAgent'],
+            llm=self.claude_llm,
+            verbose=True
+        )
+    
+    #Agent6
+    @agent
+    def YCombinatorTemplateAgent(self) -> Agent:
+        return Agent(
+            config=self.agents_config['YCombinatorTemplateAgent'],
             llm=self.claude_llm,
             verbose=True
         )
 
     #task1
     @task
-    def BrandStoryAgent_task(self) -> Task:
+    def SequoiaCapitalPitchDeckAgent_task(self) -> Task:
         return Task(
-            config=self.tasks_config['brand_story'],
+            config=self.tasks_config['sequoia_capital_pitch_deck'],
             output_pydantic=Task41Pydantic,
             callback=self.task_output_callback
         )
     
     #task2
     @task
-    def MarketMessageAgent_task(self) -> Task:
+    def GuyKawasaki102030RuleAgent_task(self) -> Task:
         return Task(
-            config=self.tasks_config['market_message_aida'],
+            config=self.tasks_config['guy_kawasaki102030_rule'],
             output_pydantic=Task42Pydantic,
             callback=self.task_output_callback
         )
     
     #task3
     @task
-    def PlatformSlecetionAgent_task(self) -> Task:
+    def VentureCapitalMethodAgent_task(self) -> Task:
         return Task(
-            config=self.tasks_config['platform_selection'],
+            config=self.tasks_config['venture_capital_method'],
             output_pydantic=Task43Pydantic,
             callback=self.task_output_callback
         )
     
     #task4
     @task
-    def LeadStagesAgent_task(self) -> Task:
+    def FirstChicagoMethodAgent_task(self) -> Task:
         return Task(
-            config=self.tasks_config['lead_stages'],
+            config=self.tasks_config['chicago_method_agent'],
             output_pydantic=Task44Pydantic,
             callback=self.task_output_callback
         )
     
     #task5
     @task
-    def LeadQualificationAgent_task(self) -> Task:
+    def RiskFactorSummationMethodAgent_task(self) -> Task:
         return Task(
-            config=self.tasks_config['lead_qualification_checklist'],
+            config=self.tasks_config['risk_factor_summation_method'],
+            output_pydantic=Task45Pydantic,
+            callback=self.task_output_callback
+        )
+    
+    #task6
+    @task
+    def YCombinatorTemplateAgent_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['ycombinator_template'],
             output_pydantic=Task45Pydantic,
             callback=self.task_output_callback
         )

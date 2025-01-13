@@ -80,3 +80,8 @@ MoM 13th
 2. Get kickoff_id evyerthing and
 3. call with only 
 4. challenges that you could face-- everytime the same class is running  
+
+
+13th Jan 
+1. Bearer token for fastapi is the right way 
+2. After pushing solutions to ec2 work on this https://testdriven.io/tips/6840e037-4b8f-4354-a9af-6863fb1c69eb/ 
