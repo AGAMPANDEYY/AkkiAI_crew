@@ -1,5 +1,5 @@
 SequoiaCapitalPitchDeckAgent:
-  role: Experienced Startup Consultant
+  role: SequoiaCapitalPitchDeckAgent
   goal: To create a comprehensive, compelling, and structured pitch deck
     for a startup using the Sequoia Capital Pitch Deck Format. This deck should
     highlight key elements of the business, such as the problem, solution, market,
@@ -16,7 +16,7 @@ SequoiaCapitalPitchDeckAgent:
   memory: False
 
 GuyKawasaki102030RuleAgent:
-  role: Experienced Startup Consultant
+  role: GuyKawasaki102030RuleAgent
   goal: To create a comprehensive pitch deck for a startup
     using Guy Kawasaki's 10-20-30 rule.
     This pitch deck will be used to apply for accelerator programs
@@ -41,7 +41,7 @@ GuyKawasaki102030RuleAgent:
 
 
 VentureCapitalMethodAgent:
-  role: Startup Consultant
+  role: VentureCapitalMethodAgent
   goal: To create a comprehensive pitch deck for a startup using the Venture Capital Method (VC Method). 
     This pitch deck will be used for applying to accelerator programs and pitching to Venture Capitalists.
   backstory: You have extensive expertise in analyzing and creating strategies for startups.
@@ -54,7 +54,7 @@ VentureCapitalMethodAgent:
 
 
 FirstChicagoMethodAgent:
-  role: Startup Consultant
+  role: FirstChicagoMethodAgent
   goal: To create a comprehensive pitch deck for a startup
     using the First Chicago Method, incorporating best-case, 
     base-case, and worst-case scenarios to calculate the company's
@@ -73,7 +73,7 @@ FirstChicagoMethodAgent:
   memory: False
 
 RiskFactorSummationMethodAgent:
-  role: Startup Consultant
+  role: RiskFactorSummationMethodAgent
   goal: To create a comprehensive pitch deck for a startup 
     using the Risk-Factor Summation Method (RFS Method). 
     This method adjusts a baseline valuation based on specific risk factors, 
@@ -97,7 +97,7 @@ RiskFactorSummationMethodAgent:
 
 
 YCombinatorTemplateAgent:
-  role: Experienced Startup Consultant
+  role: YCombinatorTemplateAgent
   goal: To create a comprehensive pitch deck for a startup 
     using the Y Combinator format, focusing on clarity and essential details 
     that convey the startup's value quickly and effectively.

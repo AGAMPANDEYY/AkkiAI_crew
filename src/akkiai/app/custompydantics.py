@@ -159,22 +159,32 @@ class Task83Pydantic(BaseModel):
 class Task84Pydantic(BaseModel):
     brand_colors:str
 
+class SlidesPydantic(BaseModel):
+    contents: str
+
 class Task91Pydantic(BaseModel):
-    marketing_strategy:str
+    pitch_deck : Dict[str,SlidesPydantic]
 
 class Task92Pydantic(BaseModel):
-    marketing_channels:str
+    pitch_deck_planning: str
+    pitch_deck: Dict[str,SlidesPydantic]
+
+class SlidesPlanningPydantic(BaseModel):
+    slide_planning: str
+    content: str
+    reasoning: str
+    presenter_notes: str
 
 class Task93Pydantic(BaseModel):
-    marketing_tools:str
+    slides: Dict[str,SlidesPlanningPydantic]
 
 class Task94Pydantic(BaseModel):
-    marketing_budget:str
+    pitch_deck: Dict[str,SlidesPydantic]
 
 class Task95Pydantic(BaseModel):
-    marketing_results:str
+    pitch_deck: Dict[str,SlidesPydantic]
 
 class Task96Pydantic(BaseModel):
-    marketing_leadership:str
+    pitch_deck: Dict[str,SlidesPlanningPydantic]
     
 

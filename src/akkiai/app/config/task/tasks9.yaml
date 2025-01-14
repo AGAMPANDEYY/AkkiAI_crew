@@ -2,7 +2,9 @@ sequoia_capital_pitch_deck:
   description: >-
     You are an Experienced Startup Consultant and expert with years of experience in analyzing and creating strategies for startups tasked with creating a comprehensive pitch deck for a startup using the Sequoia Capital Pitch Deck Format. You will use the provided information to create the best accelerator pitch deck possible.
     You will be given the following information about the startup:
-    <startup_info> {{STARTUP_INFO}}</startup_info>
+    <startup_info> 
+    {STARTUP_INFO}
+    </startup_info>
     Carefully analyze all the provided data to gain a full understanding of the startup's business, unique selling propositions (USPs), and messaging styles.
     Background Context:
     The deck will be used primarily to apply for accelerator programs and Venture Capitalists.
@@ -61,7 +63,7 @@ sequoia_capital_pitch_deck:
     - Provide both light and dark theme options
   agent: SequoiaCapitalPitchDeckAgent
   inputs: 
-   startup_info: "{{STARTUP_INFO}}"
+   startup_info: "{STARTUP_INFO}"
 
 
 guy_kawasaki102030_rule: 
@@ -71,27 +73,27 @@ guy_kawasaki102030_rule:
     First, carefully review the following information about the startup:
 
     <business_details>
-    {{business_details}}
+    {BUSINESS_DETAILS}
     </business_details>
 
     <product_description>
-    {{business_description}}
+    {PRODUCT_DESCRIPTION}
     </product_description>
 
     <target_audience>
-    {{TARGET_AUDIENCE}}
+    {TARGET_AUDIENCE}
     </target_audience>
 
     <customer_persona>
-    {{CUSTOMER_PERSONA}}
+    {CUSTOMER_PERSONA}
     </customer_persona>
 
     <value_proposition>
-    {{VALUE_PROPOSITION}}
+    {VALUE_PROPOSITION}
     </value_proposition>
 
     <messaging>
-    {{MESSAGING}}
+    {MESSAGING}
     </messaging>
 
     Your goal is to create the best possible accelerator pitch deck using this information. Follow these guidelines:
@@ -120,7 +122,7 @@ guy_kawasaki102030_rule:
 
     After your analysis, present your final pitch deck within <pitch_deck> tags, with each slide enclosed in its own numbered slide tags (e.g., <Slide_1>, <Slide_2>, etc.). Include your reasoning for the content and structure of each slide.
   expected_output: >-
-   <pitch_deck_planning>
+    <pitch_deck_planning>
     [Your detailed analysis and planning for each slide]
     </pitch_deck_planning>
 
@@ -139,8 +141,8 @@ guy_kawasaki102030_rule:
     Remember to review your final pitch deck to ensure all required elements are included and that the overall presentation is cohesive and impactful.
   agent: GuyKawasaki102030RuleAgent
   inputs: 
-    business_details: '{{business_details}}'
-    business_description: '{{business_description}}'
+    business_details: '{{BUSINESS_DETAILS}}'
+    product_description: '{{PRODUCT_DESCRIPTION}}'
     target_audience: '{{TARGET_AUDIENCE}}'
     customer_persona: '{{CUSTOMER_PERSONA}}'
     value_proposition: '{{VALUE_PROPOSITION}}'
@@ -153,7 +155,7 @@ venture_capital_method:
     First, carefully analyze the following information about the startup:
 
     <startup_info>
-    {{STARTUP_INFO}}
+    {STARTUP_INFO}
     </startup_info>
 
     Your goal is to create the best possible accelerator pitch deck based on this information. Before creating each slide, wrap your slide planning process in <slide_planning> tags. Consider the startup's business model, unique selling propositions (USPs), and messaging style. For each slide:
@@ -229,7 +231,7 @@ chicago_method_agent:
     First, carefully analyze the following information about the startup:
 
     <startup_info>
-    {{STARTUP_INFO}}
+    {STARTUP_INFO}
     </startup_info>
 
     Your task is to create a complete accelerator pitch deck based on this information. Before creating each slide, wrap your slide planning process in <slide_planning> tags. In this planning process:
@@ -299,7 +301,7 @@ risk_factor_summation_method:
     First, carefully analyze the following information about the startup:
 
     <startup_info>
-    {{STARTUP_INFO}}
+    {STARTUP_INFO}
     </startup_info>
 
     Your task is to create a complete accelerator pitch deck based on this information. For each slide, follow this process:
@@ -390,7 +392,7 @@ risk_factor_summation_method:
   
 ycombinator_template: 
   description: >- 
-    {STARTUP_INFO}}
+    {STARTUP_INFO}
 
     You are an experienced startup consultant tasked with creating a comprehensive pitch deck for a startup using the Y Combinator format. This format is designed to be simple and concise, focusing on clarity and essential details to quickly convey your startup's value.
 

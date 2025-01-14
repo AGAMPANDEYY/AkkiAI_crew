@@ -57,6 +57,10 @@ class RunInputs(BaseModel):
     INPUT_1: str
     INPUT_2: str
     INPUT_3: str
+    INPUT_4: str
+    INPUT_5: str
+    INPUT_6: str
+    INPUT_7: str
     HASH: str
 
 class TrainInputs(BaseModel):
@@ -227,6 +231,47 @@ async def run_crew_bg(crew_instance, inputs, solution_id, kickoff_id ):
                 "BRAND_INFO": inputs.INPUT_1,
                 "TARGET_AUDIENCE":inputs.INPUT_2,
                 "BUYER_PERSONA": inputs.INPUT_3
+            })
+
+        elif solution_id == "5":
+            # Pass the inputs to the backend agent (replace with your actual logic)
+            result = await crew_instance.kickoff_async(inputs={
+                "BRAND_INFO": inputs.INPUT_1,
+                "TARGET_AUDIENCE":inputs.INPUT_2,
+                "BUYER_PERSONA": inputs.INPUT_3
+            })
+        elif solution_id == "6":
+            # Pass the inputs to the backend agent (replace with your actual logic)
+            result = await crew_instance.kickoff_async(inputs={
+                "BRAND_INFO": inputs.INPUT_1,
+                "TARGET_AUDIENCE":inputs.INPUT_2,
+                "BUYER_PERSONA": inputs.INPUT_3
+            })
+        elif solution_id == "7":
+            # Pass the inputs to the backend agent (replace with your actual logic)
+            result = await crew_instance.kickoff_async(inputs={
+                "BRAND_INFO": inputs.INPUT_1,
+                "TARGET_AUDIENCE":inputs.INPUT_2,
+                "BUYER_PERSONA": inputs.INPUT_3
+            })
+        elif solution_id == "8":
+            # Pass the inputs to the backend agent (replace with your actual logic)
+            result = await crew_instance.kickoff_async(inputs={
+                "BRAND_INFO": inputs.INPUT_1,
+                "TARGET_AUDIENCE":inputs.INPUT_2,
+                "BUYER_PERSONA": inputs.INPUT_3
+            })
+        elif solution_id == "9":
+              # Pass the inputs to the backend agent (replace with your actual logic)
+            result = await crew_instance.kickoff_async(inputs={
+                "STARTUP_INFO": inputs.INPUT_1,
+                "BUSINESS_DETAILS": inputs.INPUT_2,
+                "PRODUCT_DESCRIPTION": inputs.INPUT_3,
+                "TARGET_AUDIENCE": inputs.INPUT_4,
+                "CUSTOMER_PERSONA": inputs.INPUT_5,
+                "VALUE_PROPOSITION": inputs.INPUT_6,
+                "MESSAGING": inputs.INPUT_7
+
             })
         
         job_status = "off"

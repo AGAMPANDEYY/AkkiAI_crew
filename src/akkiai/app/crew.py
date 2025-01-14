@@ -1173,7 +1173,7 @@ class crew8():
     def ExperiencedStartupFounderSpecialistAgent_task(self) -> Task:
         return Task(
             config=self.tasks_config['experienced_startup_founder_specialist'],
-            output_pydantic=Task41Pydantic,
+            output_pydantic=Task81Pydantic,
             callback=self.task_output_callback
         )
     
@@ -1182,7 +1182,7 @@ class crew8():
     def SiliconValleyInvestorAgent_task(self) -> Task:
         return Task(
             config=self.tasks_config['silicon_valley_investor'],
-            output_pydantic=Task42Pydantic,
+            output_pydantic=Task82Pydantic,
             callback=self.task_output_callback
         )
     
@@ -1191,7 +1191,7 @@ class crew8():
     def StartupSpecialistAgent_task(self) -> Task:
         return Task(
             config=self.tasks_config['startup_specialist'],
-            output_pydantic=Task43Pydantic,
+            output_pydantic=Task83Pydantic,
             callback=self.task_output_callback
         )
     
@@ -1200,7 +1200,7 @@ class crew8():
     def FamousSiliconValleyTechTitan_task(self) -> Task:
         return Task(
             config=self.tasks_config['famous_silicon_valley_tech_titan'],
-            output_pydantic=Task44Pydantic,
+            output_pydantic=Task84Pydantic,
             callback=self.task_output_callback
         )
     
@@ -1219,8 +1219,6 @@ class crew9():
     '''
     Pitch Deck - Investment Frameworks (3), Pitch Deck (3 versions) 
     '''
-
-    """Akkiai crew"""
     agents_config = 'config/agent/agents9.yaml'
     tasks_config = 'config/task/tasks9.yaml'
     claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
@@ -1251,7 +1249,7 @@ class crew9():
         Pushing the {kickoff_id, tak_name, task_output} to the Webhook URL with POST request
         '''
         webhook_url =os.environ.get("WEBHOOK_URL")
-        
+        #print(str(task_output.json_dict))
         try:
             response=requests.post(
                 webhook_url,
@@ -1328,7 +1326,8 @@ class crew9():
     def SequoiaCapitalPitchDeckAgent_task(self) -> Task:
         return Task(
             config=self.tasks_config['sequoia_capital_pitch_deck'],
-            output_pydantic=Task41Pydantic,
+            output_pydantic=Task91Pydantic,
+            output_file="outputs/task1.json",
             callback=self.task_output_callback
         )
     
@@ -1337,7 +1336,9 @@ class crew9():
     def GuyKawasaki102030RuleAgent_task(self) -> Task:
         return Task(
             config=self.tasks_config['guy_kawasaki102030_rule'],
-            output_pydantic=Task42Pydantic,
+            #context=[self.] ADD CONTEXT ONLY WHEN TASK TAKES INPUTS FROM OTHER TASK
+            output_pydantic=Task92Pydantic,
+            output_file="outputs/task2.json",
             callback=self.task_output_callback
         )
     
@@ -1346,7 +1347,8 @@ class crew9():
     def VentureCapitalMethodAgent_task(self) -> Task:
         return Task(
             config=self.tasks_config['venture_capital_method'],
-            output_pydantic=Task43Pydantic,
+            output_pydantic=Task93Pydantic,
+            output_file="outputs/task3.json",
             callback=self.task_output_callback
         )
     
@@ -1355,7 +1357,8 @@ class crew9():
     def FirstChicagoMethodAgent_task(self) -> Task:
         return Task(
             config=self.tasks_config['chicago_method_agent'],
-            output_pydantic=Task44Pydantic,
+            output_pydantic=Task94Pydantic,
+            output_file="outputs/task4.json",
             callback=self.task_output_callback
         )
     
@@ -1364,7 +1367,8 @@ class crew9():
     def RiskFactorSummationMethodAgent_task(self) -> Task:
         return Task(
             config=self.tasks_config['risk_factor_summation_method'],
-            output_pydantic=Task45Pydantic,
+            output_pydantic=Task95Pydantic,
+            output_file="outputs/task5.json",
             callback=self.task_output_callback
         )
     
@@ -1373,7 +1377,8 @@ class crew9():
     def YCombinatorTemplateAgent_task(self) -> Task:
         return Task(
             config=self.tasks_config['ycombinator_template'],
-            output_pydantic=Task45Pydantic,
+            output_pydantic=Task96Pydantic,
+            output_file="outputs/task6.json",
             callback=self.task_output_callback
         )
 
