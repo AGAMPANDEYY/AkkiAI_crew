@@ -1,0 +1,142 @@
+brand_story:
+  description: >
+    You are tasked with crafting a compelling brand story using the Story Brand Framework. This framework positions the target audience as the hero and the brand as the guide, solving their core problems and helping them achieve their goals.
+
+    First, carefully read and analyze the following brand information:
+
+    <brand_info>
+    
+    {{BRAND_INFO}}
+    
+    </brand_info>
+
+    Now, follow these steps to craft the brand story:
+
+    1. Analyze the provided brand information, identifying key elements that align with each section of the Brand Story Framework:
+      - Hero (Target Audience)
+      - The Problem
+      - Your Brand as the Guide
+      - The Call to Action
+      - The Result (Success)
+
+    2. For each section of the framework, extract relevant details from the brand information and organize them according to the framework's structure.
+
+    3. Craft a cohesive brand story that flows naturally from one section to the next, ensuring that:
+      - The target audience is positioned as the hero of the story
+      - The brand is presented as the guide that helps the hero overcome challenges
+      - The narrative focuses on how the brand helps the audience achieve success
+
+    4. Review your brand story to ensure it addresses all key points in the framework and effectively communicates the brand's value proposition.
+
+
+  expected_output: >
+    Provide your completed brand story in the following format:
+
+    <brand_story>
+    <hero>
+    [Describe the target audience, their characteristics, pain points, and aspirations]
+    </hero>
+
+    <problem>
+    [Outline the specific problem the audience faces, its impact, and potential consequences]
+    </problem>
+
+    <guide>
+    [Explain how the brand serves as a guide, its unique positioning, and the solution it offers]
+    </guide>
+
+    <call_to_action>
+    [Clearly state the desired action for the audience to take]
+    </call_to_action>
+
+    <result>
+    [Describe the positive outcome and success the audience will experience]
+    </result>
+    </brand_story>
+
+    Ensure that each section of your brand story is concise yet comprehensive, capturing the essence of the brand and its relationship with the target audience. Focus on creating a narrative that resonates with the audience and clearly communicates the brand's value.
+
+
+  agent: BrandStoryAgent
+
+brand_message_specialist:
+  description: >
+    You are tasked with creating a message sequence using the AIDA (Attention, Interest, Desire, Action) framework for a specific product or service targeting a particular audience. Follow these steps carefully:
+
+    1. First, review the information about your target audience:
+    <target_audience>
+    {{TARGET_AUDIENCE}}
+    </target_audience>
+
+    2. Next, familiarize yourself with the product or service you're promoting:
+    <product_description>
+    {{PRODUCT_DESCRIPTION}}
+    </product_description>
+
+    3. Now, create a message sequence using the AIDA framework. For each step, provide a brief explanation of your reasoning followed by the actual message content. Use the following structure:
+
+    <attention>
+    Reasoning: [Explain why this will grab the audience's attention]
+    Message: [Write the attention-grabbing headline or message]
+    </attention>
+
+    <interest>
+    Reasoning: [Explain how this builds interest]
+    Message: [Write the content that builds interest]
+    </interest>
+
+    <desire>
+    Reasoning: [Explain how this creates desire]
+    Message: [Write the content that creates desire]
+    </desire>
+
+    <action>
+    Reasoning: [Explain why this call-to-action is effective]
+    Message: [Write the clear and specific call-to-action]
+    </action>
+
+    4. After completing all four steps of the AIDA framework, provide a brief summary of how your message sequence aligns with the target audience and effectively promotes the product or service.
+
+    Remember to tailor each step to the specific characteristics and needs of your target audience, and ensure that your messages highlight the unique value proposition of your product or service.
+
+  expected_output: >
+    Present your final output in the following format:
+    <aida_framework>
+    [Insert your completed AIDA framework here, including all four steps with reasoning and messages]
+    </aida_framework>
+
+    <summary>
+    [Insert your brief summary here]
+    </summary>
+
+  agent: MarketMessageAgent
+
+gtm_specialist:
+  description: 
+  expected_output: 
+  agent: 
+
+bab_framework:
+  description: 
+  expected_output: 
+  agent: 
+
+pas_story_framework:
+  description: 
+  expected_output: 
+  agent: 
+
+stp:
+  description: 
+  expected_output: 
+  agent: 
+
+customer_journey_mapping:
+  description: 
+  expected_output: 
+  agent: 
+
+brand_archetypes_model:
+  description: 
+  expected_output: 
+  agent: 

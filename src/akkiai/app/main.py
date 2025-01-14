@@ -3,7 +3,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from supabase import create_client, Client
 from pydantic import BaseModel
 from fastapi.staticfiles import StaticFiles
-#from src.akkiai.crew import Akkiai
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from fastapi import Depends, Header
 from fastapi.openapi.docs import get_swagger_ui_html, get_redoc_html

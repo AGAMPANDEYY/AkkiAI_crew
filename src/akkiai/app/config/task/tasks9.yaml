@@ -1,0 +1,471 @@
+sequoia_capital_pitch_deck: 
+  description: >-
+    You are an Experienced Startup Consultant and expert with years of experience in analyzing and creating strategies for startups tasked with creating a comprehensive pitch deck for a startup using the Sequoia Capital Pitch Deck Format. You will use the provided information to create the best accelerator pitch deck possible.
+    You will be given the following information about the startup:
+    <startup_info> {{STARTUP_INFO}}</startup_info>
+    Carefully analyze all the provided data to gain a full understanding of the startup's business, unique selling propositions (USPs), and messaging styles.
+    Background Context:
+    The deck will be used primarily to apply for accelerator programs and Venture Capitalists.
+    The presentation style should reflect the startup's unique position as a product innovator.
+    When creating this pitch deck, think carefully about how to best present the information for each slide. 
+    Consider the target audience and how to effectively communicate the startup's value proposition. Use your 
+    expertise to create a compelling narrative that flows logically from one slide to the next.
+    After completing the deck, review it to ensure all required elements are included and that the overall 
+    presentation is cohesive and impactful.
+  expected_output: >- 
+    <pitch_deck>
+    <Slide_1>
+    [Your points and details]
+    [Reasoning behind it]
+    </Slide_1>
+    <Slide_2>
+    [Your points and any details]
+    [Reasoning behind it]
+    </Slide_2>
+    [Continue this format for all slides]
+    </pitch_deck>
+    Present your final pitch deck within <pitch_deck> tags, with each slide enclosed in its own numbered slide tags (e.g., <Slide_1>, <Slide_2>, etc.). 
+    Include your reasoning for the content and structure of each slide.
+    
+    Focus on creating a narrative that resonates with the audience and clearly communicates the startup's value. Include the following details in your deck, at a minimum:
+
+    1. Company Purpose
+    2. Problem
+    3. Solution
+    4. Market Opportunity
+    5. Product
+    6. Business Model
+    7. Go-to-Market Strategy
+    8. Traction
+    9. Team
+    10. Financials
+    11. Competition
+    12. Vision
+    13. Ask
+
+    For each slide, provide a complete, comprehensive, and concise answer. Include specific examples and data points where possible, drawing from the provided information.
+
+    Special Instructions:
+    - Include data visualizations where possible
+    - Maintain consistent visual language throughout
+    - Include space for presenter notes
+    - Ensure mobile responsiveness
+    - Create alternate versions of complex slides for different audience technical levels
+
+    Additional Requirements:
+    - Include transition slides between major sections
+    - Provide alternative layouts for key slides
+    - Include placeholder for custom demo screenshots
+    - Create versions with and without detailed technical specifications
+    - Include editable charts and graphs
+    - Provide both light and dark theme options
+  agent: SequoiaCapitalPitchDeckAgent
+  inputs: 
+   startup_info: "{{STARTUP_INFO}}"
+
+
+guy_kawasaki102030_rule: 
+  description: >-
+    You are an Experienced Startup Consultant with years of expertise in analyzing and creating strategies for startups. Your task is to create a comprehensive pitch deck for a startup using Guy Kawasaki's 10-20-30 rule. This pitch deck will be primarily used to apply for accelerator programs and attract Venture Capitalists.
+
+    First, carefully review the following information about the startup:
+
+    <business_details>
+    {{business_details}}
+    </business_details>
+
+    <product_description>
+    {{business_description}}
+    </product_description>
+
+    <target_audience>
+    {{TARGET_AUDIENCE}}
+    </target_audience>
+
+    <customer_persona>
+    {{CUSTOMER_PERSONA}}
+    </customer_persona>
+
+    <value_proposition>
+    {{VALUE_PROPOSITION}}
+    </value_proposition>
+
+    <messaging>
+    {{MESSAGING}}
+    </messaging>
+
+    Your goal is to create the best possible accelerator pitch deck using this information. Follow these guidelines:
+
+    1. Create 10 slides that can be presented in 20 minutes.
+    2. Use a 30-point font size to ensure readability.
+    3. Focus on creating a narrative that resonates with the audience and clearly communicates the startup's value.
+    4. Include data visualizations where possible.
+    5. Maintain consistent visual language throughout.
+    6. Include space for presenter notes.
+    7. Ensure mobile responsiveness.
+    8. Create alternate versions of complex slides for different audience technical levels.
+    9. Include transition slides between major sections.
+    10. Provide alternative layouts for key slides.
+    11. Include placeholders for custom demo screenshots.
+    12. Create versions with and without detailed technical specifications.
+    13. Include editable charts and graphs.
+    14. Provide both light and dark theme options.
+
+    Before creating the pitch deck, wrap your analysis inside <pitch_deck_planning> tags. In this section:
+    1. Summarize key points from each section of the input (business details, product description, target audience, customer persona, value proposition, and messaging).
+    2. Brainstorm potential unique selling propositions (USPs) based on the information provided.
+    3. Outline a narrative flow for the pitch deck.
+    4. Consider how to visualize key data points for each slide.
+    5. Plan each slide, considering the startup's USPs, messaging styles, and how to effectively communicate the value proposition.
+
+    After your analysis, present your final pitch deck within <pitch_deck> tags, with each slide enclosed in its own numbered slide tags (e.g., <Slide_1>, <Slide_2>, etc.). Include your reasoning for the content and structure of each slide.
+  expected_output: >-
+   <pitch_deck_planning>
+    [Your detailed analysis and planning for each slide]
+    </pitch_deck_planning>
+
+    <pitch_deck>
+    <Slide_1>
+    [Content for Slide 1]
+    [Reasoning for Slide 1]
+    </Slide_1>
+    <Slide_2>
+    [Content for Slide 2]
+    [Reasoning for Slide 2]
+    </Slide_2>
+    [Continue this format for all 10 slides]
+    </pitch_deck>
+
+    Remember to review your final pitch deck to ensure all required elements are included and that the overall presentation is cohesive and impactful.
+  agent: GuyKawasaki102030RuleAgent
+  inputs: 
+    business_details: '{{business_details}}'
+    business_description: '{{business_description}}'
+    target_audience: '{{TARGET_AUDIENCE}}'
+    customer_persona: '{{CUSTOMER_PERSONA}}'
+    value_proposition: '{{VALUE_PROPOSITION}}'
+    messaging: '{{MESSAGING}}'
+  
+venture_capital_method: 
+  description: >-
+    You are an experienced Startup Consultant with extensive expertise in analyzing and creating strategies for startups. Your task is to create a comprehensive pitch deck for a startup using the Venture Capital Method (VC Method). This deck will be primarily used for applying to accelerator programs and pitching to Venture Capitalists.
+
+    First, carefully analyze the following information about the startup:
+
+    <startup_info>
+    {{STARTUP_INFO}}
+    </startup_info>
+
+    Your goal is to create the best possible accelerator pitch deck based on this information. Before creating each slide, wrap your slide planning process in <slide_planning> tags. Consider the startup's business model, unique selling propositions (USPs), and messaging style. For each slide:
+
+    a) List key points from the startup info relevant to the slide topic
+    b) Brainstorm potential data visualizations
+    c) Consider how this slide connects to the previous and next slides
+
+    It's okay for this section to be quite long.
+
+    Create a complete pitch deck using the following structure:
+
+    1. Introduction
+    2. Problem
+    3. Solution
+    4. Market Opportunity
+    5. Revenue Model
+    6. Financial Projections
+    7. Comparable Companies (Exit Multiples)
+    8. Team
+    9. Risk and Mitigation
+    10. Ask and Use of Funds
+    11. Projected Returns for Investors (VC Method Focus)
+
+    For each slide:
+    1. Analyze the information and determine the most important points to include.
+    2. Consider how to present the information effectively, including potential data visualizations.
+    3. Ensure the content aligns with the overall narrative and flows logically from the previous slide.
+    4. Include specific examples and data points from the provided startup information where possible.
+
+    Special Instructions:
+    - Include data visualizations where applicable
+    - Maintain consistent visual language throughout the deck
+    - Include brief presenter notes for each slide
+    - Create alternate versions of complex slides for different audience technical levels
+
+    Additional Requirements:
+    - Add transition slides between major sections
+    - Provide alternative layouts for key slides
+    - Include placeholders for custom demo screenshots
+    - Create versions with and without detailed technical specifications
+    - Include editable charts and graphs
+    - Provide both light and dark theme options
+
+    Present your final pitch deck within <pitch_deck> tags, with each slide enclosed in its own numbered slide tags (e.g., <Slide_1>, <Slide_2>, etc.). Include your reasoning for the content and structure of each slide.
+  expected_output: 
+    <Slide_1>
+    <slide_planning>
+    [Your thought process for this slide]
+    </slide_planning>
+
+    <content>
+    [Slide content]
+    </content>
+
+    <reasoning>
+    [Explanation for the chosen content and structure]
+    </reasoning>
+
+    <presenter_notes>
+    [Brief notes for the presenter]
+    </presenter_notes>
+    </Slide_1>
+
+    After completing the deck, review it to ensure all required elements are included and that the overall presentation is cohesive and impactful. The presentation style should reflect the startup's unique position as a product innovator while emphasizing its financial potential, scalability, and the investor's exit opportunity.
+  agent: VentureCapitalMethodAgent 
+  inputs: 
+    startup_info: '{{STARTUP_INFO}}'
+  
+chicago_method_agent: 
+  description: >- 
+    You are an experienced startup consultant tasked with creating a comprehensive pitch deck for a startup using the First Chicago Method. This method is a valuation approach that combines multiple scenarios to calculate a company's expected value, considering three outcomes best-case, base-case, and worst-case, weighted based on probabilities.
+    First, carefully analyze the following information about the startup:
+
+    <startup_info>
+    {{STARTUP_INFO}}
+    </startup_info>
+
+    Your task is to create a complete accelerator pitch deck based on this information. Before creating each slide, wrap your slide planning process in <slide_planning> tags. In this planning process:
+    - List the key points from the startup info relevant to the slide
+    - Create a brief outline of the slide content
+    - Consider how this slide connects to the overall narrative of the pitch
+
+    Then, create the slide content and provide reasoning for your choices.
+
+    Create the following slides, at a minimum:
+    1. Introduction
+    2. Problem
+    3. Solution
+    4. Market Opportunity
+    5. Revenue Model
+    6. Financial Projections (Three Scenarios)
+    7. Comparable Companies (Multiples Valuation)
+    8. Team
+    9. Risk and Mitigation
+    10. Ask and Use of Funds
+    11. Weighted Valuation (First Chicago Focus)
+
+    For each slide:
+    - Provide comprehensive and concise content
+    - Include specific examples and data points from the startup info
+    - Create a narrative that flows logically from one slide to the next
+    - Consider the target audience (accelerator programs and venture capitalists)
+    - Effectively communicate the startup's value proposition
+
+    Additional requirements:
+    - Include data visualizations where possible
+    - Maintain consistent visual language throughout
+    - Include space for presenter notes
+    - Ensure mobile responsiveness
+    - Create alternate versions of complex slides for different audience technical levels
+    - Include transition slides between major sections
+    - Provide alternative layouts for key slides
+    - Include placeholder for custom demo screenshots
+    - Create versions with and without detailed technical specifications
+    - Include editable charts and graphs
+    - Provide both light and dark theme options
+
+    After completing the deck, review it to ensure all required elements are included and that the overall presentation is cohesive and impactful.
+
+    Begin by analyzing the startup info and creating the first slide.
+
+  expected_output: >- 
+    <pitch_deck>
+    <Slide_1>
+    [Slide content]
+    [Reasoning for content and structure]
+    </Slide_1>
+    <Slide_2>
+    [Slide content]
+    [Reasoning for content and structure]
+    </Slide_2>
+    [Continue this format for all slides]
+    </pitch_deck>
+  agent: FirstChicagoMethodAgent
+  inputs: 
+    startup_info: '{{STARTUP_INFO}}'
+
+risk_factor_summation_method: 
+  description: >- 
+    You are an experienced startup consultant tasked with creating a comprehensive pitch deck for a startup using the Risk-Factor Summation Method (RFS Method). This method adjusts a baseline valuation based on specific risk factors, each assigned a positive or negative value that is added to or subtracted from the base valuation.
+
+    First, carefully analyze the following information about the startup:
+
+    <startup_info>
+    {{STARTUP_INFO}}
+    </startup_info>
+
+    Your task is to create a complete accelerator pitch deck based on this information. For each slide, follow this process:
+
+    1. Preparation: Use <slide_preparation> tags to:
+    - List key points from the startup info relevant to the slide
+    - Create a brief outline of the slide content
+    - Consider how this slide connects to the overall narrative of the pitch
+    - Brainstorm potential data visualizations for the slide
+    - Suggest alternative layouts for the slide
+
+    2. Creation: Use <slide> tags to:
+    - Provide the slide content
+    - Explain your reasoning for the content and structure
+
+    Create the following slides, at a minimum:
+
+    1. Introduction
+
+    2. Problem
+
+    3. Solution
+
+    4. Market Opportunity
+
+    5. Revenue Model
+
+    6. Risk Factors
+
+    7. Base Valuation and Adjustments
+
+    8. Traction
+
+    9. Team
+
+    10. Ask and Use of Funds
+
+    11. Mitigation Strategies
+
+    For each slide:
+    - Provide comprehensive and concise content
+    - Include specific examples and data points from the startup info
+    - Create a narrative that flows logically from one slide to the next
+    - Consider the target audience (accelerator programs and venture capitalists)
+    - Effectively communicate the startup's value proposition
+
+    Additional requirements:
+    - Include data visualizations where possible (describe them in words)
+    - Maintain consistent visual language throughout
+    - Include space for presenter notes
+    - Ensure mobile responsiveness (describe how this would be achieved)
+    - Create alternate versions of complex slides for different audience technical levels
+    - Include transition slides between major sections
+    - Provide alternative layouts for key slides
+    - Include placeholder for custom demo screenshots
+    - Create versions with and without detailed technical specifications
+    - Include editable charts and graphs (describe them in words)
+    - Provide both light and dark theme options (describe how they would differ)
+
+    Before creating the Risk Factors and Base Valuation slides, use <risk_analysis> tags to brainstorm potential risk factors and their impact on valuation.
+
+    For the Team slide, explicitly link team members' skills to risk mitigation.
+
+    After completing the deck, review it to ensure all required elements are included and that the overall presentation is cohesive and impactful.
+
+    Begin by analyzing the startup info and creating the first slide.
+  expected_output: >- 
+    <pitch_deck>
+    <slide_1>
+    <slide_preparation>
+    [Preparation process]
+    </slide_preparation>
+    <slide>
+    <content>
+    [Slide content]
+    </content>
+    <reasoning>
+    [Reasoning for content and structure]
+    </reasoning>
+    </slide>
+    </slide_1>
+
+    [Continue this format for all slides]
+    </pitch_deck>
+  agent: RiskFactorSummationMethodAgent
+  inputs: 
+    startup_info: '{{STARTUP_INFO}}'
+  
+ycombinator_template: 
+  description: >- 
+    {STARTUP_INFO}}
+
+    You are an experienced startup consultant tasked with creating a comprehensive pitch deck for a startup using the Y Combinator format. This format is designed to be simple and concise, focusing on clarity and essential details to quickly convey your startup's value.
+
+    First, carefully analyze the above information about the startup.
+
+    Your task is to create a complete accelerator pitch deck based on this information. The deck will primarily be used to apply for accelerator programs like Y Combinator, 500 Startups, and TechStars, as well as to pitch to venture capitalists (like Peak XV Ventures) for funding.
+
+    For each slide, follow this two-step process:
+
+    1. Planning: Wrap the work inside <slide_planning> tags to:
+    - List key points from the startup info relevant to the slide
+    - Create a brief outline of the slide content
+    - Consider how this slide connects to the overall narrative of the pitch
+    - Brainstorm potential data visualizations for the slide
+    - Suggest alternative layouts for the slide
+    - Consider the target audience and potential objections or questions they might have
+    - Explain how this slide contributes to the overall narrative arc of the pitch
+
+    2. Creation: Wrap the work inside <slide> tags to:
+    - Provide the slide content
+    - Explain your reasoning for the content and structure
+
+    Create the following slides, at a minimum:
+
+    1. Problem
+    2. Solution
+    3. Why Now?
+    4. Market Size
+    5. Product
+    6. Traction
+    7. Team
+    8. Business Model
+    9. Competition
+    10. Ask and Use of Funds
+
+    For each slide, provide a complete, comprehensive, and concise answer. Include specific examples and data points where possible, drawing from the provided startup information.
+
+    Special Instructions:
+    - Include data visualizations where applicable
+    - Maintain consistent visual language throughout
+    - Include space for presenter notes
+    - Ensure mobile responsiveness
+    - Create alternate versions of complex slides for different audience technical levels
+
+    Additional Requirements:
+    - Include transition slides between major sections
+    - Provide alternative layouts for key slides
+    - Include placeholder for custom demo screenshots
+    - Create versions with and without detailed technical specifications
+    - Include editable charts and graphs
+    - Provide both light and dark theme options
+
+    The presentation style should reflect the startup's unique position as a product innovator. When creating this pitch deck, carefully consider how to best present the information for each slide. Keep in mind the target audience and focus on effectively communicating the startup's value proposition. Use your expertise to create a compelling narrative that flows logically from one slide to the next.
+
+    After completing the deck, review it to ensure all required elements are included and that the overall presentation is cohesive and impactful.
+  expected_output: >- 
+    <pitch_deck>
+    <slide_1>
+    <slide_planning>
+    [Planning process]
+    </slide_planning>
+    <slide>
+    <content>
+    [Slide content]
+    </content>
+    <reasoning>
+    [Reasoning for content and structure]
+    </reasoning>
+    </slide>
+    </slide_1>
+
+    [Continue this format for all slides]
+    </pitch_deck>
+
+    Remember to adhere to the Y Combinator format's emphasis on simplicity and essential details throughout the pitch deck creation process.
+  agent: YCombinatorTemplateAgent
+  inputs: 
+    startup_info: '{{STARTUP_INFO}}'

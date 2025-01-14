@@ -14,8 +14,8 @@ class crew1():
     Target Audience Specialist 
     """
     
-    agents_config = 'config/agents/agents1.yaml'
-    tasks_config = 'config/tasks/tasks1.yaml'
+    agents_config = 'config/agent/agents1.yaml'
+    tasks_config = 'config/task/tasks1.yaml'
     claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
     
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
@@ -97,8 +97,8 @@ class crew2():
     """
     Customer Persona Journey Crew
     """
-    agents_config = 'config/agents/agents2.yaml'
-    tasks_config = 'config/tasks/tasks2.yaml'
+    agents_config = 'config/agent/agents2.yaml'
+    tasks_config = 'config/task/tasks2.yaml'
     claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
     
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
@@ -256,8 +256,8 @@ class crew3():
      USP,Value Proposition Analysis Mult-Agent
     '''
 
-    agents_config = 'config/agents/agents3.yaml'
-    tasks_config = 'config/tasks/tasks3.yaml'
+    agents_config = 'config/agent/agents3.yaml'
+    tasks_config = 'config/task/tasks3.yaml'
     claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
 
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
@@ -411,8 +411,8 @@ class crew4():
     '''
 
     """Akkiai crew"""
-    agents_config = 'config/agents/agents4.yaml'
-    tasks_config = 'config/tasks/tasks4.yaml'
+    agents_config = 'config/agent/agents4.yaml'
+    tasks_config = 'config/task/tasks4.yaml'
     claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
 
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
@@ -542,18 +542,18 @@ class crew4():
     
     #task2
     @task
-    def MarketMessageAgent_task(self) -> Task:
+    def BrandMessageSpecialistAgent_task(self) -> Task:
         return Task(
-            config=self.tasks_config['market_message_aida'],
+            config=self.tasks_config['brand_message_specialist'],
             output_pydantic=Task42Pydantic,
             callback=self.task_output_callback
         )
     
     #task3
     @task
-    def PlatformSlecetionAgent_task(self) -> Task:
+    def GTMSpecialistAgent_task(self) -> Task:
         return Task(
-            config=self.tasks_config['platform_selection'],
+            config=self.tasks_config['gtm_specialist'],
             output_pydantic=Task43Pydantic,
             callback=self.task_output_callback
         )
@@ -620,8 +620,8 @@ class crew5():
     '''
 
     """Akkiai crew"""
-    agents_config = 'config/agents/agents5.yaml'
-    tasks_config = 'config/tasks/tasks5.yaml'
+    agents_config = 'config/agent/agents5.yaml'
+    tasks_config = 'config/task/tasks5.yaml'
     claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
 
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
@@ -757,8 +757,8 @@ class crew6():
     '''
 
     """Akkiai crew"""
-    agents_config = 'config/agents/agents6.yaml'
-    tasks_config = 'config/tasks/tasks6.yaml'
+    agents_config = 'config/agent/agents6.yaml'
+    tasks_config = 'config/task/tasks6.yaml'
     claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
 
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
@@ -948,8 +948,8 @@ class crew7():
     '''
 
     """Akkiai crew"""
-    agents_config = 'config/agents/agents7.yaml'
-    tasks_config = 'config/tasks/tasks7.yaml'
+    agents_config = 'config/agent/agents7.yaml'
+    tasks_config = 'config/task/tasks7.yaml'
     claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
 
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
@@ -1084,8 +1084,8 @@ class crew8():
     YC Application prompt, VC Feedback Prompt, Revised Application, Tech Titan Feedback and Application Prompt
     '''
 
-    agents_config = 'config/agents/agents8.yaml'
-    tasks_config = 'config/tasks/tasks8.yaml'
+    agents_config = 'config/agent/agents8.yaml'
+    tasks_config = 'config/task/tasks8.yaml'
     claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
 
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
@@ -1190,7 +1190,7 @@ class crew8():
     @task
     def StartupSpecialistAgent_task(self) -> Task:
         return Task(
-            config=self.tasks_config['startup_specialist_agent'],
+            config=self.tasks_config['startup_specialist'],
             output_pydantic=Task43Pydantic,
             callback=self.task_output_callback
         )
@@ -1221,8 +1221,8 @@ class crew9():
     '''
 
     """Akkiai crew"""
-    agents_config = 'config/agents/agents9.yaml'
-    tasks_config = 'config/tasks/tasks9.yaml'
+    agents_config = 'config/agent/agents9.yaml'
+    tasks_config = 'config/task/tasks9.yaml'
     claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
 
     def task_output_callback(self, task_output: TaskOutput, task_input=None):

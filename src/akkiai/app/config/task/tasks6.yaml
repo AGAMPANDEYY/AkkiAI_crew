@@ -1,0 +1,46 @@
+tam_sam_som: 
+  description:
+  expected_output:
+  agent:
+  inputs:
+
+
+future_competitors_analysis: 
+  description:
+  expected_output:
+  agent:
+  inputs:
+  
+bottom_up_analysis: 
+  description:
+  expected_output:
+  agent:
+  inputs:
+  
+strategic_group_analysis: 
+  description:
+  expected_output:
+  agent:
+  inputs:
+
+  
+porters_five_forces: 
+  description:
+  expected_output:
+  agent:
+  inputs:
+
+
+swot_analysis: 
+  description:
+  expected_output:
+  agent:
+  inputs:
+  
+top_down_analysis: 
+  description:
+  expected_output:
+  agent:
+  inputs:
+
+  

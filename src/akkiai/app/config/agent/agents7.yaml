@@ -1,0 +1,23 @@
+LeanCanvasMVPAgent:
+  role: CanvasAgent
+  goal: CanvasAgent
+  backstory: CanvasAgent
+  memory: False
+
+RoadmapMVPAgent:
+  role: CanvasAgent
+  goal: CanvasAgent
+  backstory: CanvasAgent
+  memory: False
+
+PRDTemplateAgent:
+  role: CanvasAgent
+  goal: CanvasAgent
+  backstory: CanvasAgent
+  memory: False
+
+TechStackFrameworkAgent:
+  role: CanvasAgent
+  goal: CanvasAgent
+  backstory: CanvasAgent
+  memory: False
