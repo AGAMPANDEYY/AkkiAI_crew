@@ -172,7 +172,6 @@ class Task92Pydantic(BaseModel):
 class SlidesPlanningPydantic(BaseModel):
     slide_planning: str
     content: str
-    reasoning: str
     presenter_notes: str
 
 class Task93Pydantic(BaseModel):
@@ -181,10 +180,43 @@ class Task93Pydantic(BaseModel):
 class Task94Pydantic(BaseModel):
     pitch_deck: Dict[str,SlidesPydantic]
 
+class SlidesPydanticRiskSummation(BaseModel):
+    slide_preparation: str 
+    content: str
+
+class Slides(BaseModel):
+    Slide_1: SlidesPydanticRiskSummation
+    Slide_2: SlidesPydanticRiskSummation
+    Slide_3: SlidesPydanticRiskSummation
+    Slide_4: SlidesPydanticRiskSummation
+    Slide_5: SlidesPydanticRiskSummation
+    Slide_6: SlidesPydanticRiskSummation
+    Slide_7: SlidesPydanticRiskSummation
+    Slide_8: SlidesPydanticRiskSummation
+    Slide_9: SlidesPydanticRiskSummation
+    Slide_10: SlidesPydanticRiskSummation
+    Slide_11: SlidesPydanticRiskSummation
+    
 class Task95Pydantic(BaseModel):
-    pitch_deck: Dict[str,SlidesPydantic]
+    pitch_deck: Slides
+
+class SlidesPlanningPydanticYCDeck(BaseModel):
+    slide_planning: str
+    content: str
+
+class SlidesYC(BaseModel):
+    Slide_1: SlidesPlanningPydanticYCDeck
+    Slide_2: SlidesPlanningPydanticYCDeck
+    Slide_3: SlidesPlanningPydanticYCDeck
+    Slide_4: SlidesPlanningPydanticYCDeck
+    Slide_5: SlidesPlanningPydanticYCDeck
+    Slide_6: SlidesPlanningPydanticYCDeck
+    Slide_7: SlidesPlanningPydanticYCDeck
+    Slide_8: SlidesPlanningPydanticYCDeck
+    Slide_9: SlidesPlanningPydanticYCDeck
+    Slide_10: SlidesPlanningPydanticYCDeck
 
 class Task96Pydantic(BaseModel):
-    pitch_deck: Dict[str,SlidesPlanningPydantic]
+    pitch_deck: SlidesYC
     
 

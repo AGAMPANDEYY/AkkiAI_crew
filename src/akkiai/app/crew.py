@@ -1221,7 +1221,7 @@ class crew9():
     '''
     agents_config = 'config/agent/agents9.yaml'
     tasks_config = 'config/task/tasks9.yaml'
-    claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
+    claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307", max_tokens=4096)
 
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
         """
@@ -1274,7 +1274,7 @@ class crew9():
         return Agent(
             config=self.agents_config['SequoiaCapitalPitchDeckAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #verbose=True
         )
     #Agent2
     @agent
@@ -1282,7 +1282,7 @@ class crew9():
         return Agent(
             config=self.agents_config['GuyKawasaki102030RuleAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #verbose=True
         )
     
     #Agent3
@@ -1291,7 +1291,7 @@ class crew9():
         return Agent(
             config=self.agents_config['VentureCapitalMethodAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #verbose=True
         )
     
     #Agent4
@@ -1300,7 +1300,7 @@ class crew9():
         return Agent(
             config=self.agents_config['FirstChicagoMethodAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #verbose=True
         )
     
     #Agent5
@@ -1309,7 +1309,7 @@ class crew9():
         return Agent(
             config=self.agents_config['RiskFactorSummationMethodAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #verbose=True
         )
     
     #Agent6
@@ -1318,7 +1318,7 @@ class crew9():
         return Agent(
             config=self.agents_config['YCombinatorTemplateAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #verbose=True
         )
 
     #task1

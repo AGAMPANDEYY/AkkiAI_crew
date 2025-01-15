@@ -47,23 +47,24 @@ sequoia_capital_pitch_deck:
       - Create versions with and without detailed technical specifications
       - Include editable charts and graphs
       - Provide both light and dark theme options
-      Present your final pitch deck within pitch_deck key, with each slide enclosed in its own numbered slide keys (e.g., Slide_1, Slide_2, etc.). 
+      Present your final pitch deck within <pitch_deck> tags, with each slide enclosed in its own numbered slide tags (e.g., <Slide_1>, <Slide_2>, etc.). 
       Include your reasoning for the content and structure of each slide.
   expected_output: >- 
-    Please generate a JSON file that follows the exact structure given in the pydantic model to you:
-    Keep exactly 13 slides.
-    The format should be like this but do not include XML tags instead the keys in JSON:
+    Please generate a JSON object that follows this exact structure:
+    {
+      "pitch_deck": {
+        "Slide_1": {
+         "contents": "contents related to the slide"
+          }
+        },
+        "Slide_2": {
+          // Same structure as above
+        }
+        // Continue for all slides
+      }
+    }
 
-      <pitch_deck>
-      <Slide_1>
-      [Your points and details]
-      </Slide_1>
-      <Slide_2>
-      [Your points and any details]
-      </Slide_2>
-      [Continue this format for all slides]
-      </pitch_deck>
-
+    Requirements:
     1. Each slide must include:
       - A clear, concise title
       - Main points (2-4 bullet points)
@@ -75,7 +76,7 @@ sequoia_capital_pitch_deck:
 
   agent: SequoiaCapitalPitchDeckAgent
   inputs: 
-   startup_info: '{{STARTUP_INFO}}'
+   startup_info: "{STARTUP_INFO}"
 
 
 guy_kawasaki102030_rule: 
@@ -134,26 +135,53 @@ guy_kawasaki102030_rule:
 
     After your analysis, present your final pitch deck within <pitch_deck> tags, with each slide enclosed in its own numbered slide tags (e.g., <Slide_1>, <Slide_2>, etc.). Include your reasoning for the content and structure of each slide.
   expected_output: >-
-    Please generate a JSON object that follows the exact structure given in Pydantic model to you:
-    Keep exactly 10 slides.
-    The format should be like this but do not include XML tags instead the keys in JSON:
+    Please generate a JSON object that follows this exact structure:
+    {
+      "pitch_deck_planning": {
+        "overview": "[High-level strategy for the entire deck]",
+        "target_audience": "[Description of intended audience]",
+        "key_objectives": ["objective1", "objective2", "..."],
+        "narrative_flow": "[How the slides connect and tell a story]",
+        "design_guidelines": "[Visual and formatting recommendations]"
+      },
+      "pitch_deck": {
+        "Slide_1": {
+          "content": "[Main content of the slide]",
+        },
+        "Slide_2": {
+          "content": "[Main content of the slide]",
+        }
+        // Continue for all slides
+      }
+    }
 
-      <pitch_deck>
-      <Slide_1>
-      [Your points and details]
-      </Slide_1>
-      <Slide_2>
-      [Your points and any details]
-      </Slide_2>
-      [Continue this format for all 10 slides]
-      </pitch_deck>
-
+    Requirements:
     1. The pitch_deck_planning section must provide comprehensive strategic guidance for the entire presentation
     2. Each slide in the pitch_deck section must follow the exact structure shown above
     3. Content should be detailed and specific, not placeholder text
     4. Use proper JSON formatting throughout
     5. Include all slides (Slide_1 through Slide_10)
 
+    Example structure:
+    {
+      "pitch_deck_planning": {
+        "overview": "This pitch deck aims to secure Series A funding by demonstrating our product-market fit and growth trajectory",
+        "target_audience": "Venture capital firms with expertise in B2B SaaS",
+        "key_objectives": [
+          "Demonstrate market opportunity",
+          "Showcase product differentiation",
+          "Present clear growth strategy"
+        ],
+        "narrative_flow": "Begin with problem statement, transition to our solution, demonstrate traction, and end with clear ask",
+        "design_guidelines": "Use company colors (blue #1A2B3C, gray #4D5E6F), maintain consistent font hierarchy"
+      },
+      "pitch_deck": {
+        "Slide_1": {
+          "content": "We help enterprises protect their digital assets with AI-powered threat detection...",
+        }
+        // Additional slides follow same format
+      }
+    }
   agent: GuyKawasaki102030RuleAgent
   inputs: 
     business_details: '{{BUSINESS_DETAILS}}'
@@ -217,22 +245,20 @@ venture_capital_method:
 
     Present your final pitch deck within <pitch_deck> tags, with each slide enclosed in its own numbered slide tags (e.g., <Slide_1>, <Slide_2>, etc.). Include your reasoning for the content and structure of each slide.
   expected_output: >- 
-      Please generate a JSON file that follows the exact structure given in Pydantic model to you:
-      Keep exactly 11 slides.
-      The format should be like this but do not include XML tags instead the keys in JSON:
+      Please generate a JSON object that follows this exact structure for each slide:
+      {
+          "Slide_1": {
+            "slide_planning": "[Detailed thought process/strategy for this slide]",
+            "content": "[The main content that will appear on the slide]",
+            "presenter_notes": "[Concise bullet points or notes to guide the presenter]"
+          },
+          "Slide_2": {
+            // Same structure as above
+          }
+          // ... continue for all slides
+        }
 
-      <Slide_1>
-      <slide_planning>
-      [Your thought process for this slide]
-      </slide_planning>
-      <content>
-      [Slide content]
-      </content>
-      <presenter_notes>
-      [Brief notes for the presenter]
-      </presenter_notes>
-      </Slide_1>
-
+      Requirements:
       1. Each slide must have exactly these three fields: slide_planning, content, and presenter_notes
       2. The slide_planning should describe the strategy and key points
       3. The content should be the actual text/elements that will appear on the slide
@@ -240,7 +266,14 @@ venture_capital_method:
       5. Maintain proper JSON formatting with no XML tags
       6. Use "Slide_1", "Slide_2", etc. as the exact key names
 
-
+      Example for one slide:
+      {
+          "Slide_1": {
+            "slide_planning": "Open with company mission and problem statement. Use compelling statistics about urban mobility challenges.",
+            "content": "Revolutionizing Urban Mobility\nWe're solving the last-mile transportation challenge in cities through sustainable micro-mobility solutions.",
+            "presenter_notes": "- Emphasize the growing urban mobility crisis\n- Highlight our unique approach\n- Mention key statistics about market size"
+          }
+        }
 
   agent: VentureCapitalMethodAgent 
   inputs: 
@@ -263,7 +296,7 @@ chicago_method_agent:
     Then, create the slide content and provide reasoning for your choices.
     Only give contents for 11 slides and not more than that.
 
-    Create the following slides, with only 11 slides.
+    Create the following slides, at a minimum:
     1. Introduction
     2. Problem
     3. Solution
@@ -301,30 +334,32 @@ chicago_method_agent:
     Begin by analyzing the startup info and creating the first slide.
 
   expected_output: >- 
-    Please generate a JSON file that follows the exact structure given in Pydantic model to you:
-    Generate and be concise only 11 slides.
-
-    
-    The format should be like this but do not include XML tags instead the keys in JSON:
-
-    <pitch_deck>
-    <Slide_1>
-    [Slide content]
-    [Reasoning for content and structure]
-    </Slide_1>
-    <Slide_2>
-    [Slide content]
-    [Reasoning for content and structure]
-    </Slide_2>
-    [Continue this format for all slides]
-    </pitch_deck>
-
+    Please generate a JSON object that follows this exact structure for each slide under the pitch_deck key:
+    {
+      "pitch_deck": {
+        "Slide_1": "[Slide content]",
+        "Slide_2": "[Slide content]",
+        "Slide_3": "[Slide content]",
+        "...": "..."
+      }
+    }
+    Requirements:
 
     1. pitch_deck must be the main key, and each slide should be nested under it with the format "Slide_X", where X is the slide number.
     2. The value for each "Slide_X" should contain the main content that will appear on the corresponding slide.
     3. Ensure that there are no additional markup tags (e.g., HTML, XML).
     4. Maintain proper JSON formatting with no extra elements or unnecessary details.
     5. Each slide should correspond to the structure outlined above, with "Slide_1", "Slide_2", etc., as the key names.
+    
+     Example for one slide:
+
+      {
+        "pitch_deck": {
+          "Slide_1": "Introduction to the company and its mission",
+          "Slide_2": "Overview of key products and their benefits",
+          "Slide_3": "Market analysis and growth opportunities"
+        }
+      }
 
   agent: FirstChicagoMethodAgent
   inputs: 
@@ -342,17 +377,18 @@ risk_factor_summation_method:
     {STARTUP_INFO}
     </startup_info>
 
-    Your task is to create a complete accelerator pitch deck based on this information. 
-    For each slide, follow this process:
+    Your task is to create a complete accelerator pitch deck based on this information. For each slide, follow this process:
 
-    1. Use slide_preparation key to:
+    1. Preparation: Use <slide_preparation> tags to:
     - List key points from the startup info relevant to the slide
     - Create a brief outline of the slide content
     - Consider how this slide connects to the overall narrative of the pitch
     - Brainstorm potential data visualizations for the slide
+    - Suggest alternative layouts for the slide
 
-    2. Use content key to:
+    2. Creation: Use <slide> tags to:
     - Provide the slide content
+    - Explain your reasoning for the content and structure
 
     Create the following 11 slides only: 
 
@@ -371,6 +407,7 @@ risk_factor_summation_method:
     For each slide:
     - Provide comprehensive and concise content
     - Include specific examples and data points from the startup info
+    - Create a narrative that flows logically from one slide to the next
     - Consider the target audience (accelerator programs and venture capitalists)
     - Effectively communicate the startup's value proposition
 
@@ -378,55 +415,59 @@ risk_factor_summation_method:
     - Include data visualizations where possible (describe them in words)
     - Maintain consistent visual language throughout
     - Include space for presenter notes
+    - Ensure mobile responsiveness (describe how this would be achieved)
+    - Create alternate versions of complex slides for different audience technical levels
+    - Include transition slides between major sections
+    - Provide alternative layouts for key slides
     - Include placeholder for custom demo screenshots
+    - Create versions with and without detailed technical specifications
     - Include editable charts and graphs (describe them in words)
+    - Provide both light and dark theme options (describe how they would differ)
 
+    Before creating the Risk Factors and Base Valuation slides, use <risk_analysis> tags to brainstorm potential risk factors and their impact on valuation.
     For the Team slide, explicitly link team members' skills to risk mitigation.
     After completing the deck, review it to ensure all required elements are included and that the overall presentation is cohesive and impactful.
   expected_output: >- 
-    Please generate a JSON file that follows the exact structure given in Pydantic model to you:
-    Create exactly 11 slides and concise and relevant not lengthy.
-    The format should be like this but do not include XML tags instead the keys in JSON:
+    Please generate a JSON object that follows this structure for each slide in the pitch deck:
 
-      <pitch_deck>
-      <slide_1>
-      <slide_preparation>
-      [Preparation process]
-      </slide_preparation>
-      <slide>
-      <content>
-      [Slide content]
-      </content>
-      </slide>
-      </slide_1>
+    {
+      "pitch_deck": {
+        "Slide_1": {
+          "slide_preparation": "[Preparation process]",
+          "content": "[Slide content]"
+        },
+        "Slide_2": {
+          "slide_preparation": "[Preparation process]",
+          "content": "[Slide content]"
+        },
+        "...": "..."
+      }
+    }
+    Requirements:
 
     1. Use the exact key names "Slide_1", "Slide_2", etc., for each slide.
     2. Each slide must have two keys:
-        slide_preparation: Describes the preparation process for the slide.
-        content: Contains the main content for the slide.
-    3. Maintain proper JSON formatting and exclude any HTML or XML tags.
+    3. slide_preparation: Describes the preparation process for the slide.
+    4. content: Contains the main content for the slide.
+    5. Maintain proper JSON formatting and exclude any HTML or XML tags.
 
-   
   agent: RiskFactorSummationMethodAgent
   inputs: 
     startup_info: '{{STARTUP_INFO}}'
   
 ycombinator_template: 
   description: >- 
-    You are an experienced startup consultant tasked with creating a comprehensive pitch deck for a startup using the Y Combinator format. 
-    This format is designed to be simple and concise, focusing on clarity and essential details to quickly convey 
-    your startup's value.
-
     {STARTUP_INFO}
 
+    You are an experienced startup consultant tasked with creating a comprehensive pitch deck for a startup using the Y Combinator format. This format is designed to be simple and concise, focusing on clarity and essential details to quickly convey your startup's value.
+
     First, carefully analyze the above information about the startup.
-    Your task is to create a complete accelerator pitch deck based on this information. 
-    The deck will primarily be used to apply for accelerator programs like Y Combinator, 500 Startups, 
-    and TechStars, as well as to pitch to venture capitalists (like Peak XV Ventures) for funding.
+
+    Your task is to create a complete accelerator pitch deck based on this information. The deck will primarily be used to apply for accelerator programs like Y Combinator, 500 Startups, and TechStars, as well as to pitch to venture capitalists (like Peak XV Ventures) for funding.
 
     For each slide, follow this two-step process:
 
-    1. slide_planning key:
+    1. Planning: Wrap the work inside <slide_planning> tags to:
     - List key points from the startup info relevant to the slide
     - Create a brief outline of the slide content
     - Consider how this slide connects to the overall narrative of the pitch
@@ -435,8 +476,9 @@ ycombinator_template:
     - Consider the target audience and potential objections or questions they might have
     - Explain how this slide contributes to the overall narrative arc of the pitch
 
-    2. content key:
+    2. Creation: Wrap the work inside <slide> tags to:
     - Provide the slide content
+    - Explain your reasoning for the content and structure
 
     Create exactly 10 slides on the followig topics:
 
@@ -451,8 +493,7 @@ ycombinator_template:
     9. Competition
     10. Ask and Use of Funds
 
-    For each slide, provide a complete, comprehensive, and concise answer. 
-    Include specific examples and data points where possible, drawing from the provided startup information.
+    For each slide, provide a complete, comprehensive, and concise answer. Include specific examples and data points where possible, drawing from the provided startup information.
 
     Special Instructions:
     - Include data visualizations where applicable
@@ -469,29 +510,26 @@ ycombinator_template:
     - Include editable charts and graphs
     - Provide both light and dark theme options
 
-    The presentation style should reflect the startup's unique position as a product innovator. 
-    When creating this pitch deck, carefully consider how to best present the information for each slide.
-    Keep in mind the target audience and focus on effectively communicating the startup's value proposition.
-    Use your expertise to create a compelling narrative that flows logically 
-    from one slide to the next.
-    Remember to adhere to the Y Combinator format's emphasis on simplicity and essential details throughout the 
-    pitch deck creation process.
-    After completing the deck, review it to ensure all required elements are included and that the overall
-    presentation is cohesive and impactful.
+    The presentation style should reflect the startup's unique position as a product innovator. When creating this pitch deck, carefully consider how to best present the information for each slide. Keep in mind the target audience and focus on effectively communicating the startup's value proposition. Use your expertise to create a compelling narrative that flows logically from one slide to the next.
+    Remember to adhere to the Y Combinator format's emphasis on simplicity and essential details throughout the pitch deck creation process.
+    After completing the deck, review it to ensure all required elements are included and that the overall presentation is cohesive and impactful.
   expected_output: >- 
-    Please generate a JSON file that follows the exact structure given in Pydantic model to you:
-    Create exactly 10 slides.
-    The format should be like this but do not include XML tags instead the keys in JSON:
+    Please generate a JSON object that follows the Pydantic model for the 11 slides in the pitch deck, with the following structure:
 
-      <pitch_deck>
-      <slide_1>
-      <slide_planning>
-      [Planning process]
-      </slide_planning>
-      <content>
-      [Slide content]
-      </content>
-      </slide_1>
+    {
+      "pitch_deck": {
+        "Slide_1": {
+          "slide_planning": "[Planning process]",
+          "content": "[Slide content]"
+        },
+        "Slide_2": {
+          "slide_planning": "[Planning process]",
+          "content": "[Slide content]"
+        },
+        "...": "..."
+      }
+    }
+    Requirements:
 
     1. Use the exact key names "Slide_1", "Slide_2", etc., for each slide.
     2. Each slide should have two keys:
