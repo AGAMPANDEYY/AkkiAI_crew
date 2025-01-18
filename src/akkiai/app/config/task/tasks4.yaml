@@ -1,142 +1,603 @@
 brand_story:
   description: >
-    You are tasked with crafting a compelling brand story using the Story Brand Framework. This framework positions the target audience as the hero and the brand as the guide, solving their core problems and helping them achieve their goals.
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
+    You are an expert startup and marketing strategy consultant specializing in market entry strategies analysis. Your task is to help startups prepare compelling marketing strategies using the StoryBrand Framework created by Donald Miller. This framework uses storytelling elements to clarify a brand's message, positioning the customer as the hero and the product or service as the guide.
 
-    First, carefully read and analyze the following brand information:
+    Your goal is to analyze the startup information provided above  and create a marketing strategy based on the StoryBrand Framework. Follow these steps:
 
-    <brand_info>
-    
-    {{BRAND_INFO}}
-    
-    </brand_info>
+    1. Analyze the startup information using the StoryBrand Framework components:
+    a. The Customer as Hero
+    b. The Problem
+    c. The Brand as Guide
+    d. The Action Plan
 
-    Now, follow these steps to craft the brand story:
+    2. Provide a detailed analysis of each component.
 
-    1. Analyze the provided brand information, identifying key elements that align with each section of the Brand Story Framework:
-      - Hero (Target Audience)
-      - The Problem
-      - Your Brand as the Guide
-      - The Call to Action
-      - The Result (Success)
+    3. Create a final marketing strategy recommendation based on your analysis.
 
-    2. For each section of the framework, extract relevant details from the brand information and organize them according to the framework's structure.
+    Begin by analyzing the startup information and addressing each component of the StoryBrand Framework. Wrap your analysis inside <storybrand_analysis> tags to show your thought process and ensure a comprehensive approach. Consider the following questions for each component:
 
-    3. Craft a cohesive brand story that flows naturally from one section to the next, ensuring that:
-      - The target audience is positioned as the hero of the story
-      - The brand is presented as the guide that helps the hero overcome challenges
-      - The narrative focuses on how the brand helps the audience achieve success
+    <storybrand_analysis>
+    1. The Customer as Hero
+    - Who is the target customer?
+    - What are their aspirations and goals?
+    - Relevant quotes from startup info:
+    - Potential ideas:
 
-    4. Review your brand story to ensure it addresses all key points in the framework and effectively communicates the brand's value proposition.
+    2. The Problem
+    - What external challenges does the customer face?
+    - What internal struggles or frustrations do they experience?
+    - What philosophical or ethical dilemmas might they encounter?
+    - Relevant quotes from startup info:
+    - Potential ideas:
 
+    3. The Brand as Guide
+    - How does the startup's expertise address the customer's needs?
+    - How can the brand demonstrate empathy towards the customer?
+    - What unique plan or approach does the brand offer?
+    - Relevant quotes from startup info:
+    - Potential ideas:
 
-  expected_output: >
-    Provide your completed brand story in the following format:
+    4. The Action Plan
+    - What clear, actionable steps can guide the customer to success?
+    - Relevant quotes from startup info:
+    - Potential ideas:
 
-    <brand_story>
-    <hero>
-    [Describe the target audience, their characteristics, pain points, and aspirations]
-    </hero>
+    [Your detailed analysis goes here, addressing each component and question]
+    </storybrand_analysis>
+
+  expected_output: > 
+    <marketing_strategy>
+    <customer_hero>
+    [Describe how the customer is positioned as the hero]
+    </customer_hero>
 
     <problem>
-    [Outline the specific problem the audience faces, its impact, and potential consequences]
+    <external>[Describe external problem]</external>
+    <internal>[Describe internal problem]</internal>
+    <philosophical>[Describe philosophical problem]</philosophical>
     </problem>
 
-    <guide>
-    [Explain how the brand serves as a guide, its unique positioning, and the solution it offers]
-    </guide>
+    <brand_guide>
+    <expertise>[Showcase brand's expertise]</expertise>
+    <empathy>[Demonstrate empathy]</empathy>
+    <plan>[Offer a plan for success]</plan>
+    </brand_guide>
 
-    <call_to_action>
-    [Clearly state the desired action for the audience to take]
-    </call_to_action>
+    <action_plan>
+    <step1>[Describe first step]</step1>
+    <step2>[Describe second step]</step2>
+    <step3>[Describe third step]</step3>
+    <step4>[Optional fourth step if needed]</step4>
+    </action_plan>
+    </marketing_strategy>
 
-    <result>
-    [Describe the positive outcome and success the audience will experience]
-    </result>
-    </brand_story>
+  agent: BrandStoryAgent 
+    
 
-    Ensure that each section of your brand story is concise yet comprehensive, capturing the essence of the brand and its relationship with the target audience. Focus on creating a narrative that resonates with the audience and clearly communicates the brand's value.
-
-
-  agent: BrandStoryAgent
 
 brand_message_specialist:
   description: >
-    You are tasked with creating a message sequence using the AIDA (Attention, Interest, Desire, Action) framework for a specific product or service targeting a particular audience. Follow these steps carefully:
+    You are an expert startup and marketing strategy consultant specializing in market  strategy analysis. You are tasked with creating a message sequence using the AIDA (Attention, Interest, Desire, Action) framework for a specific product or service targeting a particular audience. Follow these steps carefully:
+    First, carefully review the following startup information:
 
-    1. First, review the information about your target audience:
-    <target_audience>
-    {{TARGET_AUDIENCE}}
-    </target_audience>
-
-    2. Next, familiarize yourself with the product or service you're promoting:
-    <product_description>
-    {{PRODUCT_DESCRIPTION}}
-    </product_description>
-
-    3. Now, create a message sequence using the AIDA framework. For each step, provide a brief explanation of your reasoning followed by the actual message content. Use the following structure:
-
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
+    Now, create a message sequence using the AIDA framework. For each step, provide a brief explanation of your reasoning followed by the actual message content. Use the following structure:
     <attention>
     Reasoning: [Explain why this will grab the audience's attention]
     Message: [Write the attention-grabbing headline or message]
     </attention>
-
     <interest>
     Reasoning: [Explain how this builds interest]
     Message: [Write the content that builds interest]
     </interest>
-
     <desire>
     Reasoning: [Explain how this creates desire]
     Message: [Write the content that creates desire]
     </desire>
-
     <action>
     Reasoning: [Explain why this call-to-action is effective]
     Message: [Write the clear and specific call-to-action]
     </action>
-
     4. After completing all four steps of the AIDA framework, provide a brief summary of how your message sequence aligns with the target audience and effectively promotes the product or service.
-
     Remember to tailor each step to the specific characteristics and needs of your target audience, and ensure that your messages highlight the unique value proposition of your product or service.
-
   expected_output: >
-    Present your final output in the following format:
     <aida_framework>
     [Insert your completed AIDA framework here, including all four steps with reasoning and messages]
     </aida_framework>
-
     <summary>
     [Insert your brief summary here]
     </summary>
-
-  agent: MarketMessageAgent
+  agent: BrandMessageSpecialistAgent
 
 gtm_specialist:
-  description: 
-  expected_output: 
-  agent: 
+  description: >
+   You are an expert startup and marketing strategy consultant specializing in market entry strategies analysis. Your task is to help startups prepare compelling marketing strategies using the Market Entry Strategy framework. The objective is to evaluate the best ways to establish a market presence while minimizing risk and maximizing returns.
+
+    First, carefully review the following startup information:
+
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
+
+    Based on this information, you will provide a comprehensive market entry strategy analysis. Follow these steps:
+
+    1. Market Research and Analysis
+    2. Define Target Market Segments
+    3. Choose the Mode of Entry
+    4. Develop Market Positioning Strategy
+    5. Develop Entry Marketing Plan
+    6. Risk Assessment and Mitigation
+    7. Define Key Performance Indicators (KPIs)
+    8. Develop Long-Term Strategy for Market Growth
+
+    For each step, wrap your thought process and considerations inside <strategic_thinking> tags before providing your recommendations. After completing all steps, compile your findings into a structured output.
+
+    Here's a detailed guide for each step:
+
+    1. Market Research and Analysis
+    Purpose: Understand the dynamics of the target market to ensure successful entry.
+    <strategic_thinking>
+    - Analyze demand, customer behavior, cultural factors, and competition
+    - Assess the regulatory environment (tax laws, tariffs, legal restrictions)
+    - Study economic factors (market growth, disposable income, consumer spending patterns)
+    - Evaluate the competitive landscape (key competitors, their strengths/weaknesses, market gaps)
+    - List at least three key considerations specific to the startup's context
+    - Identify potential challenges unique to this market entry
+    - Brainstorm three potential approaches to gathering market intelligence
+    </strategic_thinking>
+
+    2. Define Target Market Segments
+    Purpose: Identify the most promising market segments to target for entry.
+    <strategic_thinking>
+    - Segment the market based on demographics, psychographics, behavior, or geographics
+    - Prioritize high-potential segments that align with the startup's product or service
+    - Identify unmet needs or gaps in the market
+    - List three potential target segments and their characteristics
+    - For each segment, note one potential challenge in targeting them
+    - Brainstorm three unique ways to appeal to the most promising segment
+    </strategic_thinking>
+
+    3. Choose the Mode of Entry
+    Purpose: Select the most appropriate method to enter the new market.
+    <strategic_thinking>
+    Consider these options:
+    A. Exporting
+    B. Licensing
+    C. Franchising
+    D. Joint Ventures/Partnerships
+    E. Direct Investment (Wholly Owned Subsidiary)
+
+    For each option:
+    - List one major advantage and one major disadvantage
+    - Rate its suitability for the startup on a scale of 1-5
+    - Note any specific challenges or opportunities it presents for this startup
+
+    Evaluate the pros and cons of each option for the specific startup and market.
+    </strategic_thinking>
+
+    4. Develop Market Positioning Strategy
+    Purpose: Craft a unique position in the new market to differentiate from competitors.
+    <strategic_thinking>
+    - Determine how the product will fulfill the target market's needs
+    - Focus on unique selling propositions (USPs)
+    - Adjust brand message and marketing strategy to resonate with local preferences
+    - Brainstorm three potential positioning statements
+    - For each statement, note how it differentiates from competitors
+    - Identify any potential cultural sensitivities to consider in positioning
+    </strategic_thinking>
+
+    5. Develop Entry Marketing Plan
+    Purpose: Plan and execute effective marketing strategies to launch in the new market.
+    <strategic_thinking>
+    - Tailor marketing channels to the local context
+    - Localize promotional content
+    - Plan for building brand awareness
+    - Strategize leveraging early adopters and creating buzz
+    - List three innovative marketing tactics specific to this market
+    - For each tactic, note potential challenges and how to overcome them
+    - Brainstorm three ways to measure the effectiveness of the marketing plan
+    </strategic_thinking>
+
+    6. Risk Assessment and Mitigation
+    Purpose: Identify and mitigate the risks involved in market entry.
+    <strategic_thinking>
+    Consider:
+    - Political and regulatory risks
+    - Cultural risks
+    - Competitive risks
+    - Operational risks
+
+    For each risk category:
+    - Identify at least two specific risks
+    - Rate each risk on a scale of 1-5 for both likelihood and impact
+    - Propose a mitigation strategy for each identified risk
+    - Note any interdependencies between risks
+    </strategic_thinking>
+
+    7. Define Key Performance Indicators (KPIs)
+    Purpose: Set measurable objectives to track the success of the market entry.
+    <strategic_thinking>
+    Propose KPIs for:
+    - Sales targets
+    - Market share
+    - Brand recognition
+    - Customer satisfaction
+
+    For each KPI:
+    - Explain how it will be measured and tracked
+    - Set a specific, measurable target
+    - Identify potential challenges in measuring or achieving the KPI
+    - Brainstorm three ways to improve performance if the KPI target is not met
+    </strategic_thinking>
+
+    8. Develop Long-Term Strategy for Market Growth
+    Purpose: Plan for sustainable growth after the initial entry phase.
+    <strategic_thinking>
+    Consider:
+    - Scaling operations
+    - Expanding product offerings
+    - Adapting pricing strategy
+    - Exploring new geographic regions or market segments
+    - Continuous performance monitoring and strategy adjustment
+
+    For each consideration:
+    - Propose a specific long-term goal
+    - Identify potential obstacles to achieving this goal
+    - Brainstorm three strategies to overcome these obstacles
+    - Note how this aligns with the overall market entry strategy
+    </strategic_thinking>
+    
+    Ensure your analysis is comprehensive, tailored to the specific startup and its target market,
+    and provides actionable insights for successful market entry.
+  expected_output: >
+     <market_entry_strategy>
+      <market_analysis>
+      [Summary of market research and analysis]
+      </market_analysis>
+
+      <target_segments>
+      [Description of identified target market segments]
+      </target_segments>
+
+      <entry_mode>
+      [Recommended mode of entry with justification]
+      </entry_mode>
+
+      <positioning_strategy>
+      [Proposed market positioning strategy]
+      </positioning_strategy>
+
+      <marketing_plan>
+      [Key elements of the entry marketing plan]
+      </marketing_plan>
+
+      <risk_mitigation>
+      [Identified risks and proposed mitigation strategies]
+      </risk_mitigation>
+
+      <kpis>
+      [List of key performance indicators and measurement methods]
+      </kpis>
+
+      <growth_strategy>
+      [Long-term strategy for market growth]
+      </growth_strategy>
+
+      <conclusion>
+      [Summary of key recommendations and next steps]
+      </conclusion>
+      </market_entry_strategy>
+  agent: GTMSpecialistAgent
 
 bab_framework:
-  description: 
-  expected_output: 
-  agent: 
+  description: >
+    You are an expert startup and marketing strategy consultant specializing in market entry strategies analysis. Your task is to help startups prepare compelling marketing and branding strategies using the Before-After-Bridge (BAB) Framework. This framework is a powerful storytelling structure used in marketing and sales copy to highlight the transformation a product or service can bring to a customer's life.
+
+    Here's the startup information you need to analyze:
+
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
+
+    Before crafting the final BAB framework, analyze the startup information and consider each component of the framework. Conduct your analysis inside <startup_analysis> tags.
+
+    <startup_analysis>
+    1. Analyze the startup information:
+    - What is the product or service?
+    - Who is the target audience?
+    - What problem does it solve?
+    - What are the startup's unique selling points and competitive advantages?
+
+    2. Consider the 'Before' state:
+    - What are the main pain points or challenges faced by the target audience?
+    - How can these be described in a relatable way?
+    - Brainstorm at least 3 different ways to describe the 'Before' state.
+
+    3. Envision the 'After' state:
+    - What positive changes will the product or service bring?
+    - What specific benefits will the customer experience?
+    - Brainstorm at least 3 different ways to describe the 'After' state.
+
+    4. Determine the 'Bridge':
+    - How does the product or service facilitate the transformation?
+    - What key features enable this change?
+    - Brainstorm at least 3 different ways to describe the 'Bridge'.
+
+    5. Review your analysis:
+    - Have you addressed all key aspects of the BAB framework?
+    - Is the information specific and relevant to the startup's offering?
+    - Have you considered how the startup's unique selling points can be incorporated into each component?
+
+    6. Select the most compelling ideas:
+    - Choose the most impactful descriptions for each component of the BAB framework.
+    - Ensure they create a cohesive narrative when combined.
+    </startup_analysis>
+    Remember:
+    1. Each section should be concise yet impactful, using vivid and emotive language to create a strong connection with the audience.
+    2. Ensure that the 'Before' and 'After' states create a clear contrast, emphasizing the transformation.
+    3. In the 'Bridge' section, make the solution seem accessible and straightforward to implement.
+    4. Tailor the language and examples to the specific startup and its target audience.
+  expected_output: >
+    <bab_framework>
+    <before>
+    [Describe the customer's current situation or problem. Outline pain points, challenges, or frustrations. Paint a relatable picture that the audience can empathize with. Focus on the negatives and struggles they're facing.]
+    </before>
+
+    <after>
+    [Present the ideal, transformed state after using the product or service. Show the positive change or outcome. Focus on benefits and improvements in life or work. Highlight how the product or service helps achieve goals and makes life easier, happier, or more successful.]
+    </after>
+
+    <bridge>
+    [Show how the product or service bridges the gap between the Before and After states. Introduce it as the solution that helps the customer transition. Explain how it works and the specific benefits it provides. Make the solution seem easy, effective, and within reach.]
+    </bridge>
+    </bab_framework>
+  agent: BABFrameworkAgent
 
 pas_story_framework:
-  description: 
-  expected_output: 
-  agent: 
+  description:  >
+    You are an expert startup and marketing strategy consultant specializing in market entry strategies analysis. Your task is to help startups prepare compelling marketing and branding strategies using the PAS (Problem-Agitate-Solution) Storytelling Framework.
+
+    Here's the startup information to analyze:
+
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
+
+    Before creating the PAS framework, analyze the startup information provided above. Wrap your analysis inside <startup_analysis> tags, addressing the following points:
+
+    1. Summarize the key aspects of the startup (product/service, target market, unique value proposition)
+    2. List the main pain points or challenges faced by the target audience
+    3. Identify the emotional triggers associated with these pain points
+    4. Outline the key benefits and features of the startup's solution
+
+    This analysis will inform your PAS framework development.
+
+    After your analysis, create a PAS (Problem-Agitate-Solution) Storytelling Framework for the startup. This powerful technique engages and persuades an audience by identifying a problem, stirring emotions around that problem (agitation), and then presenting the solution that addresses the issue.
+
+    Follow these steps to create the PAS framework:
+
+    1. Problem:
+    - Identify and articulate a problem or pain point that the startup's target audience is facing.
+    - Define the main challenge or issue the audience experiences.
+    - Make the problem relatable to the audience's day-to-day life or business.
+    - Use clear, concise language to highlight the problem, ensuring it's immediate and pressing.
+
+    2. Agitate:
+    - Stir emotions around the problem to make it feel urgent and impactful.
+    - Highlight the negative consequences of not solving the problem.
+    - Use emotional language to amplify the pain, discomfort, or frustration the audience may be feeling.
+    - Create a sense of urgency that compels the audience to seek a solution.
+
+    3. Solution:
+    - Present the startup's product or service as the clear, effective solution to the problem.
+    - Offer a solution that directly addresses the problem and alleviates the emotional discomfort caused by the agitation phase.
+    - Show how the solution works, what benefits it provides, and why it's superior to other options.
+    - Focus on positive outcomes and the ease that the solution brings to the customer's life.
+  expected_output: >
+    <pas_framework>
+    <problem>
+    [Concise description of the problem]
+    </problem>
+    <agitate>
+    [Emotional amplification of the problem's consequences]
+    </agitate>
+    <solution>
+    [Clear presentation of the startup's solution and its benefits]
+    </solution>
+    </pas_framework>
+
+  agent: PASStoryFrameworkAgent
 
 stp:
-  description: 
-  expected_output: 
-  agent: 
+  description: >
+    You are an expert startup and marketing strategy consultant specializing in market entry strategies analysis. Your task is to help startups prepare compelling marketing and branding strategies using the STP Framework (Segmentation, Targeting, Positioning).
+
+    Here's the startup information to analyze:
+
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
+
+    Your goal is to analyze this information and provide a comprehensive STP strategy for the startup. Follow these steps:
+
+    1. Segmentation
+    Identify distinct groups within the market who have different needs, behaviors, or characteristics. Consider the following segmentation types:
+    - Demographic: Age, gender, income, education, etc.
+    - Geographic: Country, city, climate, etc.
+    - Psychographic: Lifestyles, values, attitudes, personality traits
+    - Behavioral: Purchasing behavior, usage patterns, brand loyalty
+    - Firmographic (for B2B): Company size, industry, other business characteristics
+
+    2. Targeting
+    Select which segments to focus on, based on their potential and alignment with the startup's objectives. Consider these targeting strategies:
+    - Undifferentiated Marketing: Focus on the entire market with a single product
+    - Differentiated Marketing: Develop different products/strategies for each segment
+    - Concentrated Marketing: Focus on a single, niche segment
+    - Micromarketing: Target individual customers or very small segments
+
+    Evaluate segments based on factors like size, growth potential, competition, and profitability.
+
+    3. Positioning
+    Define how to position the startup's product or brand in the minds of the target audience to differentiate it from competitors. Include:
+    - Value Proposition: Clear statement of benefits and why it's the best choice
+    - Differentiation: Unique attributes that set it apart from competitors
+    - Brand Messaging: Communication of unique qualities appealing to target segment
+    - Positioning Statement: Concise summary of brand's market position
+
+    For each step of the STP framework, use <stp_analysis> tags to show your thought process before providing your final recommendations. In your analysis:
+
+    1. For Segmentation:
+    - List potential segments for each segmentation type, numbering them as you go.
+    - Summarize key findings from this step.
+
+    2. For Targeting:
+    - Evaluate each identified segment against the factors mentioned (size, growth potential, competition, profitability).
+    - Summarize key findings and rationale for chosen segments.
+
+    3. For Positioning:
+    - Brainstorm multiple options for each element (value proposition, differentiation, brand messaging, positioning statement).
+    - Choose the best option for each and explain why.
+    - Summarize key findings from this step.
+  expected_output: >
+     <stp_strategy>
+      <segmentation>
+      [List identified market segments]
+      </segmentation>
+
+      <targeting>
+      [Describe selected target segments and rationale]
+      </targeting>
+
+      <positioning>
+      <value_proposition>[Value proposition statement]</value_proposition>
+      <differentiation>[Key differentiating factors]</differentiation>
+      <brand_messaging>[Core brand message]</brand_messaging>
+      <positioning_statement>[Concise positioning statement]</positioning_statement>
+      </positioning>
+      </stp_strategy>
+  agent: STPAgent
 
 customer_journey_mapping:
-  description: 
-  expected_output: 
-  agent: 
+  description: >
+    Here is the startup information:
+
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
+
+    You are an expert startup and marketing strategy consultant specializing in market entry strategies analysis. Your task is to help startups prepare compelling marketing strategies using the Customer Journey Mapping framework. This framework helps businesses understand the interactions, emotions, and pain points that customers experience from their first exposure to the brand through to post-purchase. The goal is to optimize each stage to improve customer satisfaction, retention, and overall brand loyalty.
+
+    Based on this information, you will create a comprehensive Customer Journey Map. Before providing your final output, break down your thought process for each step inside <step_analysis> tags. This will ensure a thorough and well-structured approach.
+
+    Follow these steps to create the Customer Journey Map:
+
+    1. Define Customer Personas
+    2. Map Customer Touchpoints
+    3. Understand Customer Emotions at Each Stage
+    4. Identify Pain Points and Challenges
+    5. Identify Motivations and Goals
+    6. Map the Customer Journey Stages
+    7. Define Key Metrics and KPIs
+    8. Create a Visual Customer Journey Map (describe the visual elements in text form)
+
+    For each step, first analyze the information in <step_analysis> tags, then provide your final output for that step in <step_output> tags.
+
+    In your <step_analysis> for each step:
+    - List out key information from the startup info relevant to this step
+    - For step 1, brainstorm multiple potential personas before choosing the most relevant ones
+    - For step 2, list all possible touchpoints and then organize them by journey stage
+    - For steps 3, 4, and 5, consider each journey stage separately
+
+    After completing all steps, summarize the benefits and limitations of Customer Journey Mapping for this specific startup in <summary> tags.
+    Remember to tailor your analysis and recommendations specifically to the startup information provided. 
+    Be concise yet comprehensive in your explanations, and ensure that each step builds upon the previous ones to create a 
+    cohesive Customer Journey Map. It's OK for the analysis sections to be quite long.
+  expected_output: >
+    <step_analysis>
+    [Your thought process for Step 1: Define Customer Personas]
+    </step_analysis>
+
+    <step_output>
+    <customer_persona>
+    [Detailed description of a customer persona]
+    </customer_persona>
+    </step_output>
+
+    [Repeat the above structure for each step]
+
+    <summary>
+    <benefits>
+    [List of benefits]
+    </benefits>
+    <limitations>
+    [List of limitations]
+    </limitations>
+    </summary>
+  agent: CustomerJourneyMappingAgent
 
 brand_archetypes_model:
-  description: 
-  expected_output: 
-  agent: 
+  description:  >
+    You are an expert startup and marketing strategy consultant specializing in market entry strategies analysis. Your task is to help startups prepare compelling marketing strategies using the Brand Archetypes Model. This model leverages universal character types to create a distinct and emotionally resonant brand personality. By aligning a brand with one or more of these archetypes, you can forge a deeper emotional connection with customers and establish a clear, memorable identity.
+
+    First, carefully review the provided startup information:
+
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
+
+    Now, conduct a thorough analysis of the startup information and determine the most appropriate brand archetype(s) for this startup. Wrap your analysis in <archetype_analysis> tags. Consider the following points in your analysis:
+
+    1. List key aspects of the startup (e.g., industry, target audience, unique value proposition)
+    2. For each of the 12 brand archetypes, write a brief note on its relevance to this startup
+    3. Rank the top 3-5 most relevant archetypes
+    4. For each of these top archetypes, list pros and cons
+
+    Remember to tailor your recommendations specifically to the startup's unique characteristics and goals. Your analysis should be thorough, and your recommendations should be practical and actionable.
+
+    For reference, here are the 12 Brand Archetypes:
+
+    1. The Innocent
+    2. The Explorer
+    3. The Sage
+    4. The Hero
+    5. The Outlaw
+    6. The Magician
+    7. The Regular Guy/Girl (Everyman)
+    8. The Lover
+    9. The Caregiver
+    10. The Jester
+    11. The Ruler
+    12. The Creator
+  expected_output: >
+     After your analysis, provide your recommendations and strategy using the following structure:
+      <recommendations>
+      <chosen_archetype>
+      [Name of the chosen archetype]
+      </chosen_archetype>
+
+      <justification>
+      [Explain why this archetype is the best fit for the startup]
+      </justification>
+
+      <brand_strategy>
+      [Outline key elements of the brand strategy based on the chosen archetype]
+      </brand_strategy>
+
+      <benefits>
+      [Discuss the specific benefits of using this archetype for the startup]
+      </benefits>
+
+      <examples>
+      [Provide 1-2 examples of successful brands using this archetype and how they apply it]
+      </examples>
+
+      <implementation>
+      [Recommend 3-5 specific strategies for implementing this archetype in the startup's marketing and branding efforts]
+      </implementation>
+      </recommendations>
+  agent: BrandArchetypesModelAgent

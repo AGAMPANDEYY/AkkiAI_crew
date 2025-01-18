@@ -1,5 +1,5 @@
 MarketReadinessAgent:
-  role: Market Readiness Strategist
+  role: MarketReadinessAgent
   goal: To assess and determine the business market readiness by analyzing 
     product-market fit, competitive landscape, and potential barriers to entry, 
     delivering actionable recommendations for a successful market launch or expansion.
@@ -15,7 +15,7 @@ MarketReadinessAgent:
 
 
 TechnologyAdoptionSpecialistAgent:
-  role: Startup Strategy and Investment Expert
+  role: TechnologyAdoptionSpecialistAgent
   goal: 
     To apply the "Technology Adoption Lifecycle" framework to analyze and provide actionable insights on early
     adopter identification, product positioning, and feature prioritization for a startup.
@@ -29,7 +29,7 @@ TechnologyAdoptionSpecialistAgent:
   memory: False
 
 RiskAssesmentSpecialistAgent:
-  role: Risk Assessment Specialist
+  role: RiskAssesmentSpecialistAgent
   goal: 
     To identify and mitigate critical risks early in the business lifecycle, particularly focusing on resource 
     constraints typical of startups. Guides strategic decision-making with limited data.
@@ -43,7 +43,7 @@ RiskAssesmentSpecialistAgent:
 
 
 BlueOceanSpecialistAgent:
-  role: Blue Ocean Strategy Specialist
+  role: BlueOceanSpecialistAgent
   goal: 
     To plot industry factors against competitive offerings, identifying opportunities to eliminate, reduce, 
     raise, or create factors. The aim is to find uncontested market space by strategically analyzing the industry 

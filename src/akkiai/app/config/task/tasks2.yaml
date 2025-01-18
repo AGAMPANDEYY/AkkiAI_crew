@@ -3,15 +3,12 @@ creating_buyer_persona:
     You are tasked with creating a detailed buyer persona based on the given
     information and answering specific questions about the target audience. 
     This persona will help in understanding the ideal customer and tailoring
-    marketing strategies effectively. The target audience details will be given
-    by the output of finding_target_audience task. Here's the information you'll
+    marketing strategies effectively. Here's the information you'll
     be working with:
 
-    <target_audience> {{TARGET_AUDIENCE}} </target_audience>
-
-    <business_details> {{BUSINESS_DETAILS}} </business_details>
-
-    <product_description> {{PRODUCT_DESCRIPTION}} </product_description>
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
 
     Now, you'll need to answer the following questions for B2B and B2C market:
 
@@ -207,16 +204,11 @@ analysing_jtbd:
     (JTBD) framework to summarize the main "job" a  given
     product/service/solution helps customers accomplish, and why they would
     "hire" this product/service/solution over other options. You will be
-    provided with the following information:
+    provided with the following information and the buyer persona from the previous task output:
 
-    <business_details> {{BUSINESS_DETAILS}} </business_details>
-
-    <product_description> {{PRODUCT_DESCRIPTION}} </product_description>
-
-    <target_audience> {{TARGET_AUDIENCE}} </target_audience>
-
-    <buyer_persona> - Buyer persona details will be provided from the output of
-    the `creating_buyer_persona` task. </buyer_persona>
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
 
     The Jobs to be Done (JTBD) framework focuses on understanding the underlying
     motivations and desired outcomes that drive customers to "hire" a product or
@@ -255,11 +247,6 @@ analysing_jtbd:
 
       
   agent: JTBDAnalysisAgent
-  inputs:
-    target_audience: '{{TARGET_AUDIENCE}}'
-    business_details: '{{BUSINESS_DETAILS}}'
-    product_description: '{{PRODUCT_DESCRIPTION}}'
-    buyer_persona: '{{creating_buyer_persona.output}}'
 
 analysing_stages_of_awareness:
   description: >
@@ -270,17 +257,15 @@ analysing_stages_of_awareness:
     understand how aware potential customers are of their problems and the
     available solutions. Here is the information you'll be working with:
 
-    <target_audience> {{TARGET_AUDIENCE}} </target_audience>
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
 
     <buyer_persona> - Buyer persona details will be provided from the output of
     the `creating_buyer_persona` task. </buyer_persona>
 
     <motivations_outcomes> - JTBD motivation framework details will be provided
     from the output of the 'analysing_jtbd' task </motivations_outcomes>
-
-    <business_details> {{BUSINESS_DETAILS}} </business_details>
-
-    <product_description> {{PRODUCT_DESCRIPTION}} </product_description>
 
     Using this information, analyze the target audience's awareness level across
     the following stages:

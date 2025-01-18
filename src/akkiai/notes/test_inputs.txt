@@ -1,0 +1,165 @@
+crew 1:
+
+Inputs:
+ "BUSINESS_DETAILS": inputs.INPUT_1,
+  "PRODUCT_DESCRIPTION": inputs.INPUT_2
+API Call:
+{
+  "SOLUTION_ID": "1",
+  "INPUT_1": "string",
+  "INPUT_2": "string",
+  "INPUT_3": "string",
+  "INPUT_4": "string",
+  "INPUT_5": "string",
+  "INPUT_6": "string",
+  "INPUT_7": "string",
+  "HASH": "8177354d1fa49a824907e5f79637692c3357dcda2e92d7f2a07cb28a980c4d4a"
+}
+
+crew 2:
+
+Inputs:
+  "TARGET_AUDIENCE": inputs.INPUT_1,
+  "BUSINESS_DETAILS": inputs.INPUT_2,
+  "PRODUCT_DESCRIPTION": inputs.INPUT_3
+API Call:
+{
+  "SOLUTION_ID": "2",
+  "INPUT_1": "string",
+  "INPUT_2": "string",
+  "INPUT_3": "string",
+  "INPUT_4": "string",
+  "INPUT_5": "string",
+  "INPUT_6": "string",
+  "INPUT_7": "string",
+  "HASH": "93f4a2fdd663ce6dc9d641a160075a85cc03e98071b65ce0ed8c2661acc943ef"
+}
+
+crew 3:
+
+Inputs:
+"STARTUP_INFO": inputs.INPUT_1,
+API Call:
+{
+  "SOLUTION_ID": "3",
+  "INPUT_1": "string",
+  "INPUT_2": "string",
+  "INPUT_3": "string",
+  "INPUT_4": "string",
+  "INPUT_5": "string",
+  "INPUT_6": "string",
+  "INPUT_7": "string",
+  "HASH": "805d58a4fb3367031c42cbdc7abea23721bd225aebcd6d71eaf916250dc9ca9c"
+}
+
+crew 4:
+
+Inputs:
+"STARTUP_INFO": inputs.INPUT_1,
+API Call:
+{
+  "SOLUTION_ID": "4",
+  "INPUT_1": "string",
+  "INPUT_2": "string",
+  "INPUT_3": "string",
+  "INPUT_4": "string",
+  "INPUT_5": "string",
+  "INPUT_6": "string",
+  "INPUT_7": "string",
+  "HASH": "3ffbbbdadf36d144df0bb48e916ef35a1f20ab19cf1b322a22f9af74bc445064"
+}
+
+
+crew 5:
+
+Inputs:
+"STARTUP_INFO": inputs.INPUT_1,
+API Call:
+{
+  "SOLUTION_ID": "5",
+  "INPUT_1": "string",
+  "INPUT_2": "string",
+  "INPUT_3": "string",
+  "INPUT_4": "string",
+  "INPUT_5": "string",
+  "INPUT_6": "string",
+  "INPUT_7": "string",
+  "HASH": "d0a3a0b35a2504922a804da4088c36cc5508a8fa8b9b1f59737c386f6292569b"
+}
+
+
+crew 6:
+
+Inputs:
+"STARTUP_INFO": inputs.INPUT_1,
+API Call:
+{
+  "SOLUTION_ID": "6",
+  "INPUT_1": "string",
+  "INPUT_2": "string",
+  "INPUT_3": "string",
+  "INPUT_4": "string",
+  "INPUT_5": "string",
+  "INPUT_6": "string",
+  "INPUT_7": "string",
+  "HASH": "95def922f4ea29b4d0b8c82cdf2e862e8dfcb9ce8856f99ef21b251fb966f38b"
+}
+
+crew 7:
+
+Inputs:
+"STARTUP_INFO": inputs.INPUT_1,
+API Call:
+{
+  "SOLUTION_ID": "7",
+  "INPUT_1": "string",
+  "INPUT_2": "string",
+  "INPUT_3": "string",
+  "INPUT_4": "string",
+  "INPUT_5": "string",
+  "INPUT_6": "string",
+  "INPUT_7": "string",
+  "HASH": "497985f67fa82c14232acd8f48075f58422a6a161a0cbaa18ac33541025ed93b"
+}
+
+crew 8:
+
+Inputs:
+"STARTUP_INFO": inputs.INPUT_1,
+
+API Call:
+{
+  "SOLUTION_ID": "8",
+  "INPUT_1": "Akki AI is a Multi-Agent AI CoPilot for Founders and Investors. This helps founders to get quick and accurate feedback on different aspects of their startup pitch, strategy, and operations. On the other hand, it helps Investor analysts the ability to evaluate and analyse 1000s of idea pitch / applications, identifying the potential unicorn saving them time, and cost.",
+  "INPUT_2": "string",
+  "INPUT_3": "string",
+  "INPUT_4": "string",
+  "INPUT_5": "string",
+  "INPUT_6": "string",
+  "INPUT_7": "string",
+  "HASH": "886c13941db240f0c5101c1957b576c1b1113eb976a61ca2b19c5ffeb7bed3c9"
+}
+
+crew 9:
+Inputs:
+
+"STARTUP_INFO": inputs.INPUT_1,
+"BUSINESS_DETAILS": inputs.INPUT_2,
+"PRODUCT_DESCRIPTION": inputs.INPUT_3,
+"TARGET_AUDIENCE": inputs.INPUT_4,
+"CUSTOMER_PERSONA": inputs.INPUT_5,
+"VALUE_PROPOSITION": inputs.INPUT_6,
+"MESSAGING": inputs.INPUT_7
+
+API Call:
+{
+  "SOLUTION_ID": "9",
+  "INPUT_1": "string",
+  "INPUT_2": "string",
+  "INPUT_3": "string",
+  "INPUT_4": "string",
+  "INPUT_5": "string",
+  "INPUT_6": "string",
+  "INPUT_7": "string",
+  "HASH": "3a8e4d0f66dd227b9110a59c2562ea72a1cf5da614d777dcb0f3befba2f5a2d0"
+}

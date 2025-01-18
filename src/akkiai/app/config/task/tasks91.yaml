@@ -74,6 +74,15 @@ sequoia_capital_pitch_deck:
     4. Include all necessary slides
     5. Each point should be complete and self-contained
 
+    Example for one slide:
+    {
+      "pitch_deck": {
+        "Slide_1": {
+         "contents": "Global SaaS market expected to reach $200B by 2024",..."
+          }
+        }
+      }
+    }
   agent: SequoiaCapitalPitchDeckAgent
   inputs: 
    startup_info: "{STARTUP_INFO}"

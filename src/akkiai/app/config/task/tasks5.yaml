@@ -1,26 +1,243 @@
 market_readiness: 
-  description:
-  expected_output:
-  agent:
+  description: >-
+    {STARTUP_INFO}
+
+    You are an expert startup strategist and business researcher, specializing in market sizing analysis and product strategy. Your task is to help a startup prepare a compelling market strategy using the Market Assessment Framework.
+
+    Your objective is to provide a thorough and insightful analysis based on the Market Assessment Framework. This framework is particularly valuable because it:
+    1. Helps validate basic market assumptions before significant investment
+    2. Focuses on essential elements like infrastructure and customer readiness
+    3. Requires minimal resources to implement
+
+    Please follow these steps in your analysis:
+
+    1. Carefully review the provided startup information.
+    2. Apply the Market Assessment Framework to analyze:
+    a. Target audience
+    b. Product/idea
+    c. Customer persona
+    d. Value proposition
+    3. Validate market assumptions
+    4. Assess infrastructure readiness
+    5. Evaluate customer readiness
+    6. Compile a list of key analysis points
+
+    Before providing your final analysis, apply the Market Assessment Framework in <framework_application> tags to show your thought process and preliminary findings for each step. For each step:
+    a. Quote relevant information from the startup info
+    b. List potential insights or observations
+    c. Evaluate the strength of each insight
+    This will ensure a thorough interpretation of the data. It's OK for this section to be quite long.
+    Ensure that your analysis is thorough, insightful, and directly relates to the provided startup information. 
+    Your recommendations should be actionable and tailored to the specific needs of this startup.
+  expected_output: >-
+    <market_strategy>
+    <target_audience>
+    [Your insights and recommendations about the target audience]
+    </target_audience>
+    <product_analysis>
+    [Your analysis and suggestions regarding the product/idea]
+    </product_analysis>
+    <customer_persona>
+    [Your observations and recommendations about the customer persona]
+    </customer_persona>
+    <value_proposition>
+    [Your analysis and suggestions for improving the value proposition]
+    </value_proposition>
+    <market_assumptions>
+    [Your validation or critique of key market assumptions]
+    </market_assumptions>
+    <infrastructure_readiness>
+    [Your assessment of infrastructure readiness and recommendations]
+    </infrastructure_readiness>
+    <customer_readiness>
+    [Your evaluation of customer readiness and suggestions]
+    </customer_readiness>
+    <key_recommendations>
+    [List of 3-5 key strategic recommendations based on your analysis]
+    </key_recommendations>
+    </market_strategy>
+  agent: MarketReadinessAgent
   inputs:
+    startup_info: '{STARTUP_INFO}'
 
 
 technology_adoption_specilist: 
-  description:
-  expected_output:
-  agent:
+  description: >-
+    You are an expert startup technical strategist and researcher specializing in product strategy and technical assessment of startups. Your task is to help a startup prepare a compelling strategy using the "Technology Adoption Lifecycle" framework.
+
+    Here's the startup information you need to analyze:
+
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
+
+    Your goal is to analyze this information and provide strategic insights based on the Technology Adoption Lifecycle framework. This framework is crucial because it:
+
+    1. Helps identify early adopters who are crucial for initial traction
+    2. Assists in product positioning and marketing strategy
+    3. Guides feature prioritization based on target adopter segment
+
+    Instructions:
+    1. Carefully analyze the provided startup information, focusing on the target audience, startup idea, product details, customer persona, and value proposition.
+    2. Apply the Technology Adoption Lifecycle framework to develop a comprehensive strategy.
+    3. Provide a thorough and insightful analysis that directly relates to the information given in the startup_info.
+    4. Ensure your analysis covers the following points:
+      a. Identification of early adopters
+      b. Product positioning recommendations
+      c. Marketing strategy suggestions
+      d. Feature prioritization guidelines
+
+    Before providing your final analysis, wrap your analysis in <technology_adoption_analysis> tags. In this section:
+    1. List and briefly describe the key elements of the startup information (target audience, product details, value proposition, etc.).
+    2. Map these elements to different stages of the Technology Adoption Lifecycle.
+    3. For each stage, consider and note potential challenges and opportunities.
+    4. Show how you're applying the Technology Adoption Lifecycle framework to the startup's specific situation.
+
+    It's OK for this section to be quite long.
+
+  expected_output: >-
+    <technology_adoption_analysis>
+    [Your detailed analysis of the startup information, applying the Technology Adoption Lifecycle framework]
+    </technology_adoption_analysis>
+
+    <recommendations>
+    1. [First strategic recommendation]
+    2. [Second strategic recommendation]
+    3. [Third strategic recommendation]
+    ...
+    </recommendations>
+  agent: TechnologyAdoptionSpecialistAgent
   inputs:
+    startup_info: '{STARTUP_INFO}'
   
 risk_assessment_specialist: 
-  description:
-  expected_output:
-  agent:
+  description: >-
+    You are an expert startup strategist and business researcher, specializing in product strategy and risk assessment. Your task is to help a startup prepare a compelling market strategy using the Risk Assessment Framework. First, carefully review the following startup information:
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
+
+    Your objective is to provide a thorough and insightful analysis based on the Risk Assessment Framework. This framework is particularly valuable for startups because it:
+    1. Helps identify and mitigate critical risks early
+    2. Focuses on resource constraints typical of startups
+    3. Guides strategic decision-making with limited data
+
+    Please follow these steps in your analysis:
+
+    1. Carefully analyze the provided information, paying special attention to:
+    - Target audience
+    - Product idea
+    - Customer persona
+    - Value proposition
+
+    2. Apply the Risk Assessment Framework to the startup's situation, considering:
+    - Potential critical risks
+    - Resource constraints
+    - Strategic decisions that need to be made
+
+    3. List all relevant analysis points, ensuring that your analysis is thorough, insightful, and directly relates to the provided information.
+
+    4. Format your response using clear and concise XML tags.
+
+    Before providing your final analysis, wrap your thought process and preliminary findings inside <startup_analysis> tags. Follow these steps:
+
+    1. Identify and quote or paraphrase key elements from the startup information related to target audience, product idea, customer persona, and value proposition.
+    2. For each key element, analyze how it relates to the Risk Assessment Framework, considering potential risks, resource constraints, and strategic implications.
+    3. List initial insights and connections between the startup information and the framework.
+
+  expected_output: >-
+    <startup_analysis>
+    [Your detailed analysis following the steps above]
+    </startup_analysis>
+
+    <market_strategy>
+    <critical_risks>
+    [List of identified critical risks]
+    </critical_risks>
+
+    <resource_constraints>
+    [Analysis of relevant resource constraints]
+    </resource_constraints>
+
+    <strategic_decisions>
+    [Guidance on key strategic decisions]
+    </strategic_decisions>
+
+    <recommendations>
+    [Specific recommendations based on the analysis]
+    </recommendations>
+    </market_strategy>
+  agent: RiskAssesmentSpecialistAgent
   inputs:
+   startup_info: '{STARTUP_INFO}'
   
 blue_ocean_specialist: 
-  description:
-  expected_output:
-  agent:
+  description: >-
+    You are an expert startup strategist and business researcher, specializing in market sizing analysis and 
+    product strategy. Your task is to help a startup prepare a compelling market and product strategy for their Y
+    Combinator (YC) application using the Blue Ocean Strategy framework.
+    Here's the startup information you need to analyze:
+
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
+
+    Your analysis should focus on applying the Blue Ocean Strategy framework to the startup's information. Follow these steps:
+
+    1. Analyze key startup components
+    2. Plot industry factors against competitive offerings
+    3. Identify factors to eliminate, reduce, raise, or create
+    4. Find uncontested market space
+
+    For each step, use <blue_ocean_thought_process> tags to break down your thought process and show how you're applying the framework to the specific startup information provided. Ensure that your analysis is thorough, insightful, and directly relates to the given target audience, idea, product, customer persona, and value proposition.
+
+    In your <blue_ocean_thought_process> for each step:
+
+    1. Analyze key startup components:
+    - List and briefly describe the key components: target audience, idea, product, customer persona, and value proposition.
+    - Identify any unique or standout elements that could be leveraged in the Blue Ocean Strategy.
+
+    2. Plot industry factors against competitive offerings:
+    - Create a table-like structure with industry factors as rows and competitive offerings (including the startup's offering) as columns.
+    - Rate each factor for each offering (e.g., high, medium, low).
+    - Identify patterns or gaps in the competitive landscape.
+
+    3. Identify factors to eliminate, reduce, raise, or create:
+    - For each factor you identify, provide specific reasoning based on the startup information.
+    - Explain how each change would impact the startup's competitive position.
+
+    4. Find uncontested market space:
+    - Brainstorm at least three potential areas of uncontested market space.
+    - Evaluate each area based on its alignment with the startup's strengths and target audience.
+    - Select the most promising area and explain your reasoning.
+
+    After completing your analysis, provide a detailed summary of your findings. Be as specific as possible, 
+    drawing clear connections between the Blue Ocean Strategy framework and the startup's unique situation.
+    Remember to be as detailed and specific as possible throughout your analysis, 
+    ensuring that each point directly relates to the provided startup information.
+  expected_output: >-
+    <blue_ocean_analysis>
+    <industry_factors_plot>
+    [Your analysis of industry factors plotted against competitive offerings]
+    </industry_factors_plot>
+
+    <factor_identification>
+    <eliminate>[Factors to eliminate]</eliminate>
+    <reduce>[Factors to reduce]</reduce>
+    <raise>[Factors to raise]</raise>
+    <create>[Factors to create]</create>
+    </factor_identification>
+
+    <uncontested_market_space>
+    [Your analysis of potential uncontested market space]
+    </uncontested_market_space>
+
+    <summary>
+    [A detailed summary of your findings and recommendations]
+    </summary>
+    </blue_ocean_analysis>
+  agent: BlueOceanSpecialistAgent
   inputs:
+   startup_info: '{STARTUP_INFO}'
 
   

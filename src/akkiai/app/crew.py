@@ -352,8 +352,8 @@ class crew3():
     @task
     def ProductAudienceFitAgent_task(self) -> Task:
         return Task(
-            config=self.tasks_config['product_audience_fit'],
-            output_pydantic=Task31Pydantic,
+            config=self.tasks_config['value_proposition_canvas'],
+            #output_pydantic=Task31Pydantic,
             callback=self.task_output_callback
         )
     
@@ -362,7 +362,7 @@ class crew3():
     def Market4PAnalysisAgent_task(self) -> Task:
         return Task(
             config=self.tasks_config['marketing_4p_analysis'],
-            output_pydantic=Task32Pydantic,
+            #output_pydantic=Task32Pydantic,
             callback=self.task_output_callback
         )
     
@@ -371,7 +371,7 @@ class crew3():
     def SWOTAnalysisAgent_task(self) -> Task:
         return Task(
             config=self.tasks_config['swot_analysis'],
-            output_pydantic=Task33Pydantic,
+            #output_pydantic=Task33Pydantic,
             callback=self.task_output_callback
         )
     
@@ -380,7 +380,7 @@ class crew3():
     def MappingBuyerJourneyAgent_task(self) -> Task:
         return Task(
             config=self.tasks_config['mapping_buyer_journey'],
-            output_pydantic=Task34Pydantic,
+            #output_pydantic=Task34Pydantic,
             callback=self.task_output_callback
         )
     
@@ -389,7 +389,7 @@ class crew3():
     def USPRoseFrameworkAgent_task(self) -> Task:
         return Task(
             config=self.tasks_config['usp_rose_framework'],
-            output_pydantic=Task35Pydantic,
+            #output_pydantic=Task35Pydantic,
             callback=self.task_output_callback
         )
 
@@ -1175,6 +1175,7 @@ class crew8():
             config=self.tasks_config['experienced_startup_founder_specialist'],
             output_pydantic=Task81Pydantic,
             callback=self.task_output_callback
+
         )
     
     #task2
@@ -1183,7 +1184,8 @@ class crew8():
         return Task(
             config=self.tasks_config['silicon_valley_investor'],
             output_pydantic=Task82Pydantic,
-            callback=self.task_output_callback
+            callback=self.task_output_callback,
+            context=[self.ExperiencedStartupFounderSpecialistAgent_task()]
         )
     
     #task3
@@ -1192,7 +1194,8 @@ class crew8():
         return Task(
             config=self.tasks_config['startup_specialist'],
             output_pydantic=Task83Pydantic,
-            callback=self.task_output_callback
+            callback=self.task_output_callback,
+            context=[self.SiliconValleyInvestorAgent_task()]
         )
     
     #task4
@@ -1201,7 +1204,8 @@ class crew8():
         return Task(
             config=self.tasks_config['famous_silicon_valley_tech_titan'],
             output_pydantic=Task84Pydantic,
-            callback=self.task_output_callback
+            callback=self.task_output_callback,
+            context=[self.ExperiencedStartupFounderSpecialistAgent_task(),self.SiliconValleyInvestorAgent_task()]
         )
     
     @crew

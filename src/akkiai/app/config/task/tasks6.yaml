@@ -1,46 +1,507 @@
 tam_sam_som: 
-  description:
-  expected_output:
-  agent:
+  description: >-
+    You are an expert startup and business research consultant specializing in market sizing analysis. Your task is to help startups prepare compelling market size information for their Y Combinator (YC) applications. Your analysis should be thorough, insightful, and presented in a TAM, SAM, SOM format.
+
+    First, carefully review the following startup information:
+
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
+
+    Your goal is to provide a comprehensive market sizing analysis that will increase the startup's chances of being admitted to YC. To accomplish this, follow these steps:
+
+    1. Research and analyze the startup's idea, target market, and industry.
+    2. Investigate the competitive landscape, identifying key players and market dynamics.
+    3. Identify relevant industry trends and growth projections.
+    4. Consider any legal or regulatory factors that may impact the market.
+    5. Calculate and explain the following market sizes:
+    - Total Addressable Market (TAM): The entire market demand for the product or service.
+    - Serviceable Addressable Market (SAM): The portion of the TAM that the startup can realistically reach given its current resources and capabilities.
+    - Serviceable Obtainable Market (SOM): A realistic estimate of the market share the startup can capture in the near term.
+
+    Before providing your final analysis, use <research_and_calculations> tags to break down your thought process and show your work for each step. In this section:
+
+    - List key information extracted from the startup_info
+    - For TAM, SAM, and SOM:
+    - Describe your research process and sources
+    - Show step-by-step calculations
+    - Explain your reasoning for each figure
+    - List key competitors and their market shares
+    - Identify and explain significant market trends
+    - Note any relevant legal or regulatory factors
+
+    This will ensure a thorough and transparent interpretation of the data. It's okay for this section to be quite long to accommodate all the necessary details.
+    Ensure that your analysis is based on thorough research, provides actionable insights, and is presented in a clear, 
+    concise manner that will resonate with YC reviewers.
+  expected_output: >-
+    <market_analysis>
+    <tam>
+    <size>[TAM size in dollars]</size>
+    <explanation>[Brief explanation of TAM calculation and reasoning]</explanation>
+    </tam>
+    <sam>
+    <size>[SAM size in dollars]</size>
+    <explanation>[Brief explanation of SAM calculation and reasoning]</explanation>
+    </sam>
+    <som>
+    <size>[SOM size in dollars]</size>
+    <explanation>[Brief explanation of SOM calculation and reasoning]</explanation>
+    </som>
+    <competitive_landscape>
+    [Summary of key competitors and market dynamics]
+    </competitive_landscape>
+    <trends>
+    [Overview of relevant industry trends and growth projections]
+    </trends>
+    <legal_factors>
+    [Summary of any significant legal or regulatory considerations]
+    </legal_factors>
+    <conclusion>
+    [A concise, impactful summary of the market opportunity and its significance for the startup]
+    </conclusion>
+    </market_analysis>
+  agent: TamSamSomAgent
   inputs:
+    startup_info: '{STARTUP_INFO}'
 
 
 future_competitors_analysis: 
-  description:
-  expected_output:
-  agent:
+  description: >-
+    You are an expert startup and business research consultant specializing in market sizing analysis. Your task is to prepare a detailed competition analysis for a startup based on the information provided. This analysis should be from the perspective of an investor expert, offering insights that would be valuable for potential investors or the startup founders themselves.
+    First, carefully review the following startup information:
+
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
+
+    Your objective is to provide a comprehensive competitive analysis, including the following components:
+
+    1. Identify and analyze the top 5 direct competitors
+    2. Identify and analyze the top 5 indirect competitors
+    3. Identify and analyze the top 5 future potential competitors
+    4. For each competitor, address their advantages and disadvantages in relation to the startup
+
+    Please follow these steps to complete your analysis:
+
+    1. Begin by identifying the competitors in each category (direct, indirect, and future potential). Wrap your thought process in <competitor_identification> tags for each category:
+    a. List potential competitors (it's OK for this list to be quite long).
+    b. For each potential competitor, briefly note their market share, product offerings, pricing strategies, and unique selling propositions.
+    c. Based on this information, select the top 5 competitors for each category.
+
+    2. For each identified competitor, provide a detailed analysis of their strengths, weaknesses, and market position. Consider factors such as market share, product offerings, pricing strategies, and unique selling propositions. Wrap your reasoning for each competitor in <competitor_identification> tags.
+
+    3. Compare each competitor to the startup, highlighting specific advantages and disadvantages.
+    Be sure to consider both current and potential future market dynamics. Again, wrap your evaluation process in <competitor_identification> tags.
+    Remember to be detailed and specific in your analysis, providing concrete examples and data points where possible. Your insights should be valuable to an 
+    investor considering the potential of this startup in the competitive landscape.
+  expected_output: >-
+    <competitive_analysis>
+    <direct_competitors>
+    <competitor>
+    <name></name>
+    <description></description>
+    <advantages></advantages>
+    <disadvantages></disadvantages>
+    </competitor>
+    <!-- Repeat for all 5 direct competitors -->
+    </direct_competitors>
+    <indirect_competitors>
+    <!-- Similar structure as direct_competitors -->
+    </indirect_competitors>
+    <future_potential_competitors>
+    <!-- Similar structure as direct_competitors -->
+    </future_potential_competitors>
+    <overall_assessment>
+    <!-- Provide a concise summary of the competitive landscape and the startup's position -->
+    </overall_assessment>
+    </competitive_analysis>
+  agent: FutureCompetitorsAnalysisAgent
   inputs:
+    startup_info: '{STARTUP_INFO}'
   
 bottom_up_analysis: 
-  description:
-  expected_output:
-  agent:
+  description: >-
+    You are an expert startup and business research consultant specializing in market sizing analysis. Your task is to help startups prepare compelling market size information for accelerator applications or venture capital funding.
+    Your analysis should be thorough, insightful, and presented using a bottoms-up approach.
+    Here's the startup information you need to analyze:
+
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
+
+    Your goal is to provide a comprehensive market sizing analysis that will increase the startup's chances of getting funded by reputable VCs or being selected for an accelerator program. Follow these steps:
+
+    1. Research and analyze the startup's idea, target market, and industry.
+    2. Investigate the competitive landscape, identifying key players and market dynamics.
+    3. Identify relevant industry trends and growth projections.
+    4. Consider any legal or regulatory factors that may impact the market.
+    5. Perform a detailed bottoms-up market sizing analysis.
+
+    Before providing your final analysis, wrap your work inside <market_research_and_calculations> tags. In this section:
+
+    - Describe your research process and sources
+    - List potential competitors and their market shares
+    - Identify and list key data points needed for calculations
+    - Brainstorm potential market segments
+    - Show step-by-step calculations for TAM, SAM, and SOM, listing key data points and assumptions for each
+    - Explain your reasoning for each figure
+    - Provide a brief competitive analysis for each major competitor, including their market share
+    - Identify and explain significant market trends
+    - Note any relevant legal or regulatory factors
+
+    Ensure that your analysis is based on thorough research, provides actionable insights, and is presented in a clear, concise manner that will resonate with accelerator reviewers and venture capitalists.
+    Remember to use the bottom-up approach for your market sizing analysis. This involves:
+
+      1. Identifying the specific target market segments
+      2. Calculating the serviceable market
+      3. Defining the Average Revenue Per User (ARPU)
+      4. Estimating the total market size
+      5. Adjusting for realistic market penetration
+      6. Validating with real-world data
+      7. Considering growth potential
+
+      Your analysis should be data-driven, well-reasoned, and presented in a way that clearly demonstrates 
+      the market opportunity for the startup.
+  expected_output: >-
+    <market_analysis>
+    <executive_summary>
+    [Brief overview of findings and key insights]
+    </executive_summary>
+
+    <market_size>
+    <total_addressable_market>
+    [TAM figure and explanation]
+    </total_addressable_market>
+    <serviceable_addressable_market>
+    [SAM figure and explanation]
+    </serviceable_addressable_market>
+    <serviceable_obtainable_market>
+    [SOM figure and explanation]
+    </serviceable_obtainable_market>
+    </market_size>
+
+    <competitive_landscape>
+    [Summary of competitive landscape, including key players and market shares]
+    </competitive_landscape>
+
+    <market_trends>
+    [Description of significant market trends and growth projections]
+    </market_trends>
+
+    <regulatory_factors>
+    [Outline of relevant legal or regulatory factors]
+    </regulatory_factors>
+
+    <conclusion>
+    [Compelling conclusion highlighting the startup's potential in the context of the market analysis]
+    </conclusion>
+    </market_analysis>
+  agent: BottomUpAnalysisAgent
   inputs:
+    startup_info: '{STARTUP_INFO}'
   
 strategic_group_analysis: 
-  description:
-  expected_output:
-  agent:
+  description: >-
+    {STARTUP_INFO}
+
+    You are an expert startup and business research consultant specializing in market sizing and competitive analysis. Your task is to prepare a detailed strategic group analysis for a startup based on the provided information.
+
+    First, review the startup information provided above.
+
+    Using this information, conduct a Strategic Group Analysis following these steps:
+
+    1. Define the Industry or Market
+    2. Identify Key Competitive Factors
+    3. Group Companies Based on Similar Strategies
+    4. Map the Strategic Groups
+    5. Analyze Competitive Dynamics
+    6. Evaluate Mobility Barriers
+    7. Determine Implications for Strategy
+
+    For each step, wrap your step planning in <step_planning> tags. In this planning phase:
+    - List out the key points or factors you need to consider for this step.
+    - Identify any specific data or information from the startup info that's relevant to this step.
+    - Outline your approach for completing this step of the analysis.
+
+    After your planning, provide the final output for each step.
+
+  expected_output: >-
+    <strategic_group_map>
+    [Visual representation of the competitive landscape]
+    </strategic_group_map>
+
+    <group_characteristics>
+    [Insights into what differentiates groups (e.g., pricing, customer base)]
+    </group_characteristics>
+
+    <competitive_insights>
+    [Assessment of where the startup stands relative to competitors]
+    </competitive_insights>
+
+    <strategy_recommendations>
+    [Tactical actions based on the group's position (e.g., growth strategies, market differentiation)]
+    </strategy_recommendations>
+
+    Remember to be thorough in your analysis and provide clear, actionable insights for the startup.
+
+    Here's an example of how your output structure should look (note that this is just a structure example, not actual content):
+
+    <step_planning>
+    [Your thought process for step 1]
+    </step_planning>
+
+    <output_step_1>
+    [Your final output for step 1]
+    </output_step_1>
+
+    [Repeat for each step]
+
+    <strategic_group_map>
+    [Your strategic group map]
+    </strategic_group_map>
+
+    <group_characteristics>
+    [Your group characteristics analysis]
+    </group_characteristics>
+
+    <competitive_insights>
+    [Your competitive insights]
+    </competitive_insights>
+
+    <strategy_recommendations>
+    [Your strategy recommendations]
+    </strategy_recommendations>
+
+    Please proceed with your analysis. It's OK for the step planning sections to be quite long.
+  agent: StrategicGroupAnalysisAgent
   inputs:
+    startup_info: '{STARTUP_INFO}'
 
   
 porters_five_forces: 
-  description:
-  expected_output:
-  agent:
+  description: >-
+    {STARTUP_INFO}
+
+    You are an expert startup and business research consultant specializing in market sizing analysis. Your task is to prepare a detailed competition analysis for a startup using Porter's Five Forces framework. This framework is a strategic tool used to analyze the competitive forces within an industry, helping businesses understand the underlying drivers of profitability and competition, and identify opportunities or threats in the market.
+
+    First, carefully review the startup information provided above.
+
+    Your analysis should cover the five forces of Porter's framework. For each force, provide a detailed analysis using the following structure:
+
+    1. Briefly explain the purpose of analyzing this force.
+    2. Describe scenarios for high and low levels of this force.
+    3. List and elaborate on key factors influencing this force.
+    4. Provide a specific example related to this force.
+    5. Based on the startup information provided, assess the level of this force (high, medium, or low) and explain your reasoning.
+
+    Wrap your thought process for each force in <force_analysis> tags before providing your final assessment. In this section:
+    - List key factors from the startup information that are relevant to this force.
+    - Consider arguments for high, medium, and low levels of this force.
+    It's OK for this section to be quite long.
+
+    Then, present your findings for each force in <force> tags.
+
+    After analyzing all five forces, synthesize your findings to:
+    1. Determine overall industry profitability
+    2. Identify strategic opportunities for the startup
+    3. Assess the startup's potential market positioning
+
+    Finally, summarize the benefits and limitations of using Porter's Five Forces for this analysis.
+
+  expected_output: >-
+    <porters_five_forces_analysis>
+    <competitive_rivalry>
+    <force_analysis>[Your thought process]</force_analysis>
+    <force>[Your final assessment]</force>
+    </competitive_rivalry>
+
+    <supplier_power>
+    <force_analysis>[Your thought process]</force_analysis>
+    <force>[Your final assessment]</force>
+    </supplier_power>
+
+    <buyer_power>
+    <force_analysis>[Your thought process]</force_analysis>
+    <force>[Your final assessment]</force>
+    </buyer_power>
+
+    <threat_of_substitution>
+    <force_analysis>[Your thought process]</force_analysis>
+    <force>[Your final assessment]</force>
+    </threat_of_substitution>
+
+    <threat_of_new_entry>
+    <force_analysis>[Your thought process]</force_analysis>
+    <force>[Your final assessment]</force>
+    </threat_of_new_entry>
+
+    <synthesis>
+    <industry_profitability>[Your assessment]</industry_profitability>
+    <strategic_opportunities>[Your recommendations]</strategic_opportunities>
+    <market_positioning>[Your assessment]</market_positioning>
+    </synthesis>
+
+    <framework_evaluation>
+    <benefits>[List benefits]</benefits>
+    <limitations>[List limitations]</limitations>
+    </framework_evaluation>
+    </porters_five_forces_analysis>
+
+    Ensure that your analysis is thorough, well-reasoned, and directly applicable to the startup based on the provided information.
+  agent: PorterFiveForcesAgent
   inputs:
+    startup_info: '{STARTUP_INFO}'
 
 
 swot_analysis: 
-  description:
-  expected_output:
-  agent:
+  description: >-
+    You are an expert startup and business research consultant specializing in market sizing analysis. Your task is to prepare a detailed competition analysis for a startup based on the information provided.
+
+    First, carefully review the following startup information:
+
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
+
+    Your analysis should cover four key areas:
+    1. Competitor strengths evaluation
+    2. Weakness identification
+    3. Opportunity mapping
+    4. Threat assessment
+
+    Before providing your final analysis, wrap your thought process for each area inside <competition_analysis_breakdown> tags. Within these tags:
+
+    1. Summarize the key points of the startup information.
+    2. List potential competitors based on the startup's industry and target market.
+    3. For each area (strengths, weaknesses, opportunities, threats), brainstorm at least 5 points, considering both the startup and its competitors. It's OK for this section to be quite long.
+    4. Evaluate each point's relevance and potential impact on a scale of 1-5.
+
+    This will ensure a thorough and well-reasoned evaluation.
+
+    After your analysis, present your findings in a structured XML format. Use the following tags for each section:
+    - <competitor_strengths>
+    - <weaknesses>
+    - <opportunities>
+    - <threats>
+
+    Within each section, use <point> tags to list individual items.
+ 
+  expected_output: >-
+    <competition_analysis>
+    <competitor_strengths>
+    <point>[Strength 1]</point>
+    <point>[Strength 2]</point>
+    </competitor_strengths>
+    <weaknesses>
+    <point>[Weakness 1]</point>
+    <point>[Weakness 2]</point>
+    </weaknesses>
+    <opportunities>
+    <point>[Opportunity 1]</point>
+    <point>[Opportunity 2]</point>
+    </opportunities>
+    <threats>
+    <point>[Threat 1]</point>
+    <point>[Threat 2]</point>
+    </threats>
+    </competition_analysis>
+
+    Ensure that your analysis is specific to the startup information provided and offers actionable insights. Begin your analysis now.
+  agent: SWOTAnalysisAgent
   inputs:
+   startup_info: '{STARTUP_INFO}'
   
 top_down_analysis: 
-  description:
-  expected_output:
-  agent:
+  description: >-
+    You are an expert startup and business research consultant specializing in market sizing analysis. Your task is to help startups prepare compelling market size information for accelerator applications or venture capital funding using a TOP-DOWN ANALYSIS framework. Your analysis should be thorough, insightful, and increase the startup's chances of securing funding or being selected for an accelerator program.
+
+    Here's the startup information you need to analyze:
+
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
+
+    Please follow these steps to conduct your analysis:
+
+    1. Research and analyze the startup's idea, target market, and industry.
+    2. Investigate the competitive landscape, identifying key players and market dynamics.
+    3. Identify relevant industry trends and growth projections.
+    4. Consider any legal or regulatory factors that may impact the market.
+    5. Perform a detailed top-down market sizing analysis, including calculations for Total Addressable Market (TAM), Serviceable Addressable Market (SAM), and Serviceable Obtainable Market (SOM).
+
+    Before providing your final analysis, wrap your work and thought process inside <market_research_and_calculations> tags. In this section:
+
+    - Describe your research process and sources
+    - List potential competitors and their market shares
+    - Identify and list key data points needed for calculations
+    - Brainstorm potential market segments
+    - Show step-by-step calculations for TAM, SAM, and SOM, listing key data points and assumptions for each
+    - Explain your reasoning for each figure
+    - Provide a brief competitive analysis for each major competitor, including their market share
+    - Identify and explain significant market trends
+    - Note any relevant legal or regulatory factors
+
+    Ensure that your analysis is based on thorough research, provides actionable insights, and is
+    presented in a clear, concise manner that will resonate with accelerator reviewers and venture capitalists.
+    Remember to use the following top-down analysis framework for market sizing:
+
+    1. Define the Total Addressable Market (TAM):
+    - Start with the broadest market size for the industry or product category.
+    - Use reliable data sources such as industry reports, government statistics, or research firms.
+
+    2. Narrow Down to the Serviceable Available Market (SAM):
+    - Identify the portion of the TAM that applies to your specific target market and geography.
+    - Apply filters based on relevant factors like demographics, industry, income levels, or usage patterns.
+
+    3. Define the Serviceable Obtainable Market (SOM):
+    - Estimate the share of the SAM you can realistically capture in the short term based on competition, resources, and execution capabilities.
+    - Use benchmarks or historical data for penetration rates.
+
+    4. Validate Assumptions:
+    - Cross-check market estimates with competitor data, surveys, or customer feedback.
+    - Adjust for growth trends, market conditions, or technological advancements.
+
+    5. Scale for Growth Potential:
+    - Assess potential for market expansion by entering new geographies, introducing new features, or tapping into adjacent markets.
+
+    Ensure that your analysis follows this top-down approach, starting with broad market data and narrowing it down using logical filters and assumptions.
+
+  expected_output: >-
+    <market_analysis>
+    <executive_summary>
+    [Brief overview of findings and key insights]
+    </executive_summary>
+
+    <market_size>
+    <total_addressable_market>
+    [TAM figure and explanation]
+    </total_addressable_market>
+    <serviceable_addressable_market>
+    [SAM figure and explanation]
+    </serviceable_addressable_market>
+    <serviceable_obtainable_market>
+    [SOM figure and explanation]
+    </serviceable_obtainable_market>
+    </market_size>
+
+    <competitive_landscape>
+    [Summary of competitive landscape, including key players and market shares]
+    </competitive_landscape>
+
+    <market_trends>
+    [Description of significant market trends and growth projections]
+    </market_trends>
+
+    <regulatory_factors>
+    [Outline of relevant legal or regulatory factors]
+    </regulatory_factors>
+
+    <conclusion>
+    [Compelling conclusion highlighting the startup's potential in the context of the market analysis]
+    </conclusion>
+    </market_analysis>
+  agent: TopDownAnalysisAgent
   inputs:
+   startup_info: '{STARTUP_INFO}'
 
   

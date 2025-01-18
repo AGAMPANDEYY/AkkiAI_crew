@@ -1,31 +1,299 @@
-product_audience_fit: 
-  description:
-  expected_output:
-  agent:
+value_proposition_canvas: 
+  description: >
+    You are tasked with conducting a Stages of Awareness analysis based on the provided information about a target audience, buyer persona, motivations and desired outcomes, business details, and product/service/solutions details. The Stages of Awareness concept, developed by Eugene Schwartz, helps understand how aware potential customers are of their problems and the available solutions.
+
+    Here is the information of the startup you'll be working with:
+
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
+
+    Using this information, analyze the target audience's awareness level across the following stages:
+
+    1. Unaware: The audience doesn't know they have a problem.
+    2. Problem Aware: They know they have a problem but don't know there's a solution.
+    3. Solution Aware: They know a solution exists but don't know about the specific product/service.
+    4. Product Aware: They know about the product/service but aren't sure if it's right for them.
+    5. Most Aware: They know a lot about the product/service and are almost ready to buy.
+
+    For each stage, consider:
+    - What percentage of the target audience might be in this stage?
+    - What key messages or information would resonate with people in this stage?
+    - What marketing channels or tactics might be most effective for reaching people in this stage?
+    Ensure that your analysis is thorough, insightful, and directly relates to the provided information about the 
+    target audience, buyer persona, motivations, business, and product/service details.
+
+  expected_output: >
+    <stages_of_awareness_analysis>
+    <unaware>
+    [Your analysis for the Unaware stage]
+    </unaware>
+
+    <problem_aware>
+    [Your analysis for the Problem Aware stage]
+    </problem_aware>
+
+    <solution_aware>
+    [Your analysis for the Solution Aware stage]
+    </solution_aware>
+
+    <product_aware>
+    [Your analysis for the Product Aware stage]
+    </product_aware>
+
+    <most_aware>
+    [Your analysis for the Most Aware stage]
+    </most_aware>
+    </stages_of_awareness_analysis>
+
+    After completing the analysis, provide a summary of your findings and recommendations for marketing strategies based on the Stages of Awareness analysis. Include this in:
+
+    <summary_and_recommendations>
+    [Your summary and recommendations]
+    </summary_and_recommendations>
+
+  agent: ValuePropCanvasAgent
   inputs:
+   startup_info: "{STARTUP_INFO}"
 
 
 marketing_4p_analysis: 
-  description:
-  expected_output:
-  agent:
+  description: >
+    You are a marketing analyst tasked with applying the 4Ps of Marketing framework (Product, Price, Place, Promotion) to help understand a target audience and how a product/service aligns with their needs. You will be provided with information about the target audience and the product/service, and you should use this information to answer a series of questions about each of the 4Ps.
+
+    First, carefully read and analyze the following information about the startup
+
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
+   
+    Using the provided information, answer the following questions for each of the 4Ps. Be sure to base your answers on the specific details given about the target audience and product/service. If there isn't enough information to answer a question fully, make reasonable assumptions based on the available data and clearly state that you are making an assumption.
+
+    For each of the 4Ps, provide your analysis inside the corresponding XML tags (<product>, <price>, <place>, and <promotion>). Within each section, use subheadings (e.g., ) to separate your answers to individual questions.
+    Remember to base all your answers on the provided information about the target audience and product/service. 
+    If you need to make any assumptions, clearly state them in your analysis.
+  expected_output: >
+     <product>
+      Problem Solved
+      [Analyze what problem the product/service solves for the target audience]
+
+      Competitive Advantage
+      [Explain how the product/service stands out compared to competitors' offerings]
+
+      Key Features/Benefits
+      [Identify the key features or benefits that are most important to the target audience]
+      </product>
+
+      <price>
+      Pricing Model
+      [Recommend a pricing model that would appeal most to the target audience]
+
+      Perceived Value
+      [Analyze how the target audience perceives the value of the product/service relative to its price]
+
+      Price Sensitivities
+      [Identify any specific price sensitivities within the target audience]
+      </price>
+
+      <place>
+      Solution-Seeking Behavior
+      [Describe where the target audience typically seeks solutions like this product/service]
+
+      Distribution Channels
+      [Recommend which distribution channels or platforms would best reach the target audience]
+
+      Accessibility
+      [Suggest how to make the product/service easily accessible to the target audience]
+      </place>
+
+      <promotion>
+      Marketing Messages
+      [Describe what types of marketing messages and content would resonate most with the target audience]
+
+      Advertising Channels
+      [Recommend which advertising channels should be focused on to capture the target audience's attention]
+
+      Messaging Style
+      [Suggest what tone, style, or language should be used in messaging to appeal to the target audience]
+      </promotion>
+
+      After completing your analysis, provide a brief summary of your key findings and recommendations inside <summary> tags.
+
+  agent: Market4PAnalysisAgent
   inputs:
+    startup_info: "{STARTUP_INFO}"
   
 swot_analysis: 
-  description:
-  expected_output:
-  agent:
+  description: >
+   You are tasked with conducting a SWOT (Strengths, Weaknesses, Opportunities, Threats) analysis for a target audience. This analysis will help create more targeted and effective marketing strategies. Follow these instructions carefully to complete the task.
+
+    First, here is the description of the target audience you will be analyzing:
+
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
+
+    Now, follow these steps to conduct the SWOT analysis:
+
+    1. Carefully read and analyze the target audience description.
+
+    2. For each component of the SWOT analysis, consider the following:
+
+      a) Strengths:
+      - Identify key strengths of the target audience that align with a product or service.
+      - Determine what motivates them to buy (e.g., high purchasing power, brand loyalty).
+      - Note positive behaviors that make them ideal customers.
+
+      b) Weaknesses:
+      - Identify weaknesses or pain points of the target audience.
+      - Consider potential challenges or objections they might have when considering a product/service.
+      - Note any barriers to purchasing (e.g., limited budget, lack of trust, long decision-making process).
+
+      c) Opportunities:
+      - Identify opportunities in the market that could help engage with this audience better.
+      - Consider unmet needs or trends that could be leveraged (e.g., digital adoption, desire for sustainability).
+      - Look for growing demands or underserved niches within this audience.
+
+      d) Threats:
+      - Identify external threats that could affect the ability to reach or convert this audience.
+      - Consider competitors that might be better positioned to meet their needs.
+      - Note any industry shifts, regulations, or market trends that could negatively impact the relationship with this audience.
+
+    3. Based on your analysis, fill out the following SWOT table:
+
+  expected_output: >
+    
+    <swot_table>
+    | SWOT Component | Insights for Target Audience |
+    |-----------------|------------------------------|
+    | Strengths       |                              |
+    | Weaknesses      |                              |
+    | Opportunities   |                              |
+    | Threats         |                              |
+    </swot_table>
+
+    4. For each component in the SWOT table, provide at least three detailed insights based on the target audience description. Ensure that each insight is specific, relevant, and actionable.
+
+    5. After completing the table, provide a brief summary (2-3 sentences) of the key findings from your SWOT analysis and how they can be used to create more targeted and effective marketing strategies.
+
+    Present your completed SWOT analysis, including the filled table and summary, within <swot_analysis> tags.
+
+  agent: SWOTAnalysisAgent
   inputs:
+    startup_info: "{STARTUP_INFO}"
   
 mapping_buyer_journey: 
-  description:
-  expected_output:
-  agent:
+  description: >
+    You are tasked with mapping out the Buyer's Journey for a specific target audience and product/service. Your goal is to provide insights into how the target audience moves through each stage of the journey, from becoming aware of their problem to purchasing the product/service and beyond.
+
+    First, review the following information about the startup:
+
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
+
+    Now, follow these steps to complete the Buyer's Journey mapping:
+
+    1. Awareness Stage:
+      - Identify common challenges or pain points the target audience faces.
+      - Describe how they typically discover they have this problem.
+      - List where they seek information about their problem.
+      - Provide examples of questions they might ask at this stage.
+
+    2. Consideration Stage:
+      - List potential solutions the audience might consider, including competitors.
+      - Identify key decision-making criteria for the audience.
+      - Describe concerns or hesitations they may have about choosing a solution.
+      - Suggest how to position the product/service to meet their criteria.
+
+    3. Decision Stage:
+      - Identify final information or reassurance the audience needs before committing.
+      - List factors that could push them to choose the product/service.
+      - Specify the desired action for the audience to take.
+      - Suggest ways to make the buying process easier for them.
+
+    4. Post-Purchase Stage:
+      - Describe the experience or result the audience expects after purchasing.
+      - Suggest ways to ensure customer satisfaction or exceed expectations.
+      - Identify opportunities for encouraging repeat business or referrals.
+
+    For each stage, provide at least one key insight that can be used in a lead generation strategy.
+
+  expected_output: >
+    <buyers_journey>
+    <awareness_stage>
+    [Include your analysis and insights for the Awareness Stage here]
+    </awareness_stage>
+
+    <consideration_stage>
+    [Include your analysis and insights for the Consideration Stage here]
+    </consideration_stage>
+
+    <decision_stage>
+    [Include your analysis and insights for the Decision Stage here]
+    </decision_stage>
+
+    <post_purchase_stage>
+    [Include your analysis and insights for the Post-Purchase Stage here]
+    </post_purchase_stage>
+
+    <key_insights>
+    [List at least one key insight for each stage that can be used in a lead generation strategy]
+    </key_insights>
+    </buyers_journey>
+
+
+  agent: MappingBuyerJourneyAgent
   inputs:
+    startup_info: "{STARTUP_INFO}"
   
 usp_rose_framework: 
-  description:
-  expected_output:
-  agent:
+  description: >
+    These are the details about the startup go through it below:
+
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
+
+    You are a marketing expert tasked with applying the ROSE framework (Relevant - How does it connect to customer 
+    needs?; Original - What makes it different from competitors?; Simple - Can it be communicated clearly?; 
+    Emotional - How does it resonate with customer feelings?) to analyse and recommend the top 3 USPs and MOAT of the startup from the 
+    above data provided.
+    Ensure that your analysis is thorough, insightful, and directly relates to the provided target audience,
+    idea, product, customer persona and value proposition given above.
+  expected_output: >
+    <rose_analysis>
+    <relevant>
+    [List the relevant analysis]
+    </relevant>
+    <original>
+    [List the original analysis]
+    </original>
+    <simple>
+    [List the simple analysis]
+    </simple>
+    <emotional>
+    [List the emotional analysis]
+    </emotional>
+    </rose_analysis>
+    <top3_USPs>
+    [USP 1]
+    [USP 2]
+    [USP 3]
+    </top3_USPs>
+    <Moat>
+    [List the Moat]
+    </Moat>
+    <implementation_strategy>
+    [List the implementation strategy]
+    </implementation_strategy>
+    <success_metric>
+    [List the success metrics]
+    </success_metric>
+    [Summary of the USP]
+    <summary>
+    </summary>
+  agent: USPRoseFrameworkAgent
   inputs:
+    startup_info: "{STARTUP_INFO}"
   

@@ -147,17 +147,41 @@ class Task73Pydantic(BaseModel):
 class Task74Pydantic(BaseModel):
     product_performance:str
 
+class QuestionAnalysisAnswerPydantic(BaseModel):
+    question: str
+    analysis: str
+    answer: str
+
+class QuestionPydantic(BaseModel):
+    question_1: QuestionAnalysisAnswerPydantic
+    question_2: QuestionAnalysisAnswerPydantic
+    question_3: QuestionAnalysisAnswerPydantic
+    question_4: QuestionAnalysisAnswerPydantic
+    question_5: QuestionAnalysisAnswerPydantic
+    question_6: QuestionAnalysisAnswerPydantic
+    question_7: QuestionAnalysisAnswerPydantic
+    question_8: QuestionAnalysisAnswerPydantic
+    question_9: QuestionAnalysisAnswerPydantic
+    question_10: QuestionAnalysisAnswerPydantic
+    question_11: QuestionAnalysisAnswerPydantic
+    #question_11: Dict[str, QuestionAnalysisAnswerPydantic]
+
 class Task81Pydantic(BaseModel):
-    branding:str
+    yc_response: QuestionPydantic
+
+class FeedbackProblemSuggestionExamplePydantic(BaseModel):
+    problem: str
+    suggestion: str
+    example: str
 
 class Task82Pydantic(BaseModel):
-    brand_voice:str
+    vc_feedback:  Dict[str, FeedbackProblemSuggestionExamplePydantic]
 
 class Task83Pydantic(BaseModel):
-    brand_identity:str
+    yc_response: QuestionPydantic
 
 class Task84Pydantic(BaseModel):
-    brand_colors:str
+    yc_response: QuestionPydantic
 
 class SlidesPydantic(BaseModel):
     contents: str

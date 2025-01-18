@@ -7,13 +7,9 @@ finding_target_audience:
     business and a description of its products, services, or solutions. Read
     this information given by user as an input very carefully: 
 
-    <business_details> 
-    {BUSINESS_DETAILS}
-    </business_details>
-
-    <product_description> 
-    {PRODUCT_DESCRIPTION} 
-    </product_description>
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
 
     Now, follow these steps to generate the target audience list:
 

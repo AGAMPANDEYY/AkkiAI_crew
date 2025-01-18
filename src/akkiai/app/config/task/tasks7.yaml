@@ -1,24 +1,292 @@
 lean_canvas_mvp: 
-  description:
-  expected_output:
-  agent:
-  inputs:
+  description: >-
+    You are an experienced Product Management and Business Strategy consultant with extensive 
+    knowledge of the Lean Startup methodology. Your task is to review the provided startup information and 
+    create a comprehensive product and MVP (Minimum Viable Product) plan using Lean Startup principles.
+    This approach helps founders build products iteratively, 
+    using continuous feedback from users to minimize waste and maximize learning.
+    Here is the startup information you need to analyze:
 
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
+
+    Before providing your final product plan, wrap your thought process in <lean_startup_analysis> tags to break down your analysis for each step. This will ensure a thorough consideration of all aspects of the Lean Startup methodology. In your analysis:
+
+    1. Break down the startup information into key components: problem, target market, proposed solution, and current resources.
+    2. For each step of the Lean Startup methodology, consider:
+    - Pros and cons
+    - Potential challenges
+    - Specific applications to the startup information
+    3. Brainstorm potential metrics for measuring success in each step.
+    4. Keep the startup's specific context in mind throughout the analysis.
+
+    Please ensure that each step is thoroughly explained and directly 
+    relates to the specific startup information provided. Your analysis should demonstrate a deep understanding of
+    Lean Startup principles and how they apply to this particular case
+ 
+  expected_output: >-
+    <Product_Plan>
+    <Step_1>Initial Idea and Hypothesis</Step_1>
+    <Step_1_info>[Detailed explanation of the initial idea and hypothesis]</Step_1_info>
+
+    <Step_2>Build the MVP (Minimum Viable Product)</Step_2>
+    <Step_2_info>[Comprehensive MVP plan and steps]</Step_2_info>
+
+    <Step_3>Measure User Feedback</Step_3>
+    <Step_3_info>[Detailed strategy for MVP rollout and user feedback collection]</Step_3_info>
+
+    <Step_4>Learn and Pivot</Step_4>
+    <Step_4_info>[Thorough explanation of the learning process and potential pivot strategies]</Step_4_info>
+
+    <Step_5>Iterate and Improve</Step_5>
+    <Step_5_info>[Detailed plan for iteration and product improvement]</Step_5_info>
+    </Product_Plan> 
+  agent: LeanCanvasMVPAgent
+  inputs: 
+    startup_info: "{STARTUP_INFO}"
 
 roadmap_mvp: 
-  description:
-  expected_output:
-  agent:
-  inputs:
+  description: >-
+    You are an experienced Product Management and Business Strategy consultant specializing in Product Roadmaps. 
+    Your task is to create a comprehensive product roadmap using the NOW-NEXT-LATER format for a startup based on 
+    the provided information.
+
+    First, review the startup information:
+
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
+
+    Before creating the roadmap, analyze the startup information and categorize potential initiatives. Wrap your roadmap planning process inside <strategic_analysis> tags:
+
+    <strategic_analysis>
+    1. Identify and list all key challenges and opportunities for the startup
+    2. Brainstorm and list at least 15 potential initiatives
+    3. Create a table of initiatives with the following columns:
+    a. Initiative Name
+    b. Priority (high, medium, low)
+    c. Feasibility (easy, moderate, difficult)
+    d. Potential impact (high, medium, low)
+    4. Categorize initiatives into NOW, NEXT, and LATER based on your analysis
+    5. For each initiative, provide a brief justification for its categorization
+    6. Consider and note dependencies between initiatives
+    7. Think about and list potential success metrics for each category (NOW, NEXT, LATER)
+    8. Identify potential risks for each category and suggest mitigation strategies
+    </strategic_analysis>
+    Remember:
+    1. Keep descriptions concise and clear.
+    2. Ensure initiatives are appropriately categorized based on priority and feasibility.
+    3. Consider the startup's unique challenges and opportunities when defining initiatives.
+    4. Maintain a high-level overview without going into excessive detail.
+
+    Present your final roadmap using the example provided above.
+  expected_output: >-
+    <product_roadmap>
+    <now>
+    <timeframe>1-3 months</timeframe>
+    <goal>[Define the main objective for this timeframe]</goal>
+    <key_initiatives>
+    <initiative>
+    <name>[Initiative Name]</name>
+    <description>[Brief description]</description>
+    </initiative>
+    <!-- Repeat for 2 more initiatives -->
+    </key_initiatives>
+    <success_metrics>
+    <!-- List 2-3 key metrics -->
+    </success_metrics>
+    <dependencies>
+    <!-- List critical dependencies -->
+    </dependencies>
+    <owner>[Assign ownership to a team or individual]</owner>
+    <risks_and_mitigation>
+    <!-- Identify 1-2 key risks and suggest mitigation strategies -->
+    </risks_and_mitigation>
+    </now>
+
+    <next>
+    <!-- Same structure as <now>, but for 3-6 months timeframe -->
+    </next>
+
+    <later>
+    <!-- Same structure as <now>, but for 6-12+ months timeframe -->
+    </later>
+    </product_roadmap>
+  agent: RoadmapMVPAgent
+  inputs: 
+    startup_info: "{STARTUP_INFO}"
+     
   
 prd_template: 
-  description:
-  expected_output:
-  agent:
+  description: >- 
+    You are an experienced Product Management and Business Strategy consultant specializing in Product Roadmaps.
+    Your task is to create a comprehensive product roadmap using the Basic PRD Template Framework for Startups (MVP)
+    format based on the provided startup information.
+
+    First, review the startup information:
+
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
+
+    Before creating the roadmap, analyze the startup information and categorize potential initiatives. In <roadmap_planning> tags, break down your thought process and planning for each section of the PRD:
+
+    1. List key features and goals extracted from the startup info.
+    2. Prioritize these features for the MVP.
+    3. Outline potential risks and mitigation strategies.
+    4. Sketch a high-level timeline with major milestones.
+
+    Then, create the final PRD using the following framework:
+
+    Basic PRD Template Framework for Startups (MVP):
+
+    1. Product Overview
+    2. Goals and Success Metrics
+    3. Scope of the MVP
+    4. User Stories and Use Cases
+    5. Functional Requirements
+    6. Technical Requirements
+    7. Wireframes or Mockups
+    8. Risks and Assumptions
+    9. Success Validation Plan
+    10. Timeline and Milestones
+
+    For each section, provide concise, actionable information tailored to the startup's needs. Ensure that you address all sections in the framework.
+    Remember to keep your responses concise, specific, and tailored to the startup's product and needs. Focus on creating a lean PRD that helps the startup 
+    launch an MVP efficiently while aligning stakeholders and minimizing risks.
+  expected_output: >-
+    <PRD>
+    <ProductOverview>
+    [Content for Product Overview]
+    </ProductOverview>
+    <GoalsAndSuccessMetrics>
+    [Content for Goals and Success Metrics]
+    </GoalsAndSuccessMetrics>
+    <ScopeOfMVP>
+    <CoreFeatures>
+    [Numbered list of core features]
+    </CoreFeatures>
+    <Exclusions>
+    [Numbered list of intentionally excluded features]
+    </Exclusions>
+    </ScopeOfMVP>
+    <UserStoriesAndUseCases>
+    [Content for User Stories and Use Cases]
+    </UserStoriesAndUseCases>
+    <FunctionalRequirements>
+    [Content for Functional Requirements]
+    </FunctionalRequirements>
+    <TechnicalRequirements>
+    [Content for Technical Requirements]
+    </TechnicalRequirements>
+    <WireframesOrMockups>
+    [Description of Wireframes or Mockups]
+    </WireframesOrMockups>
+    <RisksAndAssumptions>
+    [Content for Risks and Assumptions]
+    </RisksAndAssumptions>
+    <SuccessValidationPlan>
+    [Content for Success Validation Plan]
+    </SuccessValidationPlan>
+    <TimelineAndMilestones>
+    [Content for Timeline and Milestones]
+    </TimelineAndMilestones>
+    </PRD>
+  agent: PRDTemplateAgent
   inputs:
-  
+    startup_info: "{STARTUP_INFO}"
+
 techstack_framework: 
-  description:
-  expected_output:
-  agent:
+  description: >-
+    You are an experienced Product Management and Business Strategy consultant specializing in Product Roadmaps and 
+    Technical Architecture Planning. Your task is to create a comprehensive product roadmap using the Basic PRD 
+    Template Framework for Startups (MVP) format based on the provided startup information.
+
+    Here is the startup information:
+
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
+
+    Your goal is to create a detailed Product Requirements Document (PRD) including detailed Tech Stack Info for this startup's Minimum Viable Product (MVP). Follow these steps:
+
+    1. Analyze the startup information
+    2. Plan the product roadmap
+    3. Create the PRD using the specified template
+
+    Before creating the PRD, conduct your analysis inside <startup_analysis> tags:
+    - Break down the startup information into key components: product concept, target audience, market need, and technological considerations. Number each component as you list it.
+    - List out potential features and prioritize them based on importance for the MVP. Number each feature as you list it.
+    - Identify any potential risks or challenges. Number each risk/challenge as you list it.
+
+    For each major section of the PRD, use <section_planning> tags to show your thought process before writing the final content. Consider the pros and cons of different approaches for each section. 
+    This will ensure a thorough and well-considered approach to each element of the product roadmap.
+     Important Considerations:
+    1. Ensure the Technical Requirements section clearly outlines the tech stack for frontend, backend, database, hosting, and APIs.
+    2. Align your responses with the startup's specific product goals and constraints.
+    3. Keep the roadmap lean and actionable to facilitate quick launch and MVP validation.
+    4. Prioritize features for the MVP based on user value, feasibility, and impact.
+    5. Identify potential risks (technical, operational, or market-related) and propose mitigation strategies.
+    6. Define a high-level timeline with major milestones.
+
+    Tech Stack Framework for Startups (MVP):
+    When defining the Technical Requirements section of the PRD, select a tech stack that aligns with the startup's goals, resources, and scalability needs. Consider the following categories:
+
+    1. Frontend Framework (e.g., React, Vue.js, Angular)
+    2. Backend Framework (e.g., Node.js, Django, Ruby on Rails)
+    3. Database (e.g., PostgreSQL, MongoDB, Firebase)
+    4. Hosting and Infrastructure (e.g., AWS, Google Cloud, Vercel/Netlify)
+    5. APIs and Integrations (e.g., Payment Gateways, Authentication, Analytics, Email)
+    6. DevOps and CI/CD (e.g., Docker, GitHub Actions, Jenkins)
+    7. Mobile App Development (if applicable) (e.g., React Native, Flutter, Swift/Java)
+    8. AI/ML (if applicable)
+
+    For each category, explain your choice and how it aligns with the startup's needs.
+
+    Begin your response by analyzing the startup information and planning the product roadmap. 
+  expected_output: >-
+    <PRD>
+    <ProductOverview>
+    [Product purpose, target audience, and problem statement]
+    </ProductOverview>
+    <GoalsAndSuccessMetrics>
+    [Define clear goals and KPIs]
+    </GoalsAndSuccessMetrics>
+    <ScopeOfMVP>
+    <CoreFeatures>
+    [List of prioritized core features]
+    </CoreFeatures>
+    <Exclusions>
+    [List of excluded features]
+    </Exclusions>
+    </ScopeOfMVP>
+    <UserStoriesAndUseCases>
+    [Content for user stories and use cases]
+    </UserStoriesAndUseCases>
+    <FunctionalRequirements>
+    [Details of system features and behaviors]
+    </FunctionalRequirements>
+    <TechnicalRequirements>
+    <FrontendFramework>[React, Vue, etc.]</FrontendFramework>
+    <BackendFramework>[Node.js, Django, etc.]</BackendFramework>
+    <Database>[PostgreSQL, MongoDB, etc.]</Database>
+    <Hosting>[AWS, Azure, etc.]</Hosting>
+    <APIs>[Payment Gateway, Analytics APIs, etc.]</APIs>
+    </TechnicalRequirements>
+    <WireframesOrMockups>
+    [Description or links to UI/UX wireframes]
+    </WireframesOrMockups>
+    <RisksAndAssumptions>
+    [List of risks and mitigation plans]
+    </RisksAndAssumptions>
+    <SuccessValidationPlan>
+    [Testing and feedback strategies]
+    </SuccessValidationPlan>
+    <TimelineAndMilestones>
+    [Key deliverables with timelines]
+    </TimelineAndMilestones>
+    </PRD>
+  agent: TechStackFrameworkAgent
   inputs:
+    startup_info: "{STARTUP_INFO}"

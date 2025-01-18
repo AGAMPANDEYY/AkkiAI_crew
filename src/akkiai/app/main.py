@@ -55,12 +55,12 @@ class RunInputs(BaseModel):
     
     SOLUTION_ID: str #added extra input for choosing the solution id 
     INPUT_1: str
-    INPUT_2: str
-    INPUT_3: str
-    INPUT_4: str
-    INPUT_5: str
-    INPUT_6: str
-    INPUT_7: str
+    #INPUT_2: str
+    #INPUT_3: str
+    #INPUT_4: str
+    #INPUT_5: str
+    #INPUT_6: str
+    #INPUT_7: str
     HASH: str
 
 class TrainInputs(BaseModel):
@@ -128,15 +128,17 @@ async def run(inputs: RunInputs, background_tasks: BackgroundTasks):
     try:
         solution_id=inputs.SOLUTION_ID
         input1=inputs.INPUT_1
-        input2=inputs.INPUT_2
-        input3=inputs.INPUT_3
+        #input2=inputs.INPUT_2
+        #input3=inputs.INPUT_3
         received_hash=inputs.HASH
          
-        if not (solution_id and input1 and input2 and input3 and received_hash):
+        #if not (solution_id and input1 and input2 and input3 and received_hash):
+        if not (solution_id and input1 and received_hash):
             raise HTTPException(status_code=400, detail="Invalid input data")
         
         #computing hash from received data
-        data_string=f"{solution_id}|{input1}|{input2}|{input3}"
+        #data_string=f"{solution_id}|{input1}|{input2}|{input3}"
+        data_string=f"{solution_id}|{input1}"
 
         #compute hash from data string
         computed_hash= await compute_hash(data_string,SECRET_KEY)
@@ -206,71 +208,61 @@ async def run_crew_bg(crew_instance, inputs, solution_id, kickoff_id ):
         if solution_id == "1":
             # Pass the inputs to the backend agent (replace with your actual logic)
             result = await crew_instance.kickoff_async(inputs={
-                "BUSINESS_DETAILS": inputs.INPUT_1,
-                "PRODUCT_DESCRIPTION": inputs.INPUT_2
+                "STARTUP_INFO": inputs.INPUT_1,
+                #"BUSINESS_DETAILS": inputs.INPUT_1,
+                #"PRODUCT_DESCRIPTION": inputs.INPUT_2
             })
 
         elif solution_id == "2":
              # Pass the inputs to the backend agent (replace with your actual logic)
             result = await crew_instance.kickoff_async(inputs={
-                "TARGET_AUDIENCE": inputs.INPUT_1,
-                "BUSINESS_DETAILS": inputs.INPUT_2,
-                "PRODUCT_DESCRIPTION": inputs.INPUT_3
+                "STARTUP_INFO": inputs.INPUT_1,
+                #"TARGET_AUDIENCE": inputs.INPUT_1,
+                #"BUSINESS_DETAILS": inputs.INPUT_2,
+                #"PRODUCT_DESCRIPTION": inputs.INPUT_3
             })
 
         elif solution_id == "3":
-            # Pass the inputs to the backend agent (replace with your actual logic)
+
             result = await crew_instance.kickoff_async(inputs={
-                "TARGET_AUDIENCE": inputs.INPUT_1,
-                "PRODUCT_DESCRIPTION": inputs.INPUT_2
+                "STARTUP_INFO": inputs.INPUT_1,
+                #"TARGET_AUDIENCE": inputs.INPUT_2,
+                #"PRODUCT_DESCRIPTION": inputs.INPUT_3
             })
         
         elif solution_id == "4":
               # Pass the inputs to the backend agent (replace with your actual logic)
             result = await crew_instance.kickoff_async(inputs={
-                "BRAND_INFO": inputs.INPUT_1,
-                "TARGET_AUDIENCE":inputs.INPUT_2,
-                "BUYER_PERSONA": inputs.INPUT_3
+                "STARTUP_INFO": inputs.INPUT_1,
             })
 
         elif solution_id == "5":
             # Pass the inputs to the backend agent (replace with your actual logic)
             result = await crew_instance.kickoff_async(inputs={
-                "BRAND_INFO": inputs.INPUT_1,
-                "TARGET_AUDIENCE":inputs.INPUT_2,
-                "BUYER_PERSONA": inputs.INPUT_3
+                "STARTUP_INFO": inputs.INPUT_1,
             })
         elif solution_id == "6":
             # Pass the inputs to the backend agent (replace with your actual logic)
             result = await crew_instance.kickoff_async(inputs={
-                "BRAND_INFO": inputs.INPUT_1,
-                "TARGET_AUDIENCE":inputs.INPUT_2,
-                "BUYER_PERSONA": inputs.INPUT_3
+                "STARTUP_INFO": inputs.INPUT_1,
             })
         elif solution_id == "7":
-            # Pass the inputs to the backend agent (replace with your actual logic)
-            result = await crew_instance.kickoff_async(inputs={
-                "BRAND_INFO": inputs.INPUT_1,
-                "TARGET_AUDIENCE":inputs.INPUT_2,
-                "BUYER_PERSONA": inputs.INPUT_3
-            })
-        elif solution_id == "8":
-            # Pass the inputs to the backend agent (replace with your actual logic)
-            result = await crew_instance.kickoff_async(inputs={
-                "BRAND_INFO": inputs.INPUT_1,
-                "TARGET_AUDIENCE":inputs.INPUT_2,
-                "BUYER_PERSONA": inputs.INPUT_3
-            })
-        elif solution_id == "9":
-              # Pass the inputs to the backend agent (replace with your actual logic)
             result = await crew_instance.kickoff_async(inputs={
                 "STARTUP_INFO": inputs.INPUT_1,
-                "BUSINESS_DETAILS": inputs.INPUT_2,
-                "PRODUCT_DESCRIPTION": inputs.INPUT_3,
-                "TARGET_AUDIENCE": inputs.INPUT_4,
-                "CUSTOMER_PERSONA": inputs.INPUT_5,
-                "VALUE_PROPOSITION": inputs.INPUT_6,
-                "MESSAGING": inputs.INPUT_7
+            })
+        elif solution_id == "8":
+            result = await crew_instance.kickoff_async(inputs={
+                "STARTUP_INFO": inputs.INPUT_1,
+            })
+        elif solution_id == "9":
+            result = await crew_instance.kickoff_async(inputs={
+                "STARTUP_INFO": inputs.INPUT_1,
+                #"BUSINESS_DETAILS": inputs.INPUT_2,
+                #"PRODUCT_DESCRIPTION": inputs.INPUT_3,
+                #"TARGET_AUDIENCE": inputs.INPUT_4,
+                #"CUSTOMER_PERSONA": inputs.INPUT_5,
+                #"VALUE_PROPOSITION": inputs.INPUT_6,
+                #"MESSAGING": inputs.INPUT_7
 
             })
         

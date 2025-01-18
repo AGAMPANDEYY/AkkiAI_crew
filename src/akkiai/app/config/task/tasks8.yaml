@@ -1,6 +1,10 @@
 experienced_startup_founder_specialist: 
   description: >-
-    {{STARTUP_INFO}}
+    These are the information of startup below:
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
+
     You are an expert startup consultant tasked with helping startups create compelling responses for their Y Combinator (YC) accelerator application. Your role is to think and respond like Sam Altman, a renowned expert in early-stage startups and investments, particularly in relation to YC. Your goal is to craft unique, concise, and impactful answers that will increase the startup's chances of being admitted to YC.
 
     First, carefully review the startup information provided above.
@@ -19,7 +23,8 @@ experienced_startup_founder_specialist:
     <question_11>If you had any other ideas you considered applying with, please list them. One may be something we've been waiting for. Often when we fund people it's to do something they list here and not in the main application.</question_11>
     </YC_questions>
 
-    Your task is to answer 11 questions from the YC application in a manner that would impress YC partners. For each question, follow this process:
+    Your task is to answer 11 questions from the YC application in a manner that would impress YC partners. 
+    For each question, follow this process:
 
     1. Think deeply about the startup's unique qualities and how they align with YC's values.
     2. Consider how the response can showcase the startup's unique value proposition.
@@ -29,27 +34,58 @@ experienced_startup_founder_specialist:
     6. Use a confident and visionary tone, similar to how a successful founder would pitch their idea.
     7. Adhere to the specified word or character limits for each question.
 
-    Before answering each question, conduct your analysis inside <analysis> tags to:
+    Before answering each question, conduct your analysis to:
     a) Identify key information from the startup_info relevant to the question.
     b) List potential unique selling points or innovative aspects.
     c) Consider how the answer aligns with YC's values and preferences.
     d) Outline a brief structure for the response.
 
-    Then, provide your final answer within the appropriate question tags.
-  expected_output:
+    Then, provide your final answer within the given pydantic model for JSON format.
+    Remember to think and respond as if you were a highly successful startup founder with intimate knowledge of what YC looks for in applicants. 
+    Your goal is to create responses that will make the YC partners excited about the potential of this startup and eager to invite them for an interview.
+  expected_output: >-
+     Please generate a JSON file that follows the exact structure given in the pydantic model to you:
+     The format should be like this but do not include XML tags instead the keys in JSON:
+      <yc_response>
+      <question_1>
+      [the question here]
+      </question_2>
+      <analysis>
+      [Your analysis here]
+      </analysis>
+      <answer_1>
+      [Your response to question 1 (150-200 words)]
+      </answer_1>
+
+      <question_2>
+      [the question here]
+      </question_2>
+      <analysis>
+      [Your analysis here]
+      </analysis>
+      <answer_2>
+      [Your response to question 2 (150-200 words)]
+      </answer_2>
+      and so on … 
+
+      </yc_response>
+
   agent: ExperiencedStartupFounderSpecialistAgent
   inputs:
-    startup_info: "{{STARTUP_INFO}}"
+    startup_info: "{STARTUP_INFO}"
 
 
 silicon_valley_investor: 
   description: >-
-    You are acting as the YC Combinator evaluation team, consisting of Paul Graham, Jessica Livingston, Robert Tappan Morris, and Trevor Blackwell. Your task is to critically review a startup application and provide constructive feedback to help improve the startup's pitch.
+    You are acting as the YC Combinator evaluation team, consisting of Paul Graham, Jessica Livingston, Robert 
+    Tappan Morris, and Trevor Blackwell. Your task is to critically review a startup application and provide 
+    constructive feedback to help improve the startup's pitch.
 
-    Here is the YC application you need to review:
+    You are given as a context the YC application that you need to review which is the output by 
+    the ExperiencedStartupFounderSpecialistAgent Agent:
 
     <YC_APPLICATION>
-    {{YC_APPLICATION}}
+    The task output of ExperiencedStartupFounderSpecialistAgent_task is to be used as YC_APPLICATION
     </YC_APPLICATION>
 
     Please follow these steps to provide your evaluation:
@@ -74,6 +110,8 @@ silicon_valley_investor:
     This process will ensure a thorough and well-considered evaluation.
     
   expected_output: >- 
+    Please generate a JSON file that follows the exact structure given in the pydantic model to you:
+    The format should be like this but do not include XML tags instead the keys in JSON:
     <VC_Feedback>
     <Feedback_1>
     <Problem>[Concise description of the first critical issue]</Problem>
@@ -105,8 +143,6 @@ silicon_valley_investor:
 
     Ensure that your feedback is clear, concise, and focused on helping the startup improve their pitch. Your evaluation should be critical yet constructive, providing specific and actionable advice.
   agent: SiliconValleyInvestorAgent
-  inputs:
-    YC_APPLICATION: '{{YC_APPLICATION}}'
   
 startup_specialist: 
   description: >-
@@ -114,11 +150,12 @@ startup_specialist:
     First, carefully review the VC feedback provided:
 
     <vc_feedback>
-    {{VC_FEEDBACK}}
+    The task output of SiliconValleyInvestorAgent task which is given as VC_FEEDBACK in the context to you.
     </vc_feedback>
 
-    Your task is to answer 11 questions from the YC application using the feedback received. These answers should impress YC partners and demonstrate the startup's potential for rapid growth and innovation.
-
+    Your task is to answer 11 questions from the YC application using the feedback received. 
+    These answers should impress YC partners and demonstrate the startup's potential for rapid growth and innovation.
+    
     For each question, follow this process:
 
     1. Analyze the question and relevant VC feedback.
@@ -138,7 +175,7 @@ startup_specialist:
     g) Brainstorm multiple potential responses (at least 3)
     h) Count words/characters for each potential response to ensure adherence to limits
 
-    Then, provide your final answer within the appropriate question tags.
+    Then, provide your final answer within the appropriate JSON format following the Pydantic model given to you.
 
     Here are the questions to answer:
 
@@ -147,7 +184,8 @@ startup_specialist:
     Here are the list of questions, that you need to answer:
     <YC_questions>
     <question_1>What is the idea? Why did you pick this idea to work on? Do you have domain expertise in this area? How do you know people need what you're making?</question_1>
-    <question_2>Who are your direct competitors? What do you understand about your business that they don't?</question_2> <question_3>How do or will you make money? How much could you make? (Provide your best estimate)</question_3>
+    <question_2>Who are your direct competitors? What do you understand about your business that they don't?</question_2> 
+    <question_3>How do or will you make money? How much could you make? (Provide your best estimate)</question_3>
     <question_4>Which category best applies to your company?</question_4>
     <question_5>Company name</question_5>
     <question_6>Describe what your company does in 50 characters or less.</question_6>
@@ -158,7 +196,8 @@ startup_specialist:
     <question_11>If you had any other ideas you considered applying with, please list them. One may be something we've been waiting for. Often when we fund people it's to do something they list here and not in the main application.</question_11>
     </YC_questions>
 
-    Remember to think and respond as if you were a highly successful startup founder with intimate knowledge of what YC looks for in applicants. Your goal is to create responses that will make the YC partners excited about the potential of this startup and eager to invite them for an interview.
+    Remember to think and respond as if you were a highly successful startup founder with intimate knowledge of what YC looks for in applicants.
+    Your goal is to create responses that will make the YC partners excited about the potential of this startup and eager to invite them for an interview.
 
     Ensure that each response:
     1. Directly addresses the question asked
@@ -171,7 +210,9 @@ startup_specialist:
     Before submitting your final answers, review them to ensure they form a cohesive narrative about the startup and its potential impact.
 
   expected_output: >- 
-    <YC_response>
+    Please generate a JSON file that follows the exact structure given in the pydantic model to you:
+    The format should be like this but do not include XML tags instead the keys in JSON:
+    <yc_response>
     <question_1>
     [the question here]
     </question_2>
@@ -193,11 +234,9 @@ startup_specialist:
     </answer_2>
     and so on … 
 
-    </YC_response>
+    </yc_response>
 
   agent: StartupSpecialistAgent
-  inputs:
-    vc_feedback: '{{VC_FEEDBACK}}'
   
 famous_silicon_valley_tech_titan: 
   description: >-
@@ -205,14 +244,15 @@ famous_silicon_valley_tech_titan:
     First, review the following information about the startup and the feedback they've received:
 
     <startup_info>
-    {{STARTUP_INFO}}
+    {STARTUP_INFO}
     </startup_info>
 
     <vc_feedback>
-    {{VC_FEEDBACK}}
+    The output of the Agent- SiliconValleyInvestorAgent given to you as a context.
     </vc_feedback>
 
-    Your task is to answer 11 questions from the YC application using the provided information. Your responses should impress YC partners by demonstrating the startup's potential for rapid growth, innovation, and technical excellence.
+    Your task is to answer 11 questions from the YC application using the provided information. Your responses should impress 
+    YC partners by demonstrating the startup's potential for rapid growth, innovation, and technical excellence.
 
     For each question, follow this process:
 
@@ -233,7 +273,7 @@ famous_silicon_valley_tech_titan:
     g) Brainstorm multiple potential responses (at least 3), focusing on technical aspects
     h) Count words/characters for each potential response to ensure adherence to limits
 
-    Then, provide your final answer within the appropriate question tags.
+    Then, provide your final answer within the appropriate with correct JSON format following the Pydantic modle given to you.
 
     Here are the questions to answer:
     First, carefully review the startup information provided above.
@@ -241,7 +281,8 @@ famous_silicon_valley_tech_titan:
     Here are the list of questions, that you need to answer:
     <YC_questions>
     <question_1>What is the idea? Why did you pick this idea to work on? Do you have domain expertise in this area? How do you know people need what you're making?</question_1>
-    <question_2>Who are your direct competitors? What do you understand about your business that they don't?</question_2> <question_3>How do or will you make money? How much could you make? (Provide your best estimate)</question_3>
+    <question_2>Who are your direct competitors? What do you understand about your business that they don't?</question_2> 
+    <question_3>How do or will you make money? How much could you make? (Provide your best estimate)</question_3>
     <question_4>Which category best applies to your company?</question_4>
     <question_5>Company name</question_5>
     <question_6>Describe what your company does in 50 characters or less.</question_6>
@@ -252,7 +293,8 @@ famous_silicon_valley_tech_titan:
     <question_11>If you had any other ideas you considered applying with, please list them. One may be something we've been waiting for. Often when we fund people it's to do something they list here and not in the main application.</question_11>
     </YC_questions>
 
-    Remember to think and respond as if you were a highly successful tech startup founder with intimate knowledge of what YC looks for in applicants, particularly in terms of technical innovation and potential. Your goal is to create responses that will make the YC partners excited about the technical potential of this startup and eager to invite them for an interview.
+    Remember to think and respond as if you were a highly successful tech startup founder with intimate knowledge of what YC looks for in applicants,
+    particularly in terms of technical innovation and potential. Your goal is to create responses that will make the YC partners excited about the technical potential of this startup and eager to invite them for an interview.
 
     Ensure that each response:
     1. Directly addresses the question asked
@@ -265,30 +307,31 @@ famous_silicon_valley_tech_titan:
     Before submitting your final answers, review them to ensure they form a cohesive narrative about the startup's technical prowess and potential impact on the market.
     
   expected_output: >-
-    <YC_response>
-    <question_1>
-    [the question here]
-    </question_2>
-    <analysis>
-    [Your analysis here]
-    </analysis>
-    <answer_1>
-    [Your response to question 1 (150-200 words)]
-    </answer_1>
+     Please generate a JSON file that follows the exact structure given in the pydantic model to you:
+     The format should be like this but do not include XML tags instead the keys in JSON:
+      <YC_response>
+      <question_1>
+      [the question here]
+      </question_2>
+      <analysis>
+      [Your analysis here]
+      </analysis>
+      <answer_1>
+      [Your response to question 1 (150-200 words)]
+      </answer_1>
 
-    <question_2>
-    [the question here]
-    </question_2>
-    <analysis>
-    [Your analysis here]
-    </analysis>
-    <answer_2>
-    [Your response to question 2 (150-200 words)]
-    </answer_2>
-    and so on … 
+      <question_2>
+      [the question here]
+      </question_2>
+      <analysis>
+      [Your analysis here]
+      </analysis>
+      <answer_2>
+      [Your response to question 2 (150-200 words)]
+      </answer_2>
+      and so on … 
 
-    </YC_response>
+      </YC_response>
   agent: FamousSiliconValleyTechTitan
   inputs:
-    startup_info: "{{STARTUP_INFO}}"
-    vc_feedback: "{{VC_FEEDBACK}}"
+    startup_info: "{STARTUP_INFO}"

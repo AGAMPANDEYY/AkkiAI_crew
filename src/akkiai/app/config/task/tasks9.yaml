@@ -84,29 +84,9 @@ guy_kawasaki102030_rule:
 
     First, carefully review the following information about the startup:
 
-    <business_details>
-    {BUSINESS_DETAILS}
-    </business_details>
-
-    <product_description>
-    {PRODUCT_DESCRIPTION}
-    </product_description>
-
-    <target_audience>
-    {TARGET_AUDIENCE}
-    </target_audience>
-
-    <customer_persona>
-    {CUSTOMER_PERSONA}
-    </customer_persona>
-
-    <value_proposition>
-    {VALUE_PROPOSITION}
-    </value_proposition>
-
-    <messaging>
-    {MESSAGING}
-    </messaging>
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
 
     Your goal is to create the best possible accelerator pitch deck using this information. Follow these guidelines:
 
@@ -155,13 +135,7 @@ guy_kawasaki102030_rule:
     5. Include all slides (Slide_1 through Slide_10)
 
   agent: GuyKawasaki102030RuleAgent
-  inputs: 
-    business_details: '{{BUSINESS_DETAILS}}'
-    product_description: '{{PRODUCT_DESCRIPTION}}'
-    target_audience: '{{TARGET_AUDIENCE}}'
-    customer_persona: '{{CUSTOMER_PERSONA}}'
-    value_proposition: '{{VALUE_PROPOSITION}}'
-    messaging: '{{MESSAGING}}'
+
   
 venture_capital_method: 
   description: >-
@@ -416,8 +390,10 @@ ycombinator_template:
     You are an experienced startup consultant tasked with creating a comprehensive pitch deck for a startup using the Y Combinator format. 
     This format is designed to be simple and concise, focusing on clarity and essential details to quickly convey 
     your startup's value.
-
+    
+    <startup_info>
     {STARTUP_INFO}
+    </startup_info>
 
     First, carefully analyze the above information about the startup.
     Your task is to create a complete accelerator pitch deck based on this information. 
@@ -502,4 +478,4 @@ ycombinator_template:
 
   agent: YCombinatorTemplateAgent
   inputs: 
-    startup_info: '{{STARTUP_INFO}}'
+    startup_info: '{STARTUP_INFO}'
