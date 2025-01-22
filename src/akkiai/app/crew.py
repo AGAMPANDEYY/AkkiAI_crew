@@ -17,6 +17,7 @@ class crew1():
     agents_config = 'config/agent/agents1.yaml'
     tasks_config = 'config/task/tasks1.yaml'
     claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
+    #deepseek_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
     
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
         """
@@ -51,7 +52,7 @@ class crew1():
                 json={
                     "kickoff_id": kickoff_id,
                     "task_name": task_name,
-                    "task_output": str(task_output.json_dict) #This will now send strings
+                    "task_output": str(task_output.raw) #This will now send strings
                 },
                 timeout=10
                 )
@@ -69,6 +70,7 @@ class crew1():
         return Agent(
             config=self.agents_config['TargetAudienceAgent'],
             llm=self.claude_llm,
+            #llm=self.deepseek_llm,
             verbose=True
         )
 
@@ -134,7 +136,7 @@ class crew2():
                 json={
                     "kickoff_id": kickoff_id,
                     "task_name": task_name,
-                    "task_output": str(task_output.json_dict) #This will now send strings
+                    "task_output": str(task_output.raw) #This will now send strings
                 },
                 timeout=10
                 )
@@ -293,7 +295,7 @@ class crew3():
                 json={
                     "kickoff_id": kickoff_id,
                     "task_name": task_name,
-                    "task_output": str(task_output.json_dict) #This will now send strings
+                    "task_output": str(task_output.raw) #This will now send strings
                 },
                 timeout=10
                 )
@@ -448,7 +450,7 @@ class crew4():
                 json={
                     "kickoff_id": kickoff_id,
                     "task_name": task_name,
-                    "task_output": str(task_output.json_dict) #This will now send strings
+                    "task_output": str(task_output.raw) #This will now send strings
                 },
                 timeout=10
                 )
@@ -657,7 +659,7 @@ class crew5():
                 json={
                     "kickoff_id": kickoff_id,
                     "task_name": task_name,
-                    "task_output": str(task_output.json_dict) #This will now send strings
+                    "task_output": str(task_output.raw) #This will now send strings
                 },
                 timeout=10
                 )
@@ -794,7 +796,7 @@ class crew6():
                 json={
                     "kickoff_id": kickoff_id,
                     "task_name": task_name,
-                    "task_output": str(task_output.json_dict) #This will now send strings
+                    "task_output": str(task_output.raw) #This will now send strings
                 },
                 timeout=10
                 )
@@ -985,7 +987,7 @@ class crew7():
                 json={
                     "kickoff_id": kickoff_id,
                     "task_name": task_name,
-                    "task_output": str(task_output.json_dict) #This will now send strings
+                    "task_output": str(task_output.raw) #This will now send strings
                 },
                 timeout=10
                 )
@@ -1121,7 +1123,7 @@ class crew8():
                 json={
                     "kickoff_id": kickoff_id,
                     "task_name": task_name,
-                    "task_output": str(task_output.json_dict) #This will now send strings
+                    "task_output": str(task_output.raw) #This will now send strings
                 },
                 timeout=10
                 )
@@ -1260,7 +1262,7 @@ class crew9():
                 json={
                     "kickoff_id": kickoff_id,
                     "task_name": task_name,
-                    "task_output": str(task_output.json_dict) #This will now send strings
+                    "task_output": str(task_output.raw) #This will now send strings
                 },
                 timeout=10
                 )

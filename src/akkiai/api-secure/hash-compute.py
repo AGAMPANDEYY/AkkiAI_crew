@@ -2,7 +2,7 @@ import hmac
 import hashlib
 import os 
 
-solution_id="4"
+solution_id="1"
 input1="string"
 input2="string"
 input3="string"
