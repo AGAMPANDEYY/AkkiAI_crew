@@ -76,8 +76,6 @@ brand_story:
 
   agent: BrandStoryAgent 
     
-
-
 brand_message_specialist:
   description: >
     You are an expert startup and marketing strategy consultant specializing in market  strategy analysis. You are tasked with creating a message sequence using the AIDA (Attention, Interest, Desire, Action) framework for a specific product or service targeting a particular audience. Follow these steps carefully:
@@ -135,7 +133,8 @@ gtm_specialist:
     7. Define Key Performance Indicators (KPIs)
     8. Develop Long-Term Strategy for Market Growth
 
-    For each step, wrap your thought process and considerations inside <strategic_thinking> tags before providing your recommendations. After completing all steps, compile your findings into a structured output.
+    For each step, wrap your thought process and considerations inside <strategic_thinking> tags before providing your recommendations. 
+    After completing all steps, compile your findings into a structured output.
 
     Here's a detailed guide for each step:
 
@@ -518,16 +517,18 @@ customer_journey_mapping:
     Be concise yet comprehensive in your explanations, and ensure that each step builds upon the previous ones to create a 
     cohesive Customer Journey Map. It's OK for the analysis sections to be quite long.
   expected_output: >
+    <step_1>
     <step_analysis>
-    [Your thought process for Step 1: Define Customer Personas]
+    [Your thought process for Step 1]
     </step_analysis>
 
     <step_output>
     <customer_persona>
-    [Detailed description of a customer persona]
+    [Detailed description of Step output]
     </customer_persona>
     </step_output>
-
+    </step_1>
+    
     [Repeat the above structure for each step]
 
     <summary>

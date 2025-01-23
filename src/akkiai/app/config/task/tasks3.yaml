@@ -24,33 +24,36 @@ value_proposition_canvas:
     target audience, buyer persona, motivations, business, and product/service details.
 
   expected_output: >
-    <stages_of_awareness_analysis>
-    <unaware>
-    [Your analysis for the Unaware stage]
-    </unaware>
+    <value_proposition_canvas>
+    <customer_profile>
+    <customer_jobs>
+    [List 3-5 customer jobs]
+    </customer_jobs>
+    <customer_pains>
+    [List 3-5 customer pains]
+    </customer_pains>
+    <customer_gains>
+    [List 3-5 customer gains]
+    </customer_gains>
+    </customer_profile>
 
-    <problem_aware>
-    [Your analysis for the Problem Aware stage]
-    </problem_aware>
+    <value_map>
+    <pain_relievers>
+    [List 3-5 pain relievers]
+    </pain_relievers>
+    <gain_creators>
+    [List 3-5 gain creators]
+    </gain_creators>
+    <products_and_services>
+    [List key features or aspects of the product/service]
+    </products_and_services>
+    </value_map>
 
-    <solution_aware>
-    [Your analysis for the Solution Aware stage]
-    </solution_aware>
+    <fit_evaluation>
+    [Provide a brief analysis of how well the product/service fits with the customer's needs]
+    </fit_evaluation>
+    </value_proposition_canvas>
 
-    <product_aware>
-    [Your analysis for the Product Aware stage]
-    </product_aware>
-
-    <most_aware>
-    [Your analysis for the Most Aware stage]
-    </most_aware>
-    </stages_of_awareness_analysis>
-
-    After completing the analysis, provide a summary of your findings and recommendations for marketing strategies based on the Stages of Awareness analysis. Include this in:
-
-    <summary_and_recommendations>
-    [Your summary and recommendations]
-    </summary_and_recommendations>
 
   agent: ValuePropCanvasAgent
   inputs:
@@ -74,54 +77,52 @@ marketing_4p_analysis:
     If you need to make any assumptions, clearly state them in your analysis.
   expected_output: >
      <product>
-      Problem Solved
+      <problem_solved>
       [Analyze what problem the product/service solves for the target audience]
 
-      Competitive Advantage
+      <competitive_advantage>
       [Explain how the product/service stands out compared to competitors' offerings]
 
-      Key Features/Benefits
+      <key_features_benefits>
       [Identify the key features or benefits that are most important to the target audience]
       </product>
 
       <price>
-      Pricing Model
+      <pricing_model>
       [Recommend a pricing model that would appeal most to the target audience]
 
-      Perceived Value
+      <perceived_value>
       [Analyze how the target audience perceives the value of the product/service relative to its price]
 
-      Price Sensitivities
+      <price_sensitivities>
       [Identify any specific price sensitivities within the target audience]
       </price>
 
       <place>
-      Solution-Seeking Behavior
+      <solution_seeking_behavior>
       [Describe where the target audience typically seeks solutions like this product/service]
 
-      Distribution Channels
+      <distribution_channels>
       [Recommend which distribution channels or platforms would best reach the target audience]
 
-      Accessibility
+      <accessibility>
       [Suggest how to make the product/service easily accessible to the target audience]
       </place>
 
       <promotion>
-      Marketing Messages
+      <marketing_messages>
       [Describe what types of marketing messages and content would resonate most with the target audience]
 
-      Advertising Channels
+      <advertising_channels>
       [Recommend which advertising channels should be focused on to capture the target audience's attention]
 
-      Messaging Style
+      <messaging_style>
       [Suggest what tone, style, or language should be used in messaging to appeal to the target audience]
       </promotion>
 
       After completing your analysis, provide a brief summary of your key findings and recommendations inside <summary> tags.
 
   agent: Market4PAnalysisAgent
-  inputs:
-    startup_info: "{STARTUP_INFO}"
   
 swot_analysis: 
   description: >
@@ -176,11 +177,9 @@ swot_analysis:
 
     5. After completing the table, provide a brief summary (2-3 sentences) of the key findings from your SWOT analysis and how they can be used to create more targeted and effective marketing strategies.
 
-    Present your completed SWOT analysis, including the filled table and summary, within <swot_analysis> tags.
+    Present your completed SWOT analysis, including the filled table and summary, within <swot_analysis> JSON key.
 
   agent: SWOTAnalysisAgent
-  inputs:
-    startup_info: "{STARTUP_INFO}"
   
 mapping_buyer_journey: 
   description: >
@@ -244,9 +243,7 @@ mapping_buyer_journey:
 
 
   agent: MappingBuyerJourneyAgent
-  inputs:
-    startup_info: "{STARTUP_INFO}"
-  
+
 usp_rose_framework: 
   description: >
     These are the details about the startup go through it below:
@@ -281,17 +278,17 @@ usp_rose_framework:
     [USP 2]
     [USP 3]
     </top3_USPs>
-    <Moat>
+    <moat>
     [List the Moat]
-    </Moat>
+    </moat>
     <implementation_strategy>
     [List the implementation strategy]
     </implementation_strategy>
     <success_metric>
     [List the success metrics]
     </success_metric>
-    [Summary of the USP]
     <summary>
+    [Summary of the USP]
     </summary>
   agent: USPRoseFrameworkAgent
   inputs:

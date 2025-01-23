@@ -80,17 +80,14 @@ creating_buyer_persona:
      Ensure that your buyer persona is detailed, coherent, and aligns with the provided information about the target audience, 
      business, and product/service/solution.
   agent: BuyerPersonaAgent
-  inputs:
-    target_audience: '{{TARGET_AUDIENCE}}'
-    business_details: '{{BUSINESS_DETAILS}}'
-    product_description: '{{PRODUCT_DESCRIPTION}}'
-    b2b_persona_questions: '{{creating_b2b_persona.output}}'
-    b2c_persona_questions: '{{creating_b2c_persona.output}}'
 
 creating_b2c_persona:
   description: >
     Imagine you are trying to understand your ideal customer for your product or
-    service.  Answer the following questions to create a detailed B2C Buyer
+    service. 
+    The startup details is below:
+    {STARTUP_INFO}
+    Now,Answer the following questions to create a detailed B2C Buyer
     Persona that reflects the specific characteristics, behaviors,  and
     motivations of your target audience. 1. Demographics:
       - What is the age, gender, and income range of your ideal customer?
@@ -125,25 +122,30 @@ creating_b2c_persona:
       - How do they like to be communicated with? (e.g., personalized email, social media ads, customer service chat)
       - What tone or style of communication resonates with them? (e.g., professional, casual, friendly)
   expected_output: >
-    A comprehensive B2C Buyer Persona that includes the following sections: 1.
-    Demographics: Age, gender, income range, location, education level, and
-    occupation. 2. Psychographics: Interests, motivations, aspirations, fears,
-    and challenges. 3. Behavior Patterns: Free time activities, social media
-    usage, purchasing habits, and preferred brand engagement methods. 4.
-    Consumption Patterns: Similar products/services used, buying decision
-    process, and important purchasing factors. 5. Pain Points: Specific problems
-    or frustrations the customer faces that the product/service can solve. 6.
-    Buying Triggers: Events or situations that might push the customer to seek a
-    solution or make a purchase. 7. Communication Preferences: How the customer
-    prefers to be communicated with and the preferred tone/style of
-    communication.
+    A comprehensive B2C Buyer Persona that includes the following sections:
+    1. demographics: 
+    [Age, gender, income range, location, education level, and occupation.]
+    2. psychographics: 
+    [Interests, motivations, aspirations, fears,and challenges.]
+    3. behavior_patterns: 
+    [Free time activities, social media usage, purchasing habits, and preferred brand engagement methods.]
+    4.consumption_patterns: 
+    [Similar products/services used, buying decision process, and important purchasing factors.]
+    5. pain_points:
+    [Specific problems or frustrations the customer faces that the product/service can solve.]
+    6. buying_triggers: 
+    [Events or situations that might push the customer to seek a solution or make a purchase.]
+    7. communication_preferences: 
+    [How the customer prefers to be communicated with and the preferred tone/style of communication.]
   agent: B2CPersonaAnalystAgent
 
 creating_b2b_persona:
   description: >
     To build a clear and detailed Buyer Persona for your target audience, please
-    answer the following questions based on your business and industry.  This
-    persona will represent the key decision-makers and influencers within your
+    answer the following questions based on your business and industry. 
+    The startup details is below:
+    {STARTUP_INFO}
+    This persona will represent the key decision-makers and influencers within your
     target businesses. 1. Demographic Information:
       - What is the role or job title of your ideal buyer (e.g., CMO, IT Manager)?
       - What is the typical company size (e.g., number of employees, annual revenue)?
@@ -183,19 +185,23 @@ creating_b2b_persona:
       - Who influences their decision-making (e.g., CFO, IT team, peers, analysts)?
       - Are there any external influences (e.g., industry trends, competitors’ decisions) that affect their choices?
   expected_output: >
-    A comprehensive B2B Buyer Persona that includes the following sections: 1.
-    Demographic Information: Role or job title, company size, industry, and
-    geographic location. 2. Professional Background: Experience level, daily
-    responsibilities, and typical challenges faced. 3. Pain Points and Needs:
-    Specific problems, the impact of those problems, and the goals the buyer is
-    aiming to achieve. 4. Buying Triggers: Events or circumstances prompting the
-    search for a solution, search methods, and the decision-making process. 5.
-    Buying Behavior: Buying criteria, evaluation methods, and key objections or
-    concerns. 6. Communication Preferences: Information consumption habits,
-    preferred communication channels, and content preferences. 7. Personal Goals
-    and Motivations: Personal motivations and the impact of solving the problem
-    on their success. 8. Key Influencers: Influencers involved in the
-    decision-making process and external influences affecting their decisions.
+    A comprehensive B2B Buyer Persona that includes the following sections: 
+    1. demographic_information: 
+    [Role or job title, company size, industry, and geographic location.]
+    2. professional_background: 
+    [Experience level, daily responsibilities, and typical challenges faced.]
+    3. pain_points_and_needs:
+    [Specific problems, the impact of those problems, and the goals the buyer is aiming to achieve.]
+    4. buying_triggers: 
+    [Events or circumstances prompting the search for a solution, search methods, and the decision-making process.]
+    5.buying_behavior: 
+    [Buying criteria, evaluation methods, and key objections or concerns.]
+    6. communication_preferences: 
+    [Information consumption habits, preferred communication channels, and content preferences.]
+    7. personal_goals_and_motivations: 
+    [Personal motivations and the impact of solving the problem on their success.]
+    8. key_influencers: 
+    [Influencers involved in the decision-making process and external influences affecting their decisions.]
   agent: B2BPersonaAnalystAgent
 
 analysing_jtbd:
@@ -234,8 +240,8 @@ analysing_jtbd:
       - The main "job" the product/service helps customers accomplish
       - Why customers would "hire" this product/service over other options
   expected_output: >
-
-    Your final output should be structured as follows: <analysis> [Your answers
+    Your final output should be structured as follows: 
+    <analysis> [Your answers
     to the five key questions] </analysis>
 
     <jtbd_statement> [Your brief JTBD statement, no more than 2-3 sentences]
@@ -284,31 +290,37 @@ analysing_stages_of_awareness:
   expected_output: >
     Present your analysis in the following structure:
 
-    <stages_of_awareness_analysis> <unaware> [Your analysis for the Unaware
-    stage] </unaware>
+    <stages_of_awareness_analysis> 
+    <unaware> 
+    [Your analysis for the Unaware stage] 
+    </unaware>
 
-    <problem_aware> [Your analysis for the Problem Aware stage] </problem_aware>
+    <problem_aware> 
+    [Your analysis for the Problem Aware stage] 
+    </problem_aware>
 
-    <solution_aware> [Your analysis for the Solution Aware stage]
+    <solution_aware> 
+    [Your analysis for the Solution Aware stage]
     </solution_aware>
 
-    <product_aware> [Your analysis for the Product Aware stage] </product_aware>
+    <product_aware> 
+    [Your analysis for the Product Aware stage]
+    </product_aware>
 
-    <most_aware> [Your analysis for the Most Aware stage] </most_aware>
+    <most_aware> 
+    [Your analysis for the Most Aware stage]
+    </most_aware>
     </stages_of_awareness_analysis>
 
     After completing the analysis, provide a summary of your findings and
     recommendations for marketing strategies based on the Stages of Awareness
     analysis. Include this in:
 
-    <summary_and_recommendations> [Your summary and recommendations]
+    <summary_and_recommendations> 
+    [Your summary and recommendations]
     </summary_and_recommendations>
 
     Ensure that your analysis is thorough, insightful, and directly relates to
     the provided information about the target audience, buyer persona,
     motivations, business, and product/service details.
   agent: StagesofAwarenessAgent
-  inputs:
-    target_audience: '{{TARGET_AUDIENCE}}'
-    buyer_persona: '{{creating_buyer_persona.output}}'
-    analysing_jtbd: '{{analysing_jtbd.output}}'

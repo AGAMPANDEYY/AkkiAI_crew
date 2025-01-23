@@ -16,6 +16,7 @@ import traceback
 import hmac
 import hashlib
 import anthropic
+from openai import OpenAI
 from pytz import timezone 
 import uuid
 import requests
@@ -35,6 +36,7 @@ DOCS_PASSWORD=os.getenv("API_PASSWORD1","default_password")
 API_KEY=os.getenv("API_KEY", "apikey")
 SECRET_KEY=os.getenv("SECRET_KEY")
 ANTHROPIC_API= os.getenv("ANTHROPIC_API_KEY")
+DEEPSEEK_API= os.getenv("DEEPSEEK_API_KEY")
 
 #Configuration for CORS 
 
@@ -58,14 +60,8 @@ app.add_middleware(
 # Define input models for endpoints
 class RunInputs(BaseModel):
     
-    SOLUTION_ID: str #added extra input for choosing the solution id 
+    SOLUTION_ID: str
     INPUT_1: str
-    #INPUT_2: str
-    #INPUT_3: str
-    #INPUT_4: str
-    #INPUT_5: str
-    #INPUT_6: str
-    #INPUT_7: str
     HASH: str
 
 #Anthropic Chat Endpoint Inputs
@@ -282,21 +278,36 @@ async def run_crew_bg(crew_instance, inputs, solution_id, kickoff_id ):
         print(f"Exception in run_kickoff: {error_details}")
 
 #running all the chats simultaneously in the background
-async def chat_bg( input,input_message, kickoff_id,create_date):
+async def chat_bg( input,input_message, kickoff_id,create_date, API_NAME="deepseek"):
     
-    client= anthropic.Anthropic(api_key=ANTHROPIC_API)
-    MODEL_NAME="claude-3-haiku-20240307"
+    if API_NAME=="anthropic":
+        client= anthropic.Anthropic(api_key=ANTHROPIC_API)
+        MODEL_NAME="claude-3-haiku-20240307"
 
-    message = client.messages.create(
-                model=MODEL_NAME,
-                max_tokens=1024,
-                messages=[
-                    {"role": "user", "content": input.MESSAGE}
-                ]
-            )
-    
-    message_id= message.id
-    anthropic_response= message.content[0].text
+        message = client.messages.create(
+                    model=MODEL_NAME,
+                    max_tokens=1024,
+                    messages=[
+                        {"role": "user", "content": input.MESSAGE}
+                    ]
+                )
+        
+        message_id= message.id
+        response= message.content[0].text
+        task_name= message.model
+
+    elif API_NAME=="deepseek":
+
+        client= OpenAI(api_key=DEEPSEEK_API, base_url="https://api.deepseek.com")
+        messages = [{"role": "user", "content":input.MESSAGE}]
+        message=client.chat.completions.create(
+            model="deepseek-chat",
+            messages=messages
+        )
+        messages.append(message.choices[0].message) 
+        response= message.choices[0].message.content
+        message_id=message.id
+        task_name=message.model 
 
     """
     Push the message id and the anthropic response to the SUPABASE db
@@ -307,10 +318,9 @@ async def chat_bg( input,input_message, kickoff_id,create_date):
     """
     update_date= datetime.now(timezone("Asia/Kolkata")).strftime('%Y-%m-%d %H:%M:%S.%f')
     job_status="off"
-    task_name= message.model
     job_id= str(uuid.uuid4())
     supabase.table("kickoff_details").update({'kickoff_id':message_id,'job_status':job_status, 'update_date':update_date,}).eq("create_date",create_date).execute()
-    supabase.table("run_details").insert({"kickoff_id": message_id,'task_name':task_name,'job_id':job_id, 'input':input_message,'output':anthropic_response}).execute()
+    supabase.table("run_details").insert({"kickoff_id": message_id,'task_name':task_name,'job_id':job_id, 'input':input_message,'output':response}).execute()
     webhook_url =os.environ.get("WEBHOOK_URL")
         
     try:
@@ -319,7 +329,7 @@ async def chat_bg( input,input_message, kickoff_id,create_date):
             json={
                 "kickoff_id": message_id,
                 "task_name": task_name,
-                "task_output": message.content[0].text #This will now send strings
+                "task_output": response #This will now send strings
             },
             timeout=10
             )

@@ -12,8 +12,8 @@ class TargetGroupsPydantic(BaseModel):
 class Task11Pydantic(BaseModel):
     target_audience: Dict[str,TargetGroupsPydantic]
 
-class Task21Pydantic(BaseModel):
-    buyer_persona:str
+class BuyerPersonaPydantic(BaseModel):
+    name: str
     narrative:str
     demographic_information:str 
     psychographic_information:str
@@ -22,20 +22,44 @@ class Task21Pydantic(BaseModel):
     consumption_patterns:str 
     aspirations:str
 
+class Task21Pydantic(BaseModel):
+    buyer_persona: BuyerPersonaPydantic
+    
+class Task22Pydantic(BaseModel):
+    demographics: str
+    psychographics: str
+    behavior_patterns: str
+    consumption_patterns: str
+    pain_points: str
+    buying_triggers: str
+    communication_preferences: str
+
+class Task23Pydantic(BaseModel):
+    demographic_information: str
+    professional_background: str
+    pain_points_and_needs: str
+    buying_triggers: str
+    buying_behavior:str
+    communication_preferences:str 
+    personal_goals_and_motivations: str
+    key_influencers: str
+
 class Task24Pydantic(BaseModel):
+    analysis: str
     jtbd_statement:str
 
-class Task25Pydantic(BaseModel):
-    stages_of_awareness_analysis:str
+class AwarenessPydantic(BaseModel):
     unaware:str
     problem_aware:str
     solution_aware:str
     product_aware:str
     most_aware:str
+
+class Task25Pydantic(BaseModel):
+    stages_of_awareness_analysis:AwarenessPydantic
     summary_and_recommendations:str
 
-class Task31Pydantic(BaseModel):
-    value_proposition_canvas:str
+class VPCPydantic(BaseModel):
     customer_profile:str
     customer_jobs:str
     customer_pains:str
@@ -46,61 +70,159 @@ class Task31Pydantic(BaseModel):
     products_and_services:str
     fit_evaluation:str
 
+class Task31Pydantic(BaseModel):
+    value_proposition_canvas: VPCPydantic
+    
+class ProductPydantic(BaseModel):
+    problem_solved: str
+    competitive_advantage: str
+    key_features_benefits: str
+    
+class PricePydantic(BaseModel):
+    pricing_model: str
+    perceived_value: str
+    price_sensitivities: str
+
+class PlacePydantic(BaseModel):
+    solution_seeking_behavior: str
+    distribution_channels: str
+    accessibility: str
+
+class PromotionPydantic(BaseModel):
+    marketing_messages: str
+    advertising_channels: str
+    messaging_style: str
+
 class Task32Pydantic(BaseModel):
-    product:str
-    price:str
-    place:str
-    promotion:str
+    product: ProductPydantic
+    price:PricePydantic
+    place: PlacePydantic
+    promotion:PromotionPydantic
+
+class SWOTPydantic(BaseModel):
+    strengths: str
+    weaknesses: str
+    opportunities: str
+    threats: str
 
 class Task33Pydantic(BaseModel):
-    swot_analysis:str
+    swot_analysis: SWOTPydantic
+    summary: str
 
-class Task34Pydantic(BaseModel):
-    buyers_journey:str
+class BuyerJourneyPydantic(BaseModel):
     awareness_stage:str
     consideration_stage:str
     decision_stage:str
     post_purchase_stage:str
     key_insights:str
 
+class Task34Pydantic(BaseModel):
+    buyers_journey:BuyerJourneyPydantic
+  
+class RoseAnalysisPydantic(BaseModel):
+    relevant:str
+    original:str 
+    simple:str 
+    emotional: str 
+
 class Task35Pydantic(BaseModel):
-    market_analysis:str
+    rose_analysis:RoseAnalysisPydantic
+    top3_USPs: str
+    moat: str
+    implementation_strategy: str
+    success_metric: str
+    summary : str
+
+class MarketingStrategyPydantic(BaseModel):
+    customer_hero:str
+    problem:str
+    brand_guide:str
+    action_plan:str
 
 class Task41Pydantic(BaseModel):
-    brand_story:str
-    hero:str
-    problem:str
-    guide:str
-    call_to_action:str
-    result:str
-
+    marketing_strategy: MarketingStrategyPydantic
+  
 class Task42Pydantic(BaseModel):
     aida_framework:str
     summary:str
 
+class MarketEntryPydantic(BaseModel):
+    market_analysis: str
+    target_segments: str
+    entry_mode: str
+    positioning_strategy: str
+    marketing_plan: str
+    risk_mitigation: str
+    kpis: str 
+    growth_strategy: str
+    conclusion: str 
+
 class Task43Pydantic(BaseModel):
-    platform_recommendations:str
+    market_entry_strategy: MarketEntryPydantic
+
+class BABFrameworkPydantic(BaseModel):
+    before: str
+    after: str
+    bridge: str
 
 class Task44Pydantic(BaseModel):
-    lead_stages:str
-    stage_name:str
-    audience_behavior:str
-    audience_thoughts:str
-    content_ideas:str
-    call_to_action:str
-    example_prompt:str
+    bab_framework: BABFrameworkPydantic
+
+class PASFrameworkPydantic(BaseModel):
+    problem: str
+    agitate: str 
+    solution: str 
 
 class Task45Pydantic(BaseModel):
-    lead_qualification_checklist:str
+    pas_framework:str
+
+class STPPositioningPydantic(BaseModel):
+    value_proposition: str 
+    differentiation: str 
+    brand_messaging: str 
+    positioning_statement: str 
+
+
+class STPPydantic(BaseModel):
+    segmentation: str
+    targeting: str 
+    positioning: STPPositioningPydantic 
 
 class Task46Pydantic(BaseModel):
-    product_description:str
+    stp_strategy:STPPydantic
+
+class STEPOutputPydantic(BaseModel):
+    customer_persona: str 
+
+class STEPPydantic(BaseModel):
+    step_analysis:str
+    step_output: STEPOutputPydantic
+
+class SummaryPydantic(BaseModel):
+    benefits: str
+    limitations: str
 
 class Task47Pydantic(BaseModel):
-    user_experience_map:str
+    step_1: STEPPydantic
+    step_2: STEPPydantic
+    step_3: STEPPydantic
+    step_4: STEPPydantic
+    step_5: STEPPydantic
+    step_6: STEPPydantic
+    step_7: STEPPydantic
+    step_8: STEPPydantic
+    summary: SummaryPydantic
+
+class RecommendationPydantic(BaseModel):
+    chosen_archetype: str
+    justification: str
+    brand_strategy: str
+    benefits: str
+    examples: str
+    implementation: str
 
 class Task48Pydantic(BaseModel):
-    customer_feedback:str
+    recommendations: RecommendationPydantic
 
 class Task51Pydantic(BaseModel):
     target_audience:str

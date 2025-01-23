@@ -17,7 +17,7 @@ class crew1():
     agents_config = 'config/agent/agents1.yaml'
     tasks_config = 'config/task/tasks1.yaml'
     claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
-    #deepseek_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
+    deepseek_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
     
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
         """
@@ -71,7 +71,7 @@ class crew1():
             config=self.agents_config['TargetAudienceAgent'],
             llm=self.claude_llm,
             #llm=self.deepseek_llm,
-            verbose=True
+            #verbose=True
         )
 
     #task1
@@ -102,6 +102,7 @@ class crew2():
     agents_config = 'config/agent/agents2.yaml'
     tasks_config = 'config/task/tasks2.yaml'
     claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
+    deepseek_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
     
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
         """
@@ -142,7 +143,7 @@ class crew2():
                 )
             response.raise_for_status()  # Raise an exception for HTTP errors (4xx or 5xx)
             # Log the success
-            #print(f"Webhook sent successfully: {response.status_code}, {response.json()}")
+            print(f"Webhook sent successfully: {response.status_code}, {response.json()}")
 
         except requests.exceptions.RequestException as e:
             # Log any errors during the webhook call
@@ -155,7 +156,8 @@ class crew2():
         return Agent(
             config=self.agents_config['BuyerPersonaAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
     
     #Agent2
@@ -164,7 +166,8 @@ class crew2():
         return Agent(
             config=self.agents_config['B2CPersonaAnalystAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
     #Agent3
     @agent
@@ -172,7 +175,8 @@ class crew2():
         return Agent(
             config=self.agents_config['B2BPersonaAnalystAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
     #Agent4
     @agent
@@ -180,7 +184,8 @@ class crew2():
         return Agent(
             config=self.agents_config['JTBDAnalysisAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
     #Agent5
     @agent
@@ -188,7 +193,8 @@ class crew2():
         return Agent(
             config=self.agents_config['StagesofAwarenessAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
     
     #task1
@@ -207,6 +213,7 @@ class crew2():
 
         return Task(
             config=self.tasks_config['creating_b2c_persona'],
+            output_pydantic=Task22Pydantic,
             context= [self.BuyerPersonaAgent_task()],
             callback=self.task_output_callback
         )
@@ -216,6 +223,7 @@ class crew2():
         
         return Task(
             config=self.tasks_config['creating_b2b_persona'],
+            output_pydantic=Task23Pydantic,
             context= [self.BuyerPersonaAgent_task()],
             callback=self.task_output_callback
         )
@@ -260,8 +268,8 @@ class crew3():
 
     agents_config = 'config/agent/agents3.yaml'
     tasks_config = 'config/task/tasks3.yaml'
-    claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
-
+    claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307") 
+    deepseek_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
         """
             Pushes the task output to the database.
@@ -311,9 +319,10 @@ class crew3():
     @agent
     def ValuePropCanvasAgent(self) -> Agent:
         return Agent(
-            config=self.agents_config['ValuePropCanvas'],
+            config=self.agents_config['ValuePropCanvasAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
     #Agent2
     @agent
@@ -321,7 +330,8 @@ class crew3():
         return Agent(
             config=self.agents_config['Market4PAnalysisAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
     
     #Agent3
@@ -330,7 +340,8 @@ class crew3():
         return Agent(
             config=self.agents_config['SWOTAnalysisAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
     #Agent4
     @agent
@@ -338,7 +349,8 @@ class crew3():
         return Agent(
             config=self.agents_config['USPRoseFrameworkAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
         
     #Agent5
@@ -347,7 +359,8 @@ class crew3():
         return Agent(
             config=self.agents_config['MappingBuyerJourneyAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
 
     #task1
@@ -355,7 +368,7 @@ class crew3():
     def ProductAudienceFitAgent_task(self) -> Task:
         return Task(
             config=self.tasks_config['value_proposition_canvas'],
-            #output_pydantic=Task31Pydantic,
+            output_pydantic=Task31Pydantic,
             callback=self.task_output_callback
         )
     
@@ -364,7 +377,7 @@ class crew3():
     def Market4PAnalysisAgent_task(self) -> Task:
         return Task(
             config=self.tasks_config['marketing_4p_analysis'],
-            #output_pydantic=Task32Pydantic,
+            output_pydantic=Task32Pydantic,
             callback=self.task_output_callback
         )
     
@@ -373,7 +386,7 @@ class crew3():
     def SWOTAnalysisAgent_task(self) -> Task:
         return Task(
             config=self.tasks_config['swot_analysis'],
-            #output_pydantic=Task33Pydantic,
+            output_pydantic=Task33Pydantic,
             callback=self.task_output_callback
         )
     
@@ -382,7 +395,7 @@ class crew3():
     def MappingBuyerJourneyAgent_task(self) -> Task:
         return Task(
             config=self.tasks_config['mapping_buyer_journey'],
-            #output_pydantic=Task34Pydantic,
+            output_pydantic=Task34Pydantic,
             callback=self.task_output_callback
         )
     
@@ -391,7 +404,7 @@ class crew3():
     def USPRoseFrameworkAgent_task(self) -> Task:
         return Task(
             config=self.tasks_config['usp_rose_framework'],
-            #output_pydantic=Task35Pydantic,
+            output_pydantic=Task35Pydantic,
             callback=self.task_output_callback
         )
 
@@ -416,7 +429,7 @@ class crew4():
     agents_config = 'config/agent/agents4.yaml'
     tasks_config = 'config/task/tasks4.yaml'
     claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
-
+    deepseek_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
         """
             Pushes the task output to the database.
@@ -468,7 +481,8 @@ class crew4():
         return Agent(
             config=self.agents_config['BrandStoryAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
     #Agent2
     @agent
@@ -476,7 +490,8 @@ class crew4():
         return Agent(
             config=self.agents_config['BrandMessageSpecialistAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
     
     #Agent3
@@ -485,7 +500,8 @@ class crew4():
         return Agent(
             config=self.agents_config['GTMSpecialistAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
 
     #Agent4
@@ -494,7 +510,8 @@ class crew4():
         return Agent(
             config=self.agents_config['BABFrameworkAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
     
     #Agent5
@@ -503,7 +520,8 @@ class crew4():
         return Agent(
             config=self.agents_config['PASStoryFrameworkAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
 
     #Agent6
@@ -512,7 +530,8 @@ class crew4():
         return Agent(
             config=self.agents_config['STPAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
     
     #Agent7
@@ -521,7 +540,8 @@ class crew4():
         return Agent(
             config=self.agents_config['CustomerJourneyMappingAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
     
     #Agent8
@@ -530,7 +550,8 @@ class crew4():
         return Agent(
             config=self.agents_config['BrandArchetypesModelAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
 
     #task1
@@ -625,7 +646,7 @@ class crew5():
     agents_config = 'config/agent/agents5.yaml'
     tasks_config = 'config/task/tasks5.yaml'
     claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
-
+    deepseek_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
         """
             Pushes the task output to the database.
@@ -677,7 +698,8 @@ class crew5():
         return Agent(
             config=self.agents_config['MarketReadinessAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
     #Agent2
     @agent
@@ -685,7 +707,8 @@ class crew5():
         return Agent(
             config=self.agents_config['TechnologyAdoptionSpecilistAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
     
     #Agent3
@@ -694,7 +717,8 @@ class crew5():
         return Agent(
             config=self.agents_config['RiskAssesmentSpecialistAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
     
     #Agent4
@@ -703,7 +727,8 @@ class crew5():
         return Agent(
             config=self.agents_config['BlueOceanSpecialistAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
 
     #task1
@@ -762,7 +787,7 @@ class crew6():
     agents_config = 'config/agent/agents6.yaml'
     tasks_config = 'config/task/tasks6.yaml'
     claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
-
+    deepseek_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
         """
             Pushes the task output to the database.
@@ -814,7 +839,8 @@ class crew6():
         return Agent(
             config=self.agents_config['TamSamSomAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
     #Agent2
     @agent
@@ -822,7 +848,8 @@ class crew6():
         return Agent(
             config=self.agents_config['FutureCompetitorAnalysisAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
     
     #Agent3
@@ -831,7 +858,8 @@ class crew6():
         return Agent(
             config=self.agents_config['BottomUpAnalysisAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
     
     #Agent4
@@ -840,7 +868,8 @@ class crew6():
         return Agent(
             config=self.agents_config['StrategicGroupAnalysisAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
     
     #Agent5
@@ -849,7 +878,8 @@ class crew6():
         return Agent(
             config=self.agents_config['PorterFiveForcesAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
     
     #Agent6
@@ -858,7 +888,8 @@ class crew6():
         return Agent(
             config=self.agents_config['SWOTAnalysisAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
     
     #Agent7
@@ -867,7 +898,8 @@ class crew6():
         return Agent(
             config=self.agents_config['TopDownAnalysisAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
     
     #task1
@@ -953,7 +985,7 @@ class crew7():
     agents_config = 'config/agent/agents7.yaml'
     tasks_config = 'config/task/tasks7.yaml'
     claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
-
+    deepseek_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
         """
             Pushes the task output to the database.
@@ -1005,7 +1037,8 @@ class crew7():
         return Agent(
             config=self.agents_config['LeanCanvasMVPAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
     #Agent2
     @agent
@@ -1013,7 +1046,8 @@ class crew7():
         return Agent(
             config=self.agents_config['RoadmapMVPAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
     
     #Agent3
@@ -1022,7 +1056,8 @@ class crew7():
         return Agent(
             config=self.agents_config['PRDTemplateAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
     
     #Agent4
@@ -1031,7 +1066,8 @@ class crew7():
         return Agent(
             config=self.agents_config['TechStackFrameworkAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
 
     #task1
@@ -1089,7 +1125,7 @@ class crew8():
     agents_config = 'config/agent/agents8.yaml'
     tasks_config = 'config/task/tasks8.yaml'
     claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
-
+    deepseek_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
         """
             Pushes the task output to the database.
@@ -1141,7 +1177,8 @@ class crew8():
         return Agent(
             config=self.agents_config['ExperiencedStartupFounderSpecialistAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
     #Agent2
     @agent
@@ -1149,7 +1186,8 @@ class crew8():
         return Agent(
             config=self.agents_config['SiliconValleyInvestorAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
     
     #Agent3
@@ -1158,7 +1196,8 @@ class crew8():
         return Agent(
             config=self.agents_config['StartupSpecialistAgent'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
     
     #Agent4
@@ -1167,7 +1206,8 @@ class crew8():
         return Agent(
             config=self.agents_config['FamousSiliconValleyTechTitan'],
             llm=self.claude_llm,
-            verbose=True
+            #llm=self.deepseek_llm,
+            #verbose=True
         )
 
     #task1
@@ -1280,6 +1320,7 @@ class crew9():
         return Agent(
             config=self.agents_config['SequoiaCapitalPitchDeckAgent'],
             llm=self.claude_llm,
+            #llm=self.deepseek_llm,
             #verbose=True
         )
     #Agent2
@@ -1288,6 +1329,7 @@ class crew9():
         return Agent(
             config=self.agents_config['GuyKawasaki102030RuleAgent'],
             llm=self.claude_llm,
+            #llm=self.deepseek_llm,
             #verbose=True
         )
     
@@ -1297,6 +1339,7 @@ class crew9():
         return Agent(
             config=self.agents_config['VentureCapitalMethodAgent'],
             llm=self.claude_llm,
+            #llm=self.deepseek_llm,
             #verbose=True
         )
     
@@ -1306,6 +1349,7 @@ class crew9():
         return Agent(
             config=self.agents_config['FirstChicagoMethodAgent'],
             llm=self.claude_llm,
+            #llm=self.deepseek_llm,
             #verbose=True
         )
     
@@ -1315,6 +1359,7 @@ class crew9():
         return Agent(
             config=self.agents_config['RiskFactorSummationMethodAgent'],
             llm=self.claude_llm,
+            #llm=self.deepseek_llm,
             #verbose=True
         )
     
@@ -1324,6 +1369,7 @@ class crew9():
         return Agent(
             config=self.agents_config['YCombinatorTemplateAgent'],
             llm=self.claude_llm,
+            #llm=self.deepseek_llm,
             #verbose=True
         )
 
