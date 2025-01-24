@@ -71,9 +71,6 @@ experienced_startup_founder_specialist:
       </yc_response>
 
   agent: ExperiencedStartupFounderSpecialistAgent
-  inputs:
-    startup_info: "{STARTUP_INFO}"
-
 
 silicon_valley_investor: 
   description: >-
@@ -333,5 +330,3 @@ famous_silicon_valley_tech_titan:
 
       </YC_response>
   agent: FamousSiliconValleyTechTitan
-  inputs:
-    startup_info: "{STARTUP_INFO}"

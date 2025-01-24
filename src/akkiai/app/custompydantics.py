@@ -224,50 +224,220 @@ class RecommendationPydantic(BaseModel):
 class Task48Pydantic(BaseModel):
     recommendations: RecommendationPydantic
 
+class MarketStartegyPydantic(BaseModel):
+    target_audience: str 
+    product_analysis: str 
+    customer_persona: str 
+    value_proposition: str 
+    market_assumptions: str 
+    infrastructure_readiness: str 
+    customer_readiness: str 
+    key_recommendations: str 
+
 class Task51Pydantic(BaseModel):
-    target_audience:str
+    market_startegy:MarketStartegyPydantic
 
 class Task52Pydantic(BaseModel):
-    user_story:str
+    technology_adoption_analysis:str
+    recommendations: str 
+
+class StrategyPydantic(BaseModel):
+    critical_risks: str 
+    resource_constraints:str 
+    strategic_decisions: str 
+    recommendations: str 
 
 class Task53Pydantic(BaseModel):
-    user_journey:str
+    startup_analysis:str
+    market_strategy: StrategyPydantic
+
+class FactorsPydantic(BaseModel):
+    eliminate: str 
+    reduce: str 
+    raise_factors:str 
+    create: str 
+
+class BlueOcenPydantic(BaseModel):
+    industry_factors_plot: str 
+    factor_identification: FactorsPydantic
+    uncontested_market_space: str 
+    summary: str 
 
 class Task54Pydantic(BaseModel):
-    user_needs:str
+    blue_ocean_analysis: BlueOcenPydantic
 
+class TAMSAMSOMPydantic(BaseModel):
+    size: str 
+    explanation: str
+
+class MarketAnalysisPydantic(BaseModel):
+    tam: TAMSAMSOMPydantic
+    sam: TAMSAMSOMPydantic
+    som: TAMSAMSOMPydantic
+    competitive_landscape: str 
+    trends: str 
+    legal_factors: str
+    conclusion: str 
+   
 class Task61Pydantic(BaseModel):
-    market_research:str
+    market_analysis: MarketAnalysisPydantic
+
+class CompetitorPydantic(BaseModel):
+    name: str 
+    description: str 
+    advantages: str 
+    disadvantages:str 
+
+class DiNrectCompetitorsPydantic(BaseModel):
+    competitor: CompetitorPydantic
+
+class CompetitiveAnalysisPydantic(BaseModel):
+    direct_competitors:DiNrectCompetitorsPydantic
+    direct_competitors: DiNrectCompetitorsPydantic
+    future_potential_competitors: DiNrectCompetitorsPydantic
+    overall_assessment: str 
 
 class Task62Pydantic(BaseModel):
-    market_trends:str
+    competitive_analysis: CompetitiveAnalysisPydantic
+
+class MarketSizePydantic(BaseModel):
+    total_addressable_market: str 
+    serviceable_addressable_market: str 
+    serviceable_obtainable_market: str 
+
+class MarketAnalysisPydantic2(BaseModel):
+    executive_summary: str 
+    market_size: MarketSizePydantic
+    competitive_landscape: str 
+    market_trends: str 
+    regulatory_factors:str 
+    conclusion:str 
 
 class Task63Pydantic(BaseModel):
-    market_opportunities:str
+    market_analysis:MarketAnalysisPydantic2
 
 class Task64Pydantic(BaseModel):
-    market_threats:str
+    strategic_group_map:str
+    group_characteristics: str 
+    competitive_insights: str 
+    strategy_recommendations: str
+    step_planning: str 
+    output_step_1: str 
+    output_step_2: str
+    output_step_3: str
+    output_step_4: str
+    output_step_5: str
+    output_step_6: str
+    output_step_7: str
+    strategic_group_map: str 
+    group_characteristics: str 
+    competitive_insights: str 
+    strategy_recommendations: str 
+
+class ForcePydantic(BaseModel):
+    force_analysis:str 
+    force: str 
+
+class SynthesisPydantic(BaseModel):
+    industry_profitability: str
+    strategic_opportunities: str 
+    market_positioning: str 
+
+class FrameworkPydantic(BaseModel):
+    benefits: str 
+    limitations: str 
+
+class PortorsFiveForcePydantic(BaseModel):
+    competitive_rivalry: ForcePydantic
+    supplier_power:ForcePydantic
+    buyer_power: ForcePydantic
+    threat_of_substitution: ForcePydantic
+    threat_of_new_entry: ForcePydantic
+    synthesis: SynthesisPydantic
+    framework_evaluation: FrameworkPydantic
+
 
 class Task65Pydantic(BaseModel):
-    market_share:str
+    porters_five_forces_analysis:PortorsFiveForcePydantic
+
+class CompetitionAnalysisPydantic(BaseModel):
+    competitor_strengths: str 
+    weaknesses: str 
+    opportunities: str 
+    threats:str 
+
 
 class Task66Pydantic(BaseModel):
-    market_positioning:str
+    competition_analysis: CompetitionAnalysisPydantic 
 
 class Task67Pydantic(BaseModel):
-    market_competitors:str
+    market_analysis:MarketAnalysisPydantic2
+
+class ProductPlanPydantic(BaseModel):
+    step_1: str 
+    step_1_info: str 
+    step_2: str
+    step_2_info: str 
+    step_3: str
+    step_3_info: str 
+    step_4: str
+    step_4_info: str
+    step_5: str
+    step_5_info: str
 
 class Task71Pydantic(BaseModel):
-    product_design:str
+    product_plan:ProductPlanPydantic
+
+class InitiavtePydantic(BaseModel):
+    name: str 
+    description: str
+
+class KeyIntiativesPydantic(BaseModel):
+    initiative_1: InitiavtePydantic 
+    initiative_2: InitiavtePydantic
+    initiative_3: InitiavtePydantic
+    
+
+
+class NowNextLaterPydantic(BaseModel):
+    timeframe:str 
+    goal: str 
+    key_initiatives: KeyIntiativesPydantic
+    success_metrics: str 
+    dependencies: str 
+    owner:str 
+    risks_and_mitigation: str 
+
+class ProductRoadMapPydantic(BaseModel):
+    now: NowNextLaterPydantic
+    next: NowNextLaterPydantic
+    later: NowNextLaterPydantic
 
 class Task72Pydantic(BaseModel):
-    product_features:str
+    product_roadmap: ProductRoadMapPydantic
+
+class MVPPydantic(BaseModel):
+    core_features: str 
+    exclusions: str 
+
+
+class PRDPydantic(BaseModel):
+    product_overview: str 
+    goals_and_success_metrics: str 
+    scope_of_mvp: MVPPydantic
+    user_stories_and_use_cases:str 
+    functional_requirements: str 
+    technical_requirements: str 
+    wireframes_or_mockups: str 
+    risks_and_assumptions: str 
+    success_validation_plan: str 
+    timeline_and_milestones: str 
 
 class Task73Pydantic(BaseModel):
-    product_usability:str
+    prd:PRDPydantic
 
 class Task74Pydantic(BaseModel):
-    product_performance:str
+    prd:PRDPydantic
 
 class QuestionAnalysisAnswerPydantic(BaseModel):
     question: str
@@ -365,4 +535,3 @@ class SlidesYC(BaseModel):
 class Task96Pydantic(BaseModel):
     pitch_deck: SlidesYC
     
-

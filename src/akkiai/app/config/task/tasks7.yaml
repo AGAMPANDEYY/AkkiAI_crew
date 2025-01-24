@@ -26,25 +26,24 @@ lean_canvas_mvp:
     Lean Startup principles and how they apply to this particular case
  
   expected_output: >-
-    <Product_Plan>
-    <Step_1>Initial Idea and Hypothesis</Step_1>
-    <Step_1_info>[Detailed explanation of the initial idea and hypothesis]</Step_1_info>
+    <product_plan>
+    <step_1>Initial Idea and Hypothesis</step_1>
+    <step_1_info>[Detailed explanation of the initial idea and hypothesis]</step_1_info>
 
-    <Step_2>Build the MVP (Minimum Viable Product)</Step_2>
-    <Step_2_info>[Comprehensive MVP plan and steps]</Step_2_info>
+    <step_2>Build the MVP (Minimum Viable Product)</step_2>
+    <step_2_info>[Comprehensive MVP plan and steps]</step_2_info>
 
-    <Step_3>Measure User Feedback</Step_3>
-    <Step_3_info>[Detailed strategy for MVP rollout and user feedback collection]</Step_3_info>
+    <step_3>Measure User Feedback</step_3>
+    <step_3_info>[Detailed strategy for MVP rollout and user feedback collection]</step_3_info>
 
-    <Step_4>Learn and Pivot</Step_4>
-    <Step_4_info>[Thorough explanation of the learning process and potential pivot strategies]</Step_4_info>
+    <step_4>Learn and Pivot</step_4>
+    <step_4_info>[Thorough explanation of the learning process and potential pivot strategies]</step_4_info>
 
-    <Step_5>Iterate and Improve</Step_5>
-    <Step_5_info>[Detailed plan for iteration and product improvement]</Step_5_info>
-    </Product_Plan> 
+    <step_5>Iterate and Improve</step_5>
+    <step_5_info>[Detailed plan for iteration and product improvement]</step_5_info>
+    </product_plan> 
   agent: LeanCanvasMVPAgent
-  inputs: 
-    startup_info: "{STARTUP_INFO}"
+
 
 roadmap_mvp: 
   description: >-
@@ -114,10 +113,7 @@ roadmap_mvp:
     </later>
     </product_roadmap>
   agent: RoadmapMVPAgent
-  inputs: 
-    startup_info: "{STARTUP_INFO}"
      
-  
 prd_template: 
   description: >- 
     You are an experienced Product Management and Business Strategy consultant specializing in Product Roadmaps.
@@ -156,46 +152,44 @@ prd_template:
     Remember to keep your responses concise, specific, and tailored to the startup's product and needs. Focus on creating a lean PRD that helps the startup 
     launch an MVP efficiently while aligning stakeholders and minimizing risks.
   expected_output: >-
-    <PRD>
-    <ProductOverview>
+    <prd>
+    <product_overview>
     [Content for Product Overview]
-    </ProductOverview>
-    <GoalsAndSuccessMetrics>
+    </product_overview>
+    <goals_and_success_metrics>
     [Content for Goals and Success Metrics]
-    </GoalsAndSuccessMetrics>
-    <ScopeOfMVP>
-    <CoreFeatures>
+    </goals_and_success_metrics>
+    <scope_of_mvp>
+    <core_features>
     [Numbered list of core features]
-    </CoreFeatures>
-    <Exclusions>
+    </core_features>
+    <exclusions>
     [Numbered list of intentionally excluded features]
-    </Exclusions>
-    </ScopeOfMVP>
-    <UserStoriesAndUseCases>
+    </exclusions>
+    </scope_of_mvp>
+    <user_stories_and_use_cases>
     [Content for User Stories and Use Cases]
-    </UserStoriesAndUseCases>
-    <FunctionalRequirements>
+    </user_stories_and_use_cases>
+    <functional_requirements>
     [Content for Functional Requirements]
-    </FunctionalRequirements>
-    <TechnicalRequirements>
+    </functional_requirements>
+    <technical_requirements>
     [Content for Technical Requirements]
-    </TechnicalRequirements>
-    <WireframesOrMockups>
+    </technical_requirements>
+    <wireframes_or_mockups>
     [Description of Wireframes or Mockups]
-    </WireframesOrMockups>
-    <RisksAndAssumptions>
+    </wireframes_or_mockups>
+    <risks_and_assumptions>
     [Content for Risks and Assumptions]
-    </RisksAndAssumptions>
-    <SuccessValidationPlan>
+    </risks_and_assumptions>
+    <success_validation_plan>
     [Content for Success Validation Plan]
-    </SuccessValidationPlan>
-    <TimelineAndMilestones>
+    </success_validation_plan>
+    <timeline_and_milestones>
     [Content for Timeline and Milestones]
-    </TimelineAndMilestones>
-    </PRD>
+    </timeline_and_milestones>
+    </prd>
   agent: PRDTemplateAgent
-  inputs:
-    startup_info: "{STARTUP_INFO}"
 
 techstack_framework: 
   description: >-
@@ -246,47 +240,43 @@ techstack_framework:
 
     Begin your response by analyzing the startup information and planning the product roadmap. 
   expected_output: >-
-    <PRD>
-    <ProductOverview>
-    [Product purpose, target audience, and problem statement]
-    </ProductOverview>
-    <GoalsAndSuccessMetrics>
-    [Define clear goals and KPIs]
-    </GoalsAndSuccessMetrics>
-    <ScopeOfMVP>
-    <CoreFeatures>
-    [List of prioritized core features]
-    </CoreFeatures>
-    <Exclusions>
-    [List of excluded features]
-    </Exclusions>
-    </ScopeOfMVP>
-    <UserStoriesAndUseCases>
-    [Content for user stories and use cases]
-    </UserStoriesAndUseCases>
-    <FunctionalRequirements>
-    [Details of system features and behaviors]
-    </FunctionalRequirements>
-    <TechnicalRequirements>
-    <FrontendFramework>[React, Vue, etc.]</FrontendFramework>
-    <BackendFramework>[Node.js, Django, etc.]</BackendFramework>
-    <Database>[PostgreSQL, MongoDB, etc.]</Database>
-    <Hosting>[AWS, Azure, etc.]</Hosting>
-    <APIs>[Payment Gateway, Analytics APIs, etc.]</APIs>
-    </TechnicalRequirements>
-    <WireframesOrMockups>
-    [Description or links to UI/UX wireframes]
-    </WireframesOrMockups>
-    <RisksAndAssumptions>
-    [List of risks and mitigation plans]
-    </RisksAndAssumptions>
-    <SuccessValidationPlan>
-    [Testing and feedback strategies]
-    </SuccessValidationPlan>
-    <TimelineAndMilestones>
-    [Key deliverables with timelines]
-    </TimelineAndMilestones>
-    </PRD>
+   <prd>
+    <product_overview>
+    [Content for Product Overview]
+    </product_overview>
+    <goals_and_success_metrics>
+    [Content for Goals and Success Metrics]
+    </goals_and_success_metrics>
+    <scope_of_mvp>
+    <core_features>
+    [Numbered list of core features]
+    </core_features>
+    <exclusions>
+    [Numbered list of intentionally excluded features]
+    </exclusions>
+    </scope_of_mvp>
+    <user_stories_and_use_cases>
+    [Content for User Stories and Use Cases]
+    </user_stories_and_use_cases>
+    <functional_requirements>
+    [Content for Functional Requirements]
+    </functional_requirements>
+    <technical_requirements>
+    [Content for Technical Requirements]
+    </technical_requirements>
+    <wireframes_or_mockups>
+    [Description of Wireframes or Mockups]
+    </wireframes_or_mockups>
+    <risks_and_assumptions>
+    [Content for Risks and Assumptions]
+    </risks_and_assumptions>
+    <success_validation_plan>
+    [Content for Success Validation Plan]
+    </success_validation_plan>
+    <timeline_and_milestones>
+    [Content for Timeline and Milestones]
+    </timeline_and_milestones>
+    </prd>
   agent: TechStackFrameworkAgent
   inputs:
     startup_info: "{STARTUP_INFO}"

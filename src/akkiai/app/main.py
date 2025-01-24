@@ -37,6 +37,9 @@ API_KEY=os.getenv("API_KEY", "apikey")
 SECRET_KEY=os.getenv("SECRET_KEY")
 ANTHROPIC_API= os.getenv("ANTHROPIC_API_KEY")
 DEEPSEEK_API= os.getenv("DEEPSEEK_API_KEY")
+ChatGPT_API=os.getenv("GPT_4O_MINI_API_KEY")
+GROK_API= os.getenv("GROK_BETA_API_KEY")
+LLAMA_3_API_KEY=os.getenv("LLAMA_31_API_KEY")
 
 #Configuration for CORS 
 
@@ -64,9 +67,10 @@ class RunInputs(BaseModel):
     INPUT_1: str
     HASH: str
 
-#Anthropic Chat Endpoint Inputs
+#Chat Endpoint Inputs
 class ChatInputs(BaseModel):
     MESSAGE: str
+    MODEL_NAME: str
     HASH: str
 
 class TrainInputs(BaseModel):
@@ -278,13 +282,13 @@ async def run_crew_bg(crew_instance, inputs, solution_id, kickoff_id ):
         print(f"Exception in run_kickoff: {error_details}")
 
 #running all the chats simultaneously in the background
-async def chat_bg( input,input_message, kickoff_id,create_date, API_NAME="deepseek"):
-    
-    if API_NAME=="anthropic":
+async def chat_bg( input,input_message, kickoff_id,create_date, API_NAME):
+
+    if API_NAME=="claude-3-haiku-20240307":
         client= anthropic.Anthropic(api_key=ANTHROPIC_API)
         MODEL_NAME="claude-3-haiku-20240307"
 
-        message = client.messages.create(
+        completion = client.messages.create(
                     model=MODEL_NAME,
                     max_tokens=1024,
                     messages=[
@@ -292,23 +296,75 @@ async def chat_bg( input,input_message, kickoff_id,create_date, API_NAME="deepse
                     ]
                 )
         
-        message_id= message.id
-        response= message.content[0].text
-        task_name= message.model
+        message_id= completion.id
+        response= completion.content[0].text
+        task_name= completion.model
 
-    elif API_NAME=="deepseek":
+    elif API_NAME=="deepseek-chat":
 
         client= OpenAI(api_key=DEEPSEEK_API, base_url="https://api.deepseek.com")
         messages = [{"role": "user", "content":input.MESSAGE}]
-        message=client.chat.completions.create(
+        completion=client.chat.completions.create(
             model="deepseek-chat",
             messages=messages
         )
-        messages.append(message.choices[0].message) 
-        response= message.choices[0].message.content
-        message_id=message.id
-        task_name=message.model 
+        messages.append(completion.choices[0].message) 
+        response= completion.choices[0].message.content
+        message_id=completion.id
+        task_name=completion.model 
 
+    elif API_NAME=="gpt-4o-mini":
+            client= OpenAI(api_key=ChatGPT_API)
+            completion = client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=[
+                    {"role": "system", "content": "You are a helpful assistant."},
+                    {
+                        "role": "user",
+                        "content":input.MESSAGE
+                    }
+                ]
+            )
+            response= completion.choices[0].message.content
+            message_id=completion.id
+            task_name=completion.model
+
+    elif API_NAME=="grok-beta":
+          client= OpenAI(api_key=GROK_API, base_url="https://api.x.ai/v1")
+          completion = client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=[
+                    {"role": "system", "content": "You are a helpful assistant."},
+                    {
+                        "role": "user",
+                        "content":input.MESSAGE
+                    }
+                ]
+            )
+          response= completion.choices[0].message.content
+          message_id=completion.id
+          task_name=completion.model 
+
+    elif API_NAME=="llama3.1-70b":
+        client= OpenAI(api_key=LLAMA_3_API_KEY, base_url="https://api.llama-api.com")
+        completion = client.chat.completions.create(
+                model="llama3.1-70b",
+                messages=[
+                    {"role": "system", "content": "You are a helpful assistant."},
+                    {
+                        "role": "user",
+                        "content":input.MESSAGE
+                    }
+                ]
+            )
+        response= completion.choices[0].message.content
+        message_id=str(uuid.uuid4())
+        task_name=completion.model 
+        completion.id=message_id
+
+    
+    message_id=completion.id
+    task_name=completion.model
     """
     Push the message id and the anthropic response to the SUPABASE db
     kickoff_id column --> message_id
@@ -335,7 +391,7 @@ async def chat_bg( input,input_message, kickoff_id,create_date, API_NAME="deepse
             )
         response.raise_for_status()  # Raise an exception for HTTP errors (4xx or 5xx)
         # Log the success
-        #print(f"Webhook sent successfully: {response.status_code}, {response.json()}")
+        print(f"Webhook sent successfully: {response.status_code}, {response.json()}")
 
     except requests.exceptions.RequestException as e:
         # Log any errors during the webhook call
@@ -347,11 +403,12 @@ async def chat(input: ChatInputs, background_tasks: BackgroundTasks):
     try:
         input_message=input.MESSAGE
         received_hash= input.HASH
+        model_name= input.MODEL_NAME
 
         if not (input_message and received_hash):
             raise HTTPException(status_code=400, detail="Invalid input data")
         
-        data_string=f"{input_message}"
+        data_string=f"{input_message}|{model_name}"
         #compute hash from data string
         computed_hash= await compute_hash(data_string,SECRET_KEY)
 
@@ -373,7 +430,7 @@ async def chat(input: ChatInputs, background_tasks: BackgroundTasks):
            
 
             supabase.table("kickoff_details").insert({"kickoff_id": kickoff_id, "job_status": job_status, "create_date":create_date, "update_date":update_date}).execute()
-            background_tasks.add_task(chat_bg,input,input_message,kickoff_id,create_date)
+            background_tasks.add_task(chat_bg,input,input_message,kickoff_id,create_date,model_name)
      
             return {"The Chat has been submitted. Message ID:": kickoff_id}
         

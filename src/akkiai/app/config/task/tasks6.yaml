@@ -61,9 +61,6 @@ tam_sam_som:
     </conclusion>
     </market_analysis>
   agent: TamSamSomAgent
-  inputs:
-    startup_info: '{STARTUP_INFO}'
-
 
 future_competitors_analysis: 
   description: >-
@@ -116,8 +113,7 @@ future_competitors_analysis:
     </overall_assessment>
     </competitive_analysis>
   agent: FutureCompetitorsAnalysisAgent
-  inputs:
-    startup_info: '{STARTUP_INFO}'
+
   
 bottom_up_analysis: 
   description: >-
@@ -197,8 +193,7 @@ bottom_up_analysis:
     </conclusion>
     </market_analysis>
   agent: BottomUpAnalysisAgent
-  inputs:
-    startup_info: '{STARTUP_INFO}'
+
   
 strategic_group_analysis: 
   description: >-
@@ -272,10 +267,7 @@ strategic_group_analysis:
     [Your strategy recommendations]
     </strategy_recommendations>
 
-    Please proceed with your analysis. It's OK for the step planning sections to be quite long.
   agent: StrategicGroupAnalysisAgent
-  inputs:
-    startup_info: '{STARTUP_INFO}'
 
   
 porters_five_forces: 
@@ -349,8 +341,6 @@ porters_five_forces:
 
     Ensure that your analysis is thorough, well-reasoned, and directly applicable to the startup based on the provided information.
   agent: PorterFiveForcesAgent
-  inputs:
-    startup_info: '{STARTUP_INFO}'
 
 
 swot_analysis: 
@@ -408,8 +398,7 @@ swot_analysis:
 
     Ensure that your analysis is specific to the startup information provided and offers actionable insights. Begin your analysis now.
   agent: SWOTAnalysisAgent
-  inputs:
-   startup_info: '{STARTUP_INFO}'
+
   
 top_down_analysis: 
   description: >-
@@ -501,7 +490,5 @@ top_down_analysis:
     </conclusion>
     </market_analysis>
   agent: TopDownAnalysisAgent
-  inputs:
-   startup_info: '{STARTUP_INFO}'
 
   
