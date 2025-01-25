@@ -20,6 +20,7 @@ from openai import OpenAI
 from pytz import timezone 
 import uuid
 import requests
+import crewuserinputs
 
 
 
@@ -65,6 +66,7 @@ class RunInputs(BaseModel):
     
     SOLUTION_ID: str
     INPUT_1: str
+    MODEL_NAME: str
     HASH: str
 
 #Chat Endpoint Inputs
@@ -138,7 +140,10 @@ async def run(inputs: RunInputs, background_tasks: BackgroundTasks):
     try:
         solution_id=inputs.SOLUTION_ID
         input1=inputs.INPUT_1
+        model_name=inputs.MODEL_NAME
         received_hash=inputs.HASH
+
+        crewuserinputs.SharedRunInputs.set_shared_instance(model_name=inputs.MODEL_NAME)
          
         #if not (solution_id and input1 and input2 and input3 and received_hash):
         if not (solution_id and input1 and received_hash):
@@ -199,7 +204,7 @@ async def run(inputs: RunInputs, background_tasks: BackgroundTasks):
             update_date = create_date #what does this mean
             job_status = "on"
 
-            supabase.table("kickoff_details").insert({"kickoff_id": kickoff_id, "job_status": job_status, "create_date":create_date, "update_date":update_date}).execute()
+            supabase.table("kickoff_details").insert({"kickoff_id": kickoff_id, "job_status": job_status, "create_date":create_date, "update_date":update_date, "model_name":model_name}).execute()
             
             background_tasks.add_task(run_crew_bg, crew_instance, inputs, solution_id, kickoff_id)
             

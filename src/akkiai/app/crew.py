@@ -7,17 +7,27 @@ import uuid
 import requests
 from custompydantics import *
 import os
+from crewuserinputs import SharedRunInputs
 
 @CrewBase
 class crew1():
     """
     Target Audience Specialist 
     """
-    
+
     agents_config = 'config/agent/agents1.yaml'
     tasks_config = 'config/task/tasks1.yaml'
-    claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
-    deepseek_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
+    def __init__(self):
+        
+        self.shared_inputs= SharedRunInputs.get_shared_instance()
+        self.llm_name=self.shared_inputs.MODEL_NAME
+
+        if self.llm_name=="claude-3-haiku-20240307":
+          self.selected_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
+        
+        elif self.llm_name=="deepseek-chat":
+          self.selected_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
+
     
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
         """
@@ -69,7 +79,7 @@ class crew1():
     def TargetAudienceAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['TargetAudienceAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -101,8 +111,16 @@ class crew2():
     """
     agents_config = 'config/agent/agents2.yaml'
     tasks_config = 'config/task/tasks2.yaml'
-    claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
-    deepseek_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
+    def __init__(self):
+        
+        self.shared_inputs= SharedRunInputs.get_shared_instance()
+        self.llm_name=self.shared_inputs.MODEL_NAME
+
+        if self.llm_name=="claude-3-haiku-20240307":
+          self.selected_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
+        
+        elif self.llm_name=="deepseek-chat":
+          self.selected_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
     
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
         """
@@ -155,8 +173,7 @@ class crew2():
     def BuyerPersonaAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['BuyerPersonaAgent'],
-            llm=self.claude_llm,
-            #llm=self.deepseek_llm,
+            llm=self.selected_llm,
             #verbose=True
         )
     
@@ -165,7 +182,7 @@ class crew2():
     def B2CPersonaAnalystAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['B2CPersonaAnalystAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -174,7 +191,7 @@ class crew2():
     def B2BPersonaAnalystAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['B2BPersonaAnalystAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -183,7 +200,7 @@ class crew2():
     def JTBDAnalysisAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['JTBDAnalysisAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -192,7 +209,7 @@ class crew2():
     def StagesofAwarenessAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['StagesofAwarenessAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -268,8 +285,17 @@ class crew3():
 
     agents_config = 'config/agent/agents3.yaml'
     tasks_config = 'config/task/tasks3.yaml'
-    claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307") 
-    deepseek_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
+    def __init__(self):
+        
+        self.shared_inputs= SharedRunInputs.get_shared_instance()
+        self.llm_name=self.shared_inputs.MODEL_NAME
+
+        if self.llm_name=="claude-3-haiku-20240307":
+          self.selected_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
+        
+        elif self.llm_name=="deepseek-chat":
+          self.selected_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
+    
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
         """
             Pushes the task output to the database.
@@ -320,7 +346,7 @@ class crew3():
     def ValuePropCanvasAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['ValuePropCanvasAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -329,7 +355,7 @@ class crew3():
     def Market4PAnalysisAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['Market4PAnalysisAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -339,7 +365,7 @@ class crew3():
     def SWOTAnalysisAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['SWOTAnalysisAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -348,7 +374,7 @@ class crew3():
     def USPRoseFrameworkAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['USPRoseFrameworkAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -358,7 +384,7 @@ class crew3():
     def MappingBuyerJourneyAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['MappingBuyerJourneyAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -428,8 +454,17 @@ class crew4():
     """Akkiai crew"""
     agents_config = 'config/agent/agents4.yaml'
     tasks_config = 'config/task/tasks4.yaml'
-    claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
-    deepseek_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
+    def __init__(self):
+        
+        self.shared_inputs= SharedRunInputs.get_shared_instance()
+        self.llm_name=self.shared_inputs.MODEL_NAME
+
+        if self.llm_name=="claude-3-haiku-20240307":
+          self.selected_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
+        
+        elif self.llm_name=="deepseek-chat":
+          self.selected_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
+
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
         """
             Pushes the task output to the database.
@@ -480,7 +515,7 @@ class crew4():
     def BrandStoryAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['BrandStoryAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -489,7 +524,7 @@ class crew4():
     def BrandMessageSpecialistAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['BrandMessageSpecialistAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -499,7 +534,7 @@ class crew4():
     def GTMSpecialistAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['GTMSpecialistAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -509,7 +544,7 @@ class crew4():
     def BABFrameworkAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['BABFrameworkAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -519,7 +554,7 @@ class crew4():
     def PASStoryFrameworkAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['PASStoryFrameworkAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -529,7 +564,7 @@ class crew4():
     def STPAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['STPAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -539,7 +574,7 @@ class crew4():
     def CustomerJourneyMappingAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['CustomerJourneyMappingAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -549,7 +584,7 @@ class crew4():
     def BrandArchetypesModelAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['BrandArchetypesModelAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -645,8 +680,16 @@ class crew5():
     """Akkiai crew"""
     agents_config = 'config/agent/agents5.yaml'
     tasks_config = 'config/task/tasks5.yaml'
-    claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
-    deepseek_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
+    def __init__(self):
+        
+        self.shared_inputs= SharedRunInputs.get_shared_instance()
+        self.llm_name=self.shared_inputs.MODEL_NAME
+
+        if self.llm_name=="claude-3-haiku-20240307":
+          self.selected_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
+        
+        elif self.llm_name=="deepseek-chat":
+          self.selected_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
         """
             Pushes the task output to the database.
@@ -697,7 +740,7 @@ class crew5():
     def MarketReadinessAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['MarketReadinessAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -706,7 +749,7 @@ class crew5():
     def TechnologyAdoptionSpecilistAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['TechnologyAdoptionSpecilistAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -716,7 +759,7 @@ class crew5():
     def RiskAssesmentSpecialistAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['RiskAssesmentSpecialistAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -726,7 +769,7 @@ class crew5():
     def BlueOceanSpecialistAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['BlueOceanSpecialistAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -786,8 +829,16 @@ class crew6():
     """Akkiai crew"""
     agents_config = 'config/agent/agents6.yaml'
     tasks_config = 'config/task/tasks6.yaml'
-    claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
-    deepseek_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
+    def __init__(self):
+        
+        self.shared_inputs= SharedRunInputs.get_shared_instance()
+        self.llm_name=self.shared_inputs.MODEL_NAME
+
+        if self.llm_name=="claude-3-haiku-20240307":
+          self.selected_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
+        
+        elif self.llm_name=="deepseek-chat":
+          self.selected_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
         """
             Pushes the task output to the database.
@@ -838,7 +889,7 @@ class crew6():
     def TamSamSomAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['TamSamSomAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -847,7 +898,7 @@ class crew6():
     def FutureCompetitorsAnalysisAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['FutureCompetitorAnalysisAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -857,7 +908,7 @@ class crew6():
     def BottomUpAnalysisAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['BottomUpAnalysisAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -867,7 +918,7 @@ class crew6():
     def StrategicGroupAnalysisAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['StrategicGroupAnalysisAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -877,7 +928,7 @@ class crew6():
     def PorterFiveForcesAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['PorterFiveForcesAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -887,7 +938,7 @@ class crew6():
     def SWOTAnalysisAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['SWOTAnalysisAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -897,7 +948,7 @@ class crew6():
     def TopDownAnalysisAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['TopDownAnalysisAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -984,8 +1035,16 @@ class crew7():
     """Akkiai crew"""
     agents_config = 'config/agent/agents7.yaml'
     tasks_config = 'config/task/tasks7.yaml'
-    claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
-    deepseek_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
+    def __init__(self):
+        
+        self.shared_inputs= SharedRunInputs.get_shared_instance()
+        self.llm_name=self.shared_inputs.MODEL_NAME
+
+        if self.llm_name=="claude-3-haiku-20240307":
+          self.selected_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
+        
+        elif self.llm_name=="deepseek-chat":
+          self.selected_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
         """
             Pushes the task output to the database.
@@ -1036,7 +1095,7 @@ class crew7():
     def LeanCanvasMVPAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['LeanCanvasMVPAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -1045,7 +1104,7 @@ class crew7():
     def RoadmapMVPAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['RoadmapMVPAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -1055,7 +1114,7 @@ class crew7():
     def PRDTemplateAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['PRDTemplateAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -1065,7 +1124,7 @@ class crew7():
     def TechStackFrameworkAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['TechStackFrameworkAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -1124,8 +1183,16 @@ class crew8():
 
     agents_config = 'config/agent/agents8.yaml'
     tasks_config = 'config/task/tasks8.yaml'
-    claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
-    deepseek_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
+    def __init__(self):
+        
+        self.shared_inputs= SharedRunInputs.get_shared_instance()
+        self.llm_name=self.shared_inputs.MODEL_NAME
+
+        if self.llm_name=="claude-3-haiku-20240307":
+          self.selected_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
+        
+        elif self.llm_name=="deepseek-chat":
+          self.selected_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
         """
             Pushes the task output to the database.
@@ -1176,7 +1243,7 @@ class crew8():
     def ExperiencedStartupFounderSpecialistAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['ExperiencedStartupFounderSpecialistAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -1185,7 +1252,7 @@ class crew8():
     def SiliconValleyInvestorAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['SiliconValleyInvestorAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -1195,7 +1262,7 @@ class crew8():
     def StartupSpecialistAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['StartupSpecialistAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -1205,7 +1272,7 @@ class crew8():
     def FamousSiliconValleyTechTitan(self) -> Agent:
         return Agent(
             config=self.agents_config['FamousSiliconValleyTechTitan'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -1267,8 +1334,16 @@ class crew9():
     '''
     agents_config = 'config/agent/agents9.yaml'
     tasks_config = 'config/task/tasks9.yaml'
-    claude_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307", max_tokens=4096)
+    def __init__(self):
+        
+        self.shared_inputs= SharedRunInputs.get_shared_instance()
+        self.llm_name=self.shared_inputs.MODEL_NAME
 
+        if self.llm_name=="claude-3-haiku-20240307":
+          self.selected_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
+        
+        elif self.llm_name=="deepseek-chat":
+          self.selected_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
         """
             Pushes the task output to the database.
@@ -1319,7 +1394,7 @@ class crew9():
     def SequoiaCapitalPitchDeckAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['SequoiaCapitalPitchDeckAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -1328,7 +1403,7 @@ class crew9():
     def GuyKawasaki102030RuleAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['GuyKawasaki102030RuleAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -1338,7 +1413,7 @@ class crew9():
     def VentureCapitalMethodAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['VentureCapitalMethodAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -1348,7 +1423,7 @@ class crew9():
     def FirstChicagoMethodAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['FirstChicagoMethodAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -1358,7 +1433,7 @@ class crew9():
     def RiskFactorSummationMethodAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['RiskFactorSummationMethodAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
@@ -1368,7 +1443,7 @@ class crew9():
     def YCombinatorTemplateAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['YCombinatorTemplateAgent'],
-            llm=self.claude_llm,
+            llm=self.selected_llm,
             #llm=self.deepseek_llm,
             #verbose=True
         )
