@@ -1,86 +1,3 @@
-creating_buyer_persona:
-  description: >
-    You are tasked with creating a detailed buyer persona based on the given
-    information and answering specific questions about the target audience. 
-    This persona will help in understanding the ideal customer and tailoring
-    marketing strategies effectively. Here's the information you'll
-    be working with:
-
-    <startup_info>
-    {STARTUP_INFO}
-    </startup_info>
-
-    Now, you'll need to answer the following questions for B2B and B2C market:
-
-    <B2B questions> - B2B persona questions will be provided from the output of
-    the `creating_b2b_persona` task. </B2B questions>
-
-    <B2C questions> - B2C persona questions will be provided from the output of
-    the `creating_b2c_persona` task. </B2C questions>
-
-    Approach the task as follows:
-
-    1. Carefully read and analyze the provided information about the target
-    audience, business details, and product/service/solution.
-
-    2. Answer each question in the list, using the information provided. If a
-    question cannot be answered directly from the given information, make a
-    reasonable inference based on the context, and note that it's an inference.
-
-    3. Use your answers to create a comprehensive buyer persona. This persona
-    should be a fictional representation of the ideal customer, incorporating
-    all the information you've gathered and inferred.
-
-    4. When creating the persona, organize the information into the following
-    categories:
-      - Demographic Information
-      - Psychographic Information
-      - Behavioral Information
-      - Buying Process
-      - Consumption Patterns
-      - Aspirations
-
-    5. Give your persona a name and include a brief narrative description that
-    brings the character to life.
-  expected_output: |
-    Present your output in the following format:
-
-     <buyer_persona>
-     <name>[Insert persona name]</name>
-
-     <narrative>
-     [Insert brief narrative description of the persona]
-     </narrative>
-
-     <demographic_information>
-     [List demographic details]
-     </demographic_information>
-
-     <psychographic_information>
-     [List psychographic details]
-     </psychographic_information>
-
-     <behavioral_information>
-     [List behavioral details]
-     </behavioral_information>
-
-     <buying_process>
-     [Describe the buying process]
-     </buying_process>
-
-     <consumption_patterns>
-     [Describe consumption patterns]
-     </consumption_patterns>
-
-     <aspirations>
-     [List aspirations]
-     </aspirations>
-     </buyer_persona>
-
-     Ensure that your buyer persona is detailed, coherent, and aligns with the provided information about the target audience, 
-     business, and product/service/solution.
-  agent: BuyerPersonaAgent
-
 creating_b2c_persona:
   description: >
     Imagine you are trying to understand your ideal customer for your product or
@@ -203,6 +120,88 @@ creating_b2b_persona:
     8. key_influencers: 
     [Influencers involved in the decision-making process and external influences affecting their decisions.]
   agent: B2BPersonaAnalystAgent
+
+
+creating_buyer_persona:
+  description: >
+    You are tasked with creating a detailed buyer persona based on the given
+    information and answering specific questions about the target audience. 
+    This persona will help in understanding the ideal customer and tailoring
+    marketing strategies effectively. Here's the information you'll
+    be working with:
+
+    <startup_info>
+    {STARTUP_INFO}
+    </startup_info>
+
+    Now, you'll need to answer the following questions for B2B and B2C market:
+
+    <B2B questions> B2BPersonaAnalystAgent_task output </B2B questions>
+
+    <B2C questions> B2CPersonaAnalystAgent_task output </B2C questions>
+
+    Approach the task as follows:
+
+    1. Carefully read and analyze the provided information about the target
+    audience, business details, and product/service/solution.
+
+    2. Answer each question in the list, using the information provided. If a
+    question cannot be answered directly from the given information, make a
+    reasonable inference based on the context, and note that it's an inference.
+
+    3. Use your answers to create a comprehensive buyer persona. This persona
+    should be a fictional representation of the ideal customer, incorporating
+    all the information you've gathered and inferred.
+
+    4. When creating the persona, organize the information into the following
+    categories:
+      - Demographic Information
+      - Psychographic Information
+      - Behavioral Information
+      - Buying Process
+      - Consumption Patterns
+      - Aspirations
+
+    5. Give your persona a name and include a brief narrative description that
+    brings the character to life.
+  expected_output: |
+    Present your output in the following format:
+
+     <buyer_persona>
+     <name>[Insert persona name]</name>
+
+     <narrative>
+     [Insert brief narrative description of the persona]
+     </narrative>
+
+     <demographic_information>
+     [List demographic details]
+     </demographic_information>
+
+     <psychographic_information>
+     [List psychographic details]
+     </psychographic_information>
+
+     <behavioral_information>
+     [List behavioral details]
+     </behavioral_information>
+
+     <buying_process>
+     [Describe the buying process]
+     </buying_process>
+
+     <consumption_patterns>
+     [Describe consumption patterns]
+     </consumption_patterns>
+
+     <aspirations>
+     [List aspirations]
+     </aspirations>
+     </buyer_persona>
+
+     Ensure that your buyer persona is detailed, coherent, and aligns with the provided information about the target audience, 
+     business, and product/service/solution.
+  agent: BuyerPersonaAgent
 
 analysing_jtbd:
   description: >

@@ -80,7 +80,6 @@ class crew1():
         return Agent(
             config=self.agents_config['TargetAudienceAgent'],
             llm=self.selected_llm,
-            #llm=self.deepseek_llm,
             #verbose=True
         )
 
@@ -88,6 +87,7 @@ class crew1():
     @task
     def TargetAudienceAgent_task(self) -> Task:
         return Task(
+            name= "TaregtTask",
             config=self.tasks_config['finding_target_audience'],
             output_json=Task11Pydantic,
             callback=self.task_output_callback
@@ -167,8 +167,25 @@ class crew2():
             # Log any errors during the webhook call
             print(f"Error sending webhook: {str(e)}")
 
-
+   
     #Agent1
+    @agent
+    def B2CPersonaAnalystAgent(self) -> Agent:
+        return Agent(
+            config=self.agents_config['B2CPersonaAnalystAgent'],
+            llm=self.selected_llm,
+            #verbose=True
+        )
+    #Agent2
+    @agent
+    def B2BPersonaAnalystAgent(self) -> Agent:
+        return Agent(
+            config=self.agents_config['B2BPersonaAnalystAgent'],
+            llm=self.selected_llm,
+            #verbose=True
+        )
+    
+    #Agent3
     @agent
     def BuyerPersonaAgent(self) -> Agent:
         return Agent(
@@ -177,31 +194,12 @@ class crew2():
             #verbose=True
         )
     
-    #Agent2
-    @agent
-    def B2CPersonaAnalystAgent(self) -> Agent:
-        return Agent(
-            config=self.agents_config['B2CPersonaAnalystAgent'],
-            llm=self.selected_llm,
-            #llm=self.deepseek_llm,
-            #verbose=True
-        )
-    #Agent3
-    @agent
-    def B2BPersonaAnalystAgent(self) -> Agent:
-        return Agent(
-            config=self.agents_config['B2BPersonaAnalystAgent'],
-            llm=self.selected_llm,
-            #llm=self.deepseek_llm,
-            #verbose=True
-        )
     #Agent4
     @agent
     def JTBDAnalysisAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['JTBDAnalysisAgent'],
             llm=self.selected_llm,
-            #llm=self.deepseek_llm,
             #verbose=True
         )
     #Agent5
@@ -210,39 +208,37 @@ class crew2():
         return Agent(
             config=self.agents_config['StagesofAwarenessAgent'],
             llm=self.selected_llm,
-            #llm=self.deepseek_llm,
             #verbose=True
         )
     
     #task1
-    @task
-    def BuyerPersonaAgent_task(self) -> Task:
-
-        return Task(
-            config=self.tasks_config['creating_buyer_persona'],
-            output_pydantic=Task21Pydantic,
-            callback=self.task_output_callback
-        )
-
-    #task2
     @task
     def B2CPersonaAnalystAgent_task(self) -> Task:
 
         return Task(
             config=self.tasks_config['creating_b2c_persona'],
             output_pydantic=Task22Pydantic,
-            context= [self.BuyerPersonaAgent_task()],
-            callback=self.task_output_callback
+            #callback=self.task_output_callback
         )
-    #task3
+    #task2 
     @task
     def B2BPersonaAnalystAgent_task(self) -> Task:
         
         return Task(
             config=self.tasks_config['creating_b2b_persona'],
             output_pydantic=Task23Pydantic,
-            context= [self.BuyerPersonaAgent_task()],
-            callback=self.task_output_callback
+            #callback=self.task_output_callback  #NO CALLBACKL FOR THIS SINCE IT IS HELPING THE BuyerPersonaAgent
+        )
+    
+    #task3 (MAIN TASK made of outputs from B2C and B2B Persona Agents)
+    @task
+    def BuyerPersonaAgent_task(self) -> Task:
+
+        return Task(
+            config=self.tasks_config['creating_buyer_persona'],
+            output_pydantic=Task21Pydantic,
+            callback=self.task_output_callback,
+            context= [self.B2CPersonaAnalystAgent_task(), self.B2BPersonaAnalystAgent_task()]
         )
  
     #task4
@@ -1395,7 +1391,6 @@ class crew9():
         return Agent(
             config=self.agents_config['SequoiaCapitalPitchDeckAgent'],
             llm=self.selected_llm,
-            #llm=self.deepseek_llm,
             #verbose=True
         )
     #Agent2
@@ -1404,7 +1399,6 @@ class crew9():
         return Agent(
             config=self.agents_config['GuyKawasaki102030RuleAgent'],
             llm=self.selected_llm,
-            #llm=self.deepseek_llm,
             #verbose=True
         )
     

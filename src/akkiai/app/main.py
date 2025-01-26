@@ -287,7 +287,9 @@ async def run_crew_bg(crew_instance, inputs, solution_id, kickoff_id ):
         print(f"Exception in run_kickoff: {error_details}")
 
 #running all the chats simultaneously in the background
-async def chat_bg( input,input_message, kickoff_id,create_date, API_NAME):
+async def chat_bg( input,input_message, kickoff_id,create_date, API_NAME, conversation_history):
+
+    conversation_history=[{"role":"system","content": "You are very experienced assistant"}]
 
     if API_NAME=="claude-3-haiku-20240307":
         client= anthropic.Anthropic(api_key=ANTHROPIC_API)
@@ -319,20 +321,16 @@ async def chat_bg( input,input_message, kickoff_id,create_date, API_NAME):
         task_name=completion.model 
 
     elif API_NAME=="gpt-4o-mini":
+            conversation_history.append({"role":"user","content": input.MESSAGE})
             client= OpenAI(api_key=ChatGPT_API)
             completion = client.chat.completions.create(
                 model="gpt-4o-mini",
-                messages=[
-                    {"role": "system", "content": "You are a helpful assistant."},
-                    {
-                        "role": "user",
-                        "content":input.MESSAGE
-                    }
-                ]
+                messages= conversation_history
             )
             response= completion.choices[0].message.content
             message_id=completion.id
             task_name=completion.model
+            conversation_history.append({"role":"system","content": response})
 
     elif API_NAME=="grok-beta":
           client= OpenAI(api_key=GROK_API, base_url="https://api.x.ai/v1")

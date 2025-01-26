@@ -1,8 +1,8 @@
 # Akkiai_crew
 
-This branch v6 updated on 25th January 2025.
+This branch v6 updated on 26th January 2025.
 
-NEW UPDATE-- Added deepseek and claude choices for Crew runs
+NEW UPDATE-- Added deepseek and claude choices for Crew runs, only 3 callbacks for crew-2 (B2B & B2C)
 
 1. Added crew 1-9 for production
 2. Output pydantic only done for crew 1 and 9, have to do for others
