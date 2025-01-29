@@ -45,7 +45,7 @@ class Task23Pydantic(BaseModel):
     key_influencers: str
 
 class Task24Pydantic(BaseModel):
-    analysis: str
+    jtbd_analysis: str
     jtbd_statement:str
 
 class AwarenessPydantic(BaseModel):
@@ -57,7 +57,7 @@ class AwarenessPydantic(BaseModel):
 
 class Task25Pydantic(BaseModel):
     stages_of_awareness_analysis:AwarenessPydantic
-    summary_and_recommendations:str
+    summary_and_recommendations: str
 
 class VPCPydantic(BaseModel):
     customer_profile:str

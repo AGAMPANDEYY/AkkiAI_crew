@@ -164,9 +164,12 @@ creating_buyer_persona:
 
     5. Give your persona a name and include a brief narrative description that
     brings the character to life.
+     Ensure that your buyer persona is detailed, coherent, and aligns with the provided information about the target audience, 
+     business, and product/service/solution.
   expected_output: |
-    Present your output in the following format:
 
+     Please provide the following response in strict JSON format. Ensure there are no missing commas or unmatched braces.
+     Wrap all keys and strings in double quotes. Validate the JSON before returning it
      <buyer_persona>
      <name>[Insert persona name]</name>
 
@@ -198,9 +201,6 @@ creating_buyer_persona:
      [List aspirations]
      </aspirations>
      </buyer_persona>
-
-     Ensure that your buyer persona is detailed, coherent, and aligns with the provided information about the target audience, 
-     business, and product/service/solution.
   agent: BuyerPersonaAgent
 
 analysing_jtbd:
@@ -216,7 +216,7 @@ analysing_jtbd:
     </startup_info>
 
     The Jobs to be Done (JTBD) framework focuses on understanding the underlying
-    motivations and desired outcomes that drive customers to "hire" a product or
+    motivations and desired outcomes that drive customers to hire a product or
     service. Instead of focusing solely on product features, JTBD emphasizes the
     progress that customers are trying to make in their lives.
 
@@ -227,7 +227,7 @@ analysing_jtbd:
 
     2. Answer the following five key questions based on the information
     provided. Use your analytical skills to infer answers if they are not
-    explicitly stated in the inputs. Write your answers inside <analysis> tags.
+    explicitly stated in the inputs.
 
       a. What is the main "job" the customer is trying to accomplish by using this product/service?
       b. What problem or pain point is the customer trying to solve with this product/service?
@@ -238,18 +238,18 @@ analysing_jtbd:
     3. Based on your analysis, create a brief JTBD statement that summarizes:
       - The main "job" the product/service helps customers accomplish
       - Why customers would "hire" this product/service over other options
-  expected_output: >
-    Your final output should be structured as follows: 
-    <analysis> [Your answers
-    to the five key questions] </analysis>
-
-    <jtbd_statement> [Your brief JTBD statement, no more than 2-3 sentences]
-    </jtbd_statement>
-
     Remember to focus on the functional, emotional, and social dimensions of the
     job, and highlight what  makes this product/service uniquely suited to help
     customers accomplish their goals.
-
+  expected_output: >
+    Please provide the following response in strict JSON format. Ensure there are no missing commas or unmatched braces.
+    Wrap all keys and strings in double quotes. Validate the JSON before returning it
+    <jtbd_analysis> 
+    [Your answers to the five questions given above, all in different sentences.] 
+    </jtbd_analysis>
+    <jtbd_statement> 
+    [Your brief JTBD statement, no more than 2-3 sentences]
+    </jtbd_statement>
       
   agent: JTBDAnalysisAgent
 
@@ -286,9 +286,12 @@ analysing_stages_of_awareness:
     in this stage? - What key messages or information would resonate with people
     in this stage? - What marketing channels or tactics might be most effective
     for reaching people in this stage?
+    Ensure that your analysis is thorough, insightful, and directly relates to
+    the provided information about the target audience, buyer persona,
+    motivations, business, and product/service details.
   expected_output: >
-    Present your analysis in the following structure:
-
+    Please provide the following response in strict JSON format. Ensure there are no missing commas or unmatched braces.
+    Wrap all keys and strings in double quotes. Validate the JSON before returning it
     <stages_of_awareness_analysis> 
     <unaware> 
     [Your analysis for the Unaware stage] 
@@ -318,8 +321,4 @@ analysing_stages_of_awareness:
     <summary_and_recommendations> 
     [Your summary and recommendations]
     </summary_and_recommendations>
-
-    Ensure that your analysis is thorough, insightful, and directly relates to
-    the provided information about the target audience, buyer persona,
-    motivations, business, and product/service details.
   agent: StagesofAwarenessAgent

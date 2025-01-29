@@ -286,51 +286,116 @@ async def run_crew_bg(crew_instance, inputs, solution_id, kickoff_id ):
         error_details = traceback.format_exc()
         print(f"Exception in run_kickoff: {error_details}")
 
+class ConversationHistory:
+    def __init__(self):
+        #initialising empty list to store conversation 
+        self.turns = []
+    
+    #storing response of assitant 
+    def update_assistant_turn(self, content):
+        self.turns.append(
+            {
+                "role":"assistant",
+                "content": [
+                    {
+                        "type":"text",
+                        "text": content 
+                    }
+                ]
+            }
+        )
+
+    #storing user text to turns
+    def update_user_turn(self, content):
+        self.turns.append(
+            {
+                "role":"user",
+                "content": [
+                    {
+                        "type":"text",
+                        "text": content
+                    }
+                ]
+            }
+        )
+    #retrive the conversations in past turns
+    def get_turns(self):
+        # Retrieve conversation turns with specific formatting
+        result = []
+        user_turns_processed = 0
+        # Iterate through turns in reverse order
+        for turn in reversed(self.turns):
+            if turn["role"] == "user" and user_turns_processed < 3:
+                # Add the last user turn with ephemeral cache control
+                result.append({
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": turn["content"][0]["text"],
+                            "cache_control": {"type": "ephemeral"}
+                        }
+                    ]
+                })
+                user_turns_processed += 1
+            else:
+                # Add other turns as they are
+                result.append(turn)
+        # Return the turns in the original order
+        return list(reversed(result))
+conversation_history= ConversationHistory()
+
 #running all the chats simultaneously in the background
-async def chat_bg( input,input_message, kickoff_id,create_date, API_NAME, conversation_history):
+async def chat_bg( input,input_message, kickoff_id,create_date, API_NAME):
 
-    conversation_history=[{"role":"system","content": "You are very experienced assistant"}]
-
-    if API_NAME=="claude-3-haiku-20240307":
+    if API_NAME=="claude-3-haiku-20240307":        
+        conversation_history.update_user_turn(input.MESSAGE)
+        #print(conversation_history.turns)
         client= anthropic.Anthropic(api_key=ANTHROPIC_API)
         MODEL_NAME="claude-3-haiku-20240307"
+        system_message="You are an experienced helpful assistant"
 
         completion = client.messages.create(
                     model=MODEL_NAME,
                     max_tokens=1024,
-                    messages=[
-                        {"role": "user", "content": input.MESSAGE}
-                    ]
+                    extra_headers={
+                        "anthropic-beta":"prompt-caching-2024-07-31"
+                    },
+                    system=[
+                        {"type": "text", "text": system_message, "cache_control": {"type": "ephemeral"}},
+                           ],
+                    messages=conversation_history.get_turns(),
                 )
         
         message_id= completion.id
         response= completion.content[0].text
         task_name= completion.model
+        conversation_history.update_assistant_turn(response)
 
     elif API_NAME=="deepseek-chat":
-
+        conversation_history.update_user_turn(input.MESSAGE)
         client= OpenAI(api_key=DEEPSEEK_API, base_url="https://api.deepseek.com")
-        messages = [{"role": "user", "content":input.MESSAGE}]
         completion=client.chat.completions.create(
             model="deepseek-chat",
-            messages=messages
+            messages=conversation_history.get_turns()
         )
-        messages.append(completion.choices[0].message) 
         response= completion.choices[0].message.content
         message_id=completion.id
         task_name=completion.model 
+        conversation_history.update_assistant_turn(response)
 
     elif API_NAME=="gpt-4o-mini":
-            conversation_history.append({"role":"user","content": input.MESSAGE})
+            
+            conversation_history.update_user_turn(input.MESSAGE)
             client= OpenAI(api_key=ChatGPT_API)
             completion = client.chat.completions.create(
                 model="gpt-4o-mini",
-                messages= conversation_history
+                messages= conversation_history.get_turns()
             )
             response= completion.choices[0].message.content
             message_id=completion.id
             task_name=completion.model
-            conversation_history.append({"role":"system","content": response})
+            conversation_history.update_assistant_turn(response)
 
     elif API_NAME=="grok-beta":
           client= OpenAI(api_key=GROK_API, base_url="https://api.x.ai/v1")

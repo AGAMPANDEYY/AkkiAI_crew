@@ -7,6 +7,8 @@ import uuid
 import requests
 from custompydantics import *
 import os
+import re, json, ast, anthropic
+from openai import OpenAI
 from crewuserinputs import SharedRunInputs
 
 @CrewBase
@@ -27,8 +29,54 @@ class crew1():
         
         elif self.llm_name=="deepseek-chat":
           self.selected_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
-
     
+    def validate_json_llm(self, output_task):
+        system_prompt= """You are a JSON validation and correction specialist. Your task is to:
+            1. Analyze the incoming JSON for validity and structure
+            2. Fix any syntax errors (missing quotes, commas, brackets)
+            3. Ensure all data types are consistent and appropriate
+            4. Return ONLY the corrected JSON with no additional explanation or text
+
+            Rules:
+            - Preserve all existing data while fixing format issues
+            - Maintain the original structure where possible
+            - Ensure all keys are properly quoted
+            - Convert any invalid values to their closest valid JSON equivalent
+            - Handle nested structures correctly
+            - If arrays or objects are malformed, fix their structure
+
+            DO NOT:
+            - Add new fields that weren't in the original
+            - Remove existing data unless absolutely necessary for validity
+            - Include any explanatory text or markdown
+            - Wrap the response in code blocks
+
+            If the input is completely invalid or cannot be parsed as JSON, return an empty JSON object: {}"""
+        
+        if self.llm_name=="claude-3-haiku-20240307":
+           validated_json= anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY")).messages.create(
+            model="claude-3-haiku-20240307", 
+            max_tokens=2048, 
+            system=system_prompt,
+            messages=[
+                {"role": "user", "content":output_task}
+            ]
+           )
+           return validated_json.content[0].text
+        
+        elif self.llm_name=="deepseek-chat":
+            client= OpenAI(api_key=os.getenv("DEEPSEEK_API_KEY"), base_url="https://api.deepseek.com")
+            validated_json=client.chat.completions.create(
+                model="deepseek-chat",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": output_task}
+                ], 
+                stream= False
+            )
+            return validated_json.choices[0].message.content
+            
+        
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
         """
             Pushes the task output to the database.
@@ -48,9 +96,10 @@ class crew1():
         kickoff_id= kickoff_ids.kickoff_id_temp
         job_id=str(uuid.uuid4())
         task_name=task_output.name
+        task_output_processed=str(task_output.raw).replace("\n", "").replace("\\", "").replace(" \" ", "")
+        task_output_validated_llm= str(self.validate_json_llm(task_output_processed))
         supabase: Client= create_client(url, key)
-        supabase.table("run_details").insert({"kickoff_id": kickoff_id,'task_name':task_name,'job_id':job_id, 'input':task_input,'output':task_output.raw}).execute()
-
+        supabase.table("run_details").insert({"kickoff_id": kickoff_id,'task_name':task_name,'job_id':job_id, 'input':task_input,'output':task_output_validated_llm}).execute()
         '''
         Pushing the {kickoff_id, tak_name, task_output} to the Webhook URL with POST request
         '''
@@ -62,13 +111,13 @@ class crew1():
                 json={
                     "kickoff_id": kickoff_id,
                     "task_name": task_name,
-                    "task_output": str(task_output.raw) #This will now send strings
+                    "task_output": task_output_validated_llm #This will now send strings
                 },
                 timeout=10
                 )
             response.raise_for_status()  # Raise an exception for HTTP errors (4xx or 5xx)
             # Log the success
-            #print(f"Webhook sent successfully: {response.status_code}, {response.json()}")
+            print(f"Webhook sent successfully: {response.status_code}, {response.json()}")
 
         except requests.exceptions.RequestException as e:
             # Log any errors during the webhook call
@@ -121,7 +170,55 @@ class crew2():
         
         elif self.llm_name=="deepseek-chat":
           self.selected_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
-    
+        
+    def validate_json_llm(self, output_task):
+        system_prompt= """You are a JSON validation and correction specialist. Your task is to:
+            1. Analyze the incoming JSON for validity and structure
+            2. Fix any syntax errors (missing quotes, commas, brackets)
+            3. Ensure all data types are consistent and appropriate
+            4. Return ONLY the corrected JSON with no additional explanation or text
+
+            Rules:
+            - Preserve all existing data while fixing format issues
+            - Maintain the original structure where possible
+            - Ensure all keys are properly quoted
+            - Convert any invalid values to their closest valid JSON equivalent
+            - Handle nested structures correctly
+            - If arrays or objects are malformed, fix their structure
+
+            DO NOT:
+            - Add new fields that weren't in the original
+            - Remove existing data unless absolutely necessary for validity
+            - Include any explanatory text or markdown
+            - Wrap the response in code blocks
+
+            If the input is completely invalid or cannot be parsed as JSON, return an empty JSON object: {}"""
+        
+        if self.llm_name=="claude-3-haiku-20240307":
+           validated_json= anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY")).messages.create(
+            model="claude-3-haiku-20240307", 
+            max_tokens=2048, 
+            system=system_prompt,
+            messages=[
+                {"role": "user", "content":output_task}
+            ]
+           )
+           return validated_json.content[0].text
+        
+        elif self.llm_name=="deepseek-chat":
+            client= OpenAI(api_key=os.getenv("DEEPSEEK_API_KEY"), base_url="https://api.deepseek.com")
+            validated_json=client.chat.completions.create(
+                model="deepseek-chat",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": output_task}
+                ], 
+                stream= False
+            )
+            return validated_json.choices[0].message.content
+            
+        
+        
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
         """
             Pushes the task output to the database.
@@ -141,9 +238,10 @@ class crew2():
         kickoff_id= kickoff_ids.kickoff_id_temp
         job_id=str(uuid.uuid4())
         task_name=task_output.name
+        task_output_processed=str(task_output.raw).replace("\n", "").replace("\\", "").replace(" \" ", "")
+        task_output_validated_llm= str(self.validate_json_llm(task_output_processed))
         supabase: Client= create_client(url, key)
-        supabase.table("run_details").insert({"kickoff_id": kickoff_id,'task_name':task_name,'job_id':job_id, 'input':task_input,'output':task_output.raw}).execute()
-
+        supabase.table("run_details").insert({"kickoff_id": kickoff_id,'task_name':task_name,'job_id':job_id, 'input':task_input,'output':task_output_validated_llm}).execute()
         '''
         Pushing the {kickoff_id, tak_name, task_output} to the Webhook URL with POST request
         '''
@@ -155,7 +253,7 @@ class crew2():
                 json={
                     "kickoff_id": kickoff_id,
                     "task_name": task_name,
-                    "task_output": str(task_output.raw) #This will now send strings
+                    "task_output": task_output_validated_llm #This will now send strings
                 },
                 timeout=10
                 )
@@ -217,7 +315,7 @@ class crew2():
 
         return Task(
             config=self.tasks_config['creating_b2c_persona'],
-            output_pydantic=Task22Pydantic,
+            #output_pydantic=Task22Pydantic,
             #callback=self.task_output_callback
         )
     #task2 
@@ -226,7 +324,7 @@ class crew2():
         
         return Task(
             config=self.tasks_config['creating_b2b_persona'],
-            output_pydantic=Task23Pydantic,
+            #output_pydantic=Task23Pydantic,
             #callback=self.task_output_callback  #NO CALLBACKL FOR THIS SINCE IT IS HELPING THE BuyerPersonaAgent
         )
     
@@ -292,6 +390,54 @@ class crew3():
         elif self.llm_name=="deepseek-chat":
           self.selected_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
     
+    def validate_json_llm(self, output_task):
+        system_prompt= """You are a JSON validation and correction specialist. Your task is to:
+            1. Analyze the incoming JSON for validity and structure
+            2. Fix any syntax errors (missing quotes, commas, brackets)
+            3. Ensure all data types are consistent and appropriate
+            4. Return ONLY the corrected JSON with no additional explanation or text
+
+            Rules:
+            - Preserve all existing data while fixing format issues
+            - Maintain the original structure where possible
+            - Ensure all keys are properly quoted
+            - Convert any invalid values to their closest valid JSON equivalent
+            - Handle nested structures correctly
+            - If arrays or objects are malformed, fix their structure
+
+            DO NOT:
+            - Add new fields that weren't in the original
+            - Remove existing data unless absolutely necessary for validity
+            - Include any explanatory text or markdown
+            - Wrap the response in code blocks
+
+            If the input is completely invalid or cannot be parsed as JSON, return an empty JSON object: {}"""
+        
+        if self.llm_name=="claude-3-haiku-20240307":
+           validated_json= anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY")).messages.create(
+            model="claude-3-haiku-20240307", 
+            max_tokens=2048, 
+            system=system_prompt,
+            messages=[
+                {"role": "user", "content":output_task}
+            ]
+           )
+           return validated_json.content[0].text
+        
+        elif self.llm_name=="deepseek-chat":
+            client= OpenAI(api_key=os.getenv("DEEPSEEK_API_KEY"), base_url="https://api.deepseek.com")
+            validated_json=client.chat.completions.create(
+                model="deepseek-chat",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": output_task}
+                ], 
+                stream= False
+            )
+            return validated_json.choices[0].message.content
+            
+        
+        
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
         """
             Pushes the task output to the database.
@@ -311,9 +457,10 @@ class crew3():
         kickoff_id= kickoff_ids.kickoff_id_temp
         job_id=str(uuid.uuid4())
         task_name=task_output.name
+        task_output_processed=str(task_output.raw).replace("\n", "").replace("\\", "").replace(" \" ", "")
+        task_output_validated_llm= str(self.validate_json_llm(task_output_processed))
         supabase: Client= create_client(url, key)
-        supabase.table("run_details").insert({"kickoff_id": kickoff_id,'task_name':task_name,'job_id':job_id, 'input':task_input,'output':task_output.raw}).execute()
-
+        supabase.table("run_details").insert({"kickoff_id": kickoff_id,'task_name':task_name,'job_id':job_id, 'input':task_input,'output':task_output_validated_llm}).execute()
         '''
         Pushing the {kickoff_id, tak_name, task_output} to the Webhook URL with POST request
         '''
@@ -325,13 +472,13 @@ class crew3():
                 json={
                     "kickoff_id": kickoff_id,
                     "task_name": task_name,
-                    "task_output": str(task_output.raw) #This will now send strings
+                    "task_output": task_output_validated_llm #This will now send strings
                 },
                 timeout=10
                 )
             response.raise_for_status()  # Raise an exception for HTTP errors (4xx or 5xx)
             # Log the success
-            #print(f"Webhook sent successfully: {response.status_code}, {response.json()}")
+            print(f"Webhook sent successfully: {response.status_code}, {response.json()}")
 
         except requests.exceptions.RequestException as e:
             # Log any errors during the webhook call
@@ -461,6 +608,54 @@ class crew4():
         elif self.llm_name=="deepseek-chat":
           self.selected_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
 
+    def validate_json_llm(self, output_task):
+        system_prompt= """You are a JSON validation and correction specialist. Your task is to:
+            1. Analyze the incoming JSON for validity and structure
+            2. Fix any syntax errors (missing quotes, commas, brackets)
+            3. Ensure all data types are consistent and appropriate
+            4. Return ONLY the corrected JSON with no additional explanation or text
+
+            Rules:
+            - Preserve all existing data while fixing format issues
+            - Maintain the original structure where possible
+            - Ensure all keys are properly quoted
+            - Convert any invalid values to their closest valid JSON equivalent
+            - Handle nested structures correctly
+            - If arrays or objects are malformed, fix their structure
+
+            DO NOT:
+            - Add new fields that weren't in the original
+            - Remove existing data unless absolutely necessary for validity
+            - Include any explanatory text or markdown
+            - Wrap the response in code blocks
+
+            If the input is completely invalid or cannot be parsed as JSON, return an empty JSON object: {}"""
+        
+        if self.llm_name=="claude-3-haiku-20240307":
+           validated_json= anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY")).messages.create(
+            model="claude-3-haiku-20240307", 
+            max_tokens=2048, 
+            system=system_prompt,
+            messages=[
+                {"role": "user", "content":output_task}
+            ]
+           )
+           return validated_json.content[0].text
+        
+        elif self.llm_name=="deepseek-chat":
+            client= OpenAI(api_key=os.getenv("DEEPSEEK_API_KEY"), base_url="https://api.deepseek.com")
+            validated_json=client.chat.completions.create(
+                model="deepseek-chat",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": output_task}
+                ], 
+                stream= False
+            )
+            return validated_json.choices[0].message.content
+            
+        
+        
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
         """
             Pushes the task output to the database.
@@ -480,9 +675,10 @@ class crew4():
         kickoff_id= kickoff_ids.kickoff_id_temp
         job_id=str(uuid.uuid4())
         task_name=task_output.name
+        task_output_processed=str(task_output.raw).replace("\n", "").replace("\\", "").replace(" \" ", "")
+        task_output_validated_llm= str(self.validate_json_llm(task_output_processed))
         supabase: Client= create_client(url, key)
-        supabase.table("run_details").insert({"kickoff_id": kickoff_id,'task_name':task_name,'job_id':job_id, 'input':task_input,'output':task_output.raw}).execute()
-
+        supabase.table("run_details").insert({"kickoff_id": kickoff_id,'task_name':task_name,'job_id':job_id, 'input':task_input,'output':task_output_validated_llm}).execute()
         '''
         Pushing the {kickoff_id, tak_name, task_output} to the Webhook URL with POST request
         '''
@@ -494,7 +690,7 @@ class crew4():
                 json={
                     "kickoff_id": kickoff_id,
                     "task_name": task_name,
-                    "task_output": str(task_output.raw) #This will now send strings
+                    "task_output": task_output_validated_llm #This will now send strings
                 },
                 timeout=10
                 )
@@ -686,6 +882,55 @@ class crew5():
         
         elif self.llm_name=="deepseek-chat":
           self.selected_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
+    
+    def validate_json_llm(self, output_task):
+        system_prompt= """You are a JSON validation and correction specialist. Your task is to:
+            1. Analyze the incoming JSON for validity and structure
+            2. Fix any syntax errors (missing quotes, commas, brackets)
+            3. Ensure all data types are consistent and appropriate
+            4. Return ONLY the corrected JSON with no additional explanation or text
+
+            Rules:
+            - Preserve all existing data while fixing format issues
+            - Maintain the original structure where possible
+            - Ensure all keys are properly quoted
+            - Convert any invalid values to their closest valid JSON equivalent
+            - Handle nested structures correctly
+            - If arrays or objects are malformed, fix their structure
+
+            DO NOT:
+            - Add new fields that weren't in the original
+            - Remove existing data unless absolutely necessary for validity
+            - Include any explanatory text or markdown
+            - Wrap the response in code blocks
+
+            If the input is completely invalid or cannot be parsed as JSON, return an empty JSON object: {}"""
+        
+        if self.llm_name=="claude-3-haiku-20240307":
+           validated_json= anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY")).messages.create(
+            model="claude-3-haiku-20240307", 
+            max_tokens=2048, 
+            system=system_prompt,
+            messages=[
+                {"role": "user", "content":output_task}
+            ]
+           )
+           return validated_json.content[0].text
+        
+        elif self.llm_name=="deepseek-chat":
+            client= OpenAI(api_key=os.getenv("DEEPSEEK_API_KEY"), base_url="https://api.deepseek.com")
+            validated_json=client.chat.completions.create(
+                model="deepseek-chat",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": output_task}
+                ], 
+                stream= False
+            )
+            return validated_json.choices[0].message.content
+            
+        
+        
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
         """
             Pushes the task output to the database.
@@ -705,9 +950,10 @@ class crew5():
         kickoff_id= kickoff_ids.kickoff_id_temp
         job_id=str(uuid.uuid4())
         task_name=task_output.name
+        task_output_processed=str(task_output.raw).replace("\n", "").replace("\\", "").replace(" \" ", "")
+        task_output_validated_llm= str(self.validate_json_llm(task_output_processed))
         supabase: Client= create_client(url, key)
-        supabase.table("run_details").insert({"kickoff_id": kickoff_id,'task_name':task_name,'job_id':job_id, 'input':task_input,'output':task_output.raw}).execute()
-
+        supabase.table("run_details").insert({"kickoff_id": kickoff_id,'task_name':task_name,'job_id':job_id, 'input':task_input,'output':task_output_validated_llm}).execute()
         '''
         Pushing the {kickoff_id, tak_name, task_output} to the Webhook URL with POST request
         '''
@@ -719,7 +965,7 @@ class crew5():
                 json={
                     "kickoff_id": kickoff_id,
                     "task_name": task_name,
-                    "task_output": str(task_output.raw) #This will now send strings
+                    "task_output": task_output_validated_llm #This will now send strings
                 },
                 timeout=10
                 )
@@ -835,6 +1081,55 @@ class crew6():
         
         elif self.llm_name=="deepseek-chat":
           self.selected_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
+    
+    def validate_json_llm(self, output_task):
+        system_prompt= """You are a JSON validation and correction specialist. Your task is to:
+            1. Analyze the incoming JSON for validity and structure
+            2. Fix any syntax errors (missing quotes, commas, brackets)
+            3. Ensure all data types are consistent and appropriate
+            4. Return ONLY the corrected JSON with no additional explanation or text
+
+            Rules:
+            - Preserve all existing data while fixing format issues
+            - Maintain the original structure where possible
+            - Ensure all keys are properly quoted
+            - Convert any invalid values to their closest valid JSON equivalent
+            - Handle nested structures correctly
+            - If arrays or objects are malformed, fix their structure
+
+            DO NOT:
+            - Add new fields that weren't in the original
+            - Remove existing data unless absolutely necessary for validity
+            - Include any explanatory text or markdown
+            - Wrap the response in code blocks
+
+            If the input is completely invalid or cannot be parsed as JSON, return an empty JSON object: {}"""
+        
+        if self.llm_name=="claude-3-haiku-20240307":
+           validated_json= anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY")).messages.create(
+            model="claude-3-haiku-20240307", 
+            max_tokens=2048, 
+            system=system_prompt,
+            messages=[
+                {"role": "user", "content":output_task}
+            ]
+           )
+           return validated_json.content[0].text
+        
+        elif self.llm_name=="deepseek-chat":
+            client= OpenAI(api_key=os.getenv("DEEPSEEK_API_KEY"), base_url="https://api.deepseek.com")
+            validated_json=client.chat.completions.create(
+                model="deepseek-chat",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": output_task}
+                ], 
+                stream= False
+            )
+            return validated_json.choices[0].message.content
+            
+        
+        
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
         """
             Pushes the task output to the database.
@@ -854,9 +1149,10 @@ class crew6():
         kickoff_id= kickoff_ids.kickoff_id_temp
         job_id=str(uuid.uuid4())
         task_name=task_output.name
+        task_output_processed=str(task_output.raw).replace("\n", "").replace("\\", "").replace(" \" ", "")
+        task_output_validated_llm= str(self.validate_json_llm(task_output_processed))
         supabase: Client= create_client(url, key)
-        supabase.table("run_details").insert({"kickoff_id": kickoff_id,'task_name':task_name,'job_id':job_id, 'input':task_input,'output':task_output.raw}).execute()
-
+        supabase.table("run_details").insert({"kickoff_id": kickoff_id,'task_name':task_name,'job_id':job_id, 'input':task_input,'output':task_output_validated_llm}).execute()
         '''
         Pushing the {kickoff_id, tak_name, task_output} to the Webhook URL with POST request
         '''
@@ -868,7 +1164,7 @@ class crew6():
                 json={
                     "kickoff_id": kickoff_id,
                     "task_name": task_name,
-                    "task_output": str(task_output.raw) #This will now send strings
+                    "task_output": task_output_validated_llm #This will now send strings
                 },
                 timeout=10
                 )
@@ -1041,6 +1337,55 @@ class crew7():
         
         elif self.llm_name=="deepseek-chat":
           self.selected_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
+    
+    def validate_json_llm(self, output_task):
+        system_prompt= """You are a JSON validation and correction specialist. Your task is to:
+            1. Analyze the incoming JSON for validity and structure
+            2. Fix any syntax errors (missing quotes, commas, brackets)
+            3. Ensure all data types are consistent and appropriate
+            4. Return ONLY the corrected JSON with no additional explanation or text
+
+            Rules:
+            - Preserve all existing data while fixing format issues
+            - Maintain the original structure where possible
+            - Ensure all keys are properly quoted
+            - Convert any invalid values to their closest valid JSON equivalent
+            - Handle nested structures correctly
+            - If arrays or objects are malformed, fix their structure
+
+            DO NOT:
+            - Add new fields that weren't in the original
+            - Remove existing data unless absolutely necessary for validity
+            - Include any explanatory text or markdown
+            - Wrap the response in code blocks
+
+            If the input is completely invalid or cannot be parsed as JSON, return an empty JSON object: {}"""
+        
+        if self.llm_name=="claude-3-haiku-20240307":
+           validated_json= anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY")).messages.create(
+            model="claude-3-haiku-20240307", 
+            max_tokens=2048, 
+            system=system_prompt,
+            messages=[
+                {"role": "user", "content":output_task}
+            ]
+           )
+           return validated_json.content[0].text
+        
+        elif self.llm_name=="deepseek-chat":
+            client= OpenAI(api_key=os.getenv("DEEPSEEK_API_KEY"), base_url="https://api.deepseek.com")
+            validated_json=client.chat.completions.create(
+                model="deepseek-chat",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": output_task}
+                ], 
+                stream= False
+            )
+            return validated_json.choices[0].message.content
+            
+        
+        
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
         """
             Pushes the task output to the database.
@@ -1060,9 +1405,10 @@ class crew7():
         kickoff_id= kickoff_ids.kickoff_id_temp
         job_id=str(uuid.uuid4())
         task_name=task_output.name
+        task_output_processed=str(task_output.raw).replace("\n", "").replace("\\", "").replace(" \" ", "")
+        task_output_validated_llm= str(self.validate_json_llm(task_output_processed))
         supabase: Client= create_client(url, key)
-        supabase.table("run_details").insert({"kickoff_id": kickoff_id,'task_name':task_name,'job_id':job_id, 'input':task_input,'output':task_output.raw}).execute()
-
+        supabase.table("run_details").insert({"kickoff_id": kickoff_id,'task_name':task_name,'job_id':job_id, 'input':task_input,'output':task_output_validated_llm}).execute()
         '''
         Pushing the {kickoff_id, tak_name, task_output} to the Webhook URL with POST request
         '''
@@ -1074,7 +1420,7 @@ class crew7():
                 json={
                     "kickoff_id": kickoff_id,
                     "task_name": task_name,
-                    "task_output": str(task_output.raw) #This will now send strings
+                    "task_output": task_output_validated_llm #This will now send strings
                 },
                 timeout=10
                 )
@@ -1189,6 +1535,55 @@ class crew8():
         
         elif self.llm_name=="deepseek-chat":
           self.selected_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
+    
+    def validate_json_llm(self, output_task):
+        system_prompt= """You are a JSON validation and correction specialist. Your task is to:
+            1. Analyze the incoming JSON for validity and structure
+            2. Fix any syntax errors (missing quotes, commas, brackets)
+            3. Ensure all data types are consistent and appropriate
+            4. Return ONLY the corrected JSON with no additional explanation or text
+
+            Rules:
+            - Preserve all existing data while fixing format issues
+            - Maintain the original structure where possible
+            - Ensure all keys are properly quoted
+            - Convert any invalid values to their closest valid JSON equivalent
+            - Handle nested structures correctly
+            - If arrays or objects are malformed, fix their structure
+
+            DO NOT:
+            - Add new fields that weren't in the original
+            - Remove existing data unless absolutely necessary for validity
+            - Include any explanatory text or markdown
+            - Wrap the response in code blocks
+
+            If the input is completely invalid or cannot be parsed as JSON, return an empty JSON object: {}"""
+        
+        if self.llm_name=="claude-3-haiku-20240307":
+           validated_json= anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY")).messages.create(
+            model="claude-3-haiku-20240307", 
+            max_tokens=2048, 
+            system=system_prompt,
+            messages=[
+                {"role": "user", "content":output_task}
+            ]
+           )
+           return validated_json.content[0].text
+        
+        elif self.llm_name=="deepseek-chat":
+            client= OpenAI(api_key=os.getenv("DEEPSEEK_API_KEY"), base_url="https://api.deepseek.com")
+            validated_json=client.chat.completions.create(
+                model="deepseek-chat",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": output_task}
+                ], 
+                stream= False
+            )
+            return validated_json.choices[0].message.content
+            
+        
+        
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
         """
             Pushes the task output to the database.
@@ -1208,9 +1603,10 @@ class crew8():
         kickoff_id= kickoff_ids.kickoff_id_temp
         job_id=str(uuid.uuid4())
         task_name=task_output.name
+        task_output_processed=str(task_output.raw).replace("\n", "").replace("\\", "").replace(" \" ", "")
+        task_output_validated_llm= str(self.validate_json_llm(task_output_processed))
         supabase: Client= create_client(url, key)
-        supabase.table("run_details").insert({"kickoff_id": kickoff_id,'task_name':task_name,'job_id':job_id, 'input':task_input,'output':task_output.raw}).execute()
-
+        supabase.table("run_details").insert({"kickoff_id": kickoff_id,'task_name':task_name,'job_id':job_id, 'input':task_input,'output':task_output_validated_llm}).execute()
         '''
         Pushing the {kickoff_id, tak_name, task_output} to the Webhook URL with POST request
         '''
@@ -1222,7 +1618,7 @@ class crew8():
                 json={
                     "kickoff_id": kickoff_id,
                     "task_name": task_name,
-                    "task_output": str(task_output.raw) #This will now send strings
+                    "task_output": task_output_validated_llm #This will now send strings
                 },
                 timeout=10
                 )
@@ -1233,7 +1629,6 @@ class crew8():
         except requests.exceptions.RequestException as e:
             # Log any errors during the webhook call
             print(f"Error sending webhook: {str(e)}")
-
     #Agent1
     @agent
     def ExperiencedStartupFounderSpecialistAgent(self) -> Agent:
@@ -1340,6 +1735,55 @@ class crew9():
         
         elif self.llm_name=="deepseek-chat":
           self.selected_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
+    
+    def validate_json_llm(self, output_task):
+        system_prompt= """You are a JSON validation and correction specialist. Your task is to:
+            1. Analyze the incoming JSON for validity and structure
+            2. Fix any syntax errors (missing quotes, commas, brackets)
+            3. Ensure all data types are consistent and appropriate
+            4. Return ONLY the corrected JSON with no additional explanation or text
+
+            Rules:
+            - Preserve all existing data while fixing format issues
+            - Maintain the original structure where possible
+            - Ensure all keys are properly quoted
+            - Convert any invalid values to their closest valid JSON equivalent
+            - Handle nested structures correctly
+            - If arrays or objects are malformed, fix their structure
+
+            DO NOT:
+            - Add new fields that weren't in the original
+            - Remove existing data unless absolutely necessary for validity
+            - Include any explanatory text or markdown
+            - Wrap the response in code blocks
+
+            If the input is completely invalid or cannot be parsed as JSON, return an empty JSON object: {}"""
+        
+        if self.llm_name=="claude-3-haiku-20240307":
+           validated_json= anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY")).messages.create(
+            model="claude-3-haiku-20240307", 
+            max_tokens=2048, 
+            system=system_prompt,
+            messages=[
+                {"role": "user", "content":output_task}
+            ]
+           )
+           return validated_json.content[0].text
+        
+        elif self.llm_name=="deepseek-chat":
+            client= OpenAI(api_key=os.getenv("DEEPSEEK_API_KEY"), base_url="https://api.deepseek.com")
+            validated_json=client.chat.completions.create(
+                model="deepseek-chat",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": output_task}
+                ], 
+                stream= False
+            )
+            return validated_json.choices[0].message.content
+            
+        
+        
     def task_output_callback(self, task_output: TaskOutput, task_input=None):
         """
             Pushes the task output to the database.
@@ -1359,21 +1803,22 @@ class crew9():
         kickoff_id= kickoff_ids.kickoff_id_temp
         job_id=str(uuid.uuid4())
         task_name=task_output.name
+        task_output_processed=str(task_output.raw).replace("\n", "").replace("\\", "").replace(" \" ", "")
+        task_output_validated_llm= str(self.validate_json_llm(task_output_processed))
         supabase: Client= create_client(url, key)
-        supabase.table("run_details").insert({"kickoff_id": kickoff_id,'task_name':task_name,'job_id':job_id, 'input':task_input,'output':task_output.raw}).execute()
-
+        supabase.table("run_details").insert({"kickoff_id": kickoff_id,'task_name':task_name,'job_id':job_id, 'input':task_input,'output':task_output_validated_llm}).execute()
         '''
         Pushing the {kickoff_id, tak_name, task_output} to the Webhook URL with POST request
         '''
         webhook_url =os.environ.get("WEBHOOK_URL")
-        #print(str(task_output.json_dict))
+        
         try:
             response=requests.post(
                 webhook_url,
                 json={
                     "kickoff_id": kickoff_id,
                     "task_name": task_name,
-                    "task_output": str(task_output.raw) #This will now send strings
+                    "task_output": task_output_validated_llm #This will now send strings
                 },
                 timeout=10
                 )
