@@ -6,7 +6,9 @@ finding_target_audience:
     marketing efforts effectively. First, you will be given details about the
     business and a description of its products, services, or solutions. Read
     this information given by user as an input very carefully: 
-
+    (Note: The input details of the startup may also be available in the cache. Please use any tool or system available to you to retrieve this data and incorporate it into your analysis.
+    Ensure that cached data, if relevant and up-to-date, is seamlessly integrated with the provided input to generate accurate and comprehensive audience segmentation.)
+    
     <startup_info>
     {STARTUP_INFO}
     </startup_info>

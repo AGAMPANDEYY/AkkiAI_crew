@@ -1,6 +1,8 @@
 from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task, before_kickoff, after_kickoff
 from crewai.tasks.task_output import TaskOutput
+from crewai.tools import tool
+from crewai.tools import BaseTool
 from supabase import create_client, Client
 import helpercodes.kickoff_ids as kickoff_ids
 import uuid
@@ -10,6 +12,27 @@ import os
 import re, json, ast, anthropic
 from openai import OpenAI
 from crewuserinputs import SharedRunInputs
+from diskcache import Cache
+import hashlib 
+
+CACHE_DIR = './prompt_cache_crew'
+cache=Cache((CACHE_DIR))
+
+class CacheFetcher(BaseTool):
+    name: str = "CacheFetcher"
+    description: str = "Fetched cached inputs of user for each agent run."
+    def _run(self):
+        prompt_cache=SharedRunInputs.get_shared_instance().PROMPT_CACHING
+        user_input= SharedRunInputs.get_shared_instance().INPUT_1
+        if prompt_cache == "True":
+            cache_key=hashlib.sha256(user_input.encode()).hexdigest()
+            if cache_key in cache:
+                return cache[cache_key]
+            else:
+                cache[cache_key]=user_input
+                return user_input
+        else:
+            return user_input
 
 @CrewBase
 class crew1():
@@ -21,8 +44,13 @@ class crew1():
     tasks_config = 'config/task/tasks1.yaml'
     def __init__(self):
         
+        CACHE_DIR = './prompt_cache_crew'  # Cache will be stored in this directory
+        # Initialize a cache directory
+        self.cache = Cache(CACHE_DIR)
         self.shared_inputs= SharedRunInputs.get_shared_instance()
         self.llm_name=self.shared_inputs.MODEL_NAME
+        self.prompt_cache= self.shared_inputs.PROMPT_CACHING
+        self.user_input= self.shared_inputs.INPUT_1  #have to cache this for each run.
 
         if self.llm_name=="claude-3-haiku-20240307":
           self.selected_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
@@ -123,12 +151,14 @@ class crew1():
             # Log any errors during the webhook call
             print(f"Error sending webhook: {str(e)}")
 
+
     #Agent1
     @agent
     def TargetAudienceAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['TargetAudienceAgent'],
             llm=self.selected_llm,
+            tools=[CacheFetcher()]
             #verbose=True
         )
 
@@ -138,6 +168,7 @@ class crew1():
         return Task(
             name= "TaregtTask",
             config=self.tasks_config['finding_target_audience'],
+            tools=[CacheFetcher()],
             output_json=Task11Pydantic,
             callback=self.task_output_callback
         )
@@ -162,14 +193,19 @@ class crew2():
     tasks_config = 'config/task/tasks2.yaml'
     def __init__(self):
         
+        # Initialize a cache directory
+        CACHE_DIR = './prompt_cache'  # Cache will be stored in this directory
+        cache = Cache(CACHE_DIR)
         self.shared_inputs= SharedRunInputs.get_shared_instance()
         self.llm_name=self.shared_inputs.MODEL_NAME
+        self.prompt_caching= self.shared_inputs.PROMPT_CACHING
 
         if self.llm_name=="claude-3-haiku-20240307":
           self.selected_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
         
         elif self.llm_name=="deepseek-chat":
           self.selected_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
+
         
     def validate_json_llm(self, output_task):
         system_prompt= """You are a JSON validation and correction specialist. Your task is to:
@@ -264,7 +300,22 @@ class crew2():
         except requests.exceptions.RequestException as e:
             # Log any errors during the webhook call
             print(f"Error sending webhook: {str(e)}")
-
+   
+    
+    @tool 
+    def cached_input_tool(self):
+        """
+        caches inputs of user for each agent run.
+        """
+        if self.prompt_cache == "True":
+            cache_key=hashlib.sha256(self.user_input.encode()).hexdigest()
+            if cache_key in self.cache:
+                return self.cache[cache_key]
+            else:
+                self.cache[cache_key]=self.user_input
+                return self.user_input
+        else:
+            return self.user_input
    
     #Agent1
     @agent
@@ -280,6 +331,7 @@ class crew2():
         return Agent(
             config=self.agents_config['B2BPersonaAnalystAgent'],
             llm=self.selected_llm,
+            tools=[CacheFetcher()],
             #verbose=True
         )
     
@@ -289,6 +341,7 @@ class crew2():
         return Agent(
             config=self.agents_config['BuyerPersonaAgent'],
             llm=self.selected_llm,
+            tools=[CacheFetcher()],
             #verbose=True
         )
     
@@ -298,6 +351,7 @@ class crew2():
         return Agent(
             config=self.agents_config['JTBDAnalysisAgent'],
             llm=self.selected_llm,
+            tools=[CacheFetcher()],
             #verbose=True
         )
     #Agent5
@@ -306,6 +360,7 @@ class crew2():
         return Agent(
             config=self.agents_config['StagesofAwarenessAgent'],
             llm=self.selected_llm,
+            tools=[CacheFetcher()],
             #verbose=True
         )
     
@@ -324,6 +379,7 @@ class crew2():
         
         return Task(
             config=self.tasks_config['creating_b2b_persona'],
+            tools=[CacheFetcher()],
             #output_pydantic=Task23Pydantic,
             #callback=self.task_output_callback  #NO CALLBACKL FOR THIS SINCE IT IS HELPING THE BuyerPersonaAgent
         )
@@ -334,6 +390,7 @@ class crew2():
 
         return Task(
             config=self.tasks_config['creating_buyer_persona'],
+            tools=[CacheFetcher()],
             output_pydantic=Task21Pydantic,
             callback=self.task_output_callback,
             context= [self.B2CPersonaAnalystAgent_task(), self.B2BPersonaAnalystAgent_task()]
@@ -346,6 +403,7 @@ class crew2():
         return Task(
             config=self.tasks_config['analysing_jtbd'],
             context= [self.BuyerPersonaAgent_task()],
+            tools=[CacheFetcher()],
             output_pydantic=Task24Pydantic,
             callback=self.task_output_callback
         )
@@ -356,6 +414,7 @@ class crew2():
         return Task(
             config=self.tasks_config['analysing_stages_of_awareness'],
             context= [self.BuyerPersonaAgent_task(),self.JTBDAnalysisAgent_task()],
+            tools=[CacheFetcher()],
             output_pydantic=Task25Pydantic,
             callback=self.task_output_callback
         )

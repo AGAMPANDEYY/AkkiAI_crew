@@ -61,7 +61,10 @@ creating_b2b_persona:
     To build a clear and detailed Buyer Persona for your target audience, please
     answer the following questions based on your business and industry. 
     The startup details is below:
-    {STARTUP_INFO}
+    (Note: The input details of the startup may also be available in the cache. Please use any tool or system available to you to retrieve this data and incorporate it into your analysis.
+    Ensure that cached data, if relevant and up-to-date, is seamlessly integrated with the provided input.)
+
+    
     This persona will represent the key decision-makers and influencers within your
     target businesses. 1. Demographic Information:
       - What is the role or job title of your ideal buyer (e.g., CMO, IT Manager)?
@@ -129,10 +132,10 @@ creating_buyer_persona:
     This persona will help in understanding the ideal customer and tailoring
     marketing strategies effectively. Here's the information you'll
     be working with:
+    (Note: The input details of the startup may also be available in the cache. Please use any tool or system available to you to retrieve this data and incorporate it into your analysis.
+    Ensure that cached data, if relevant and up-to-date, is seamlessly integrated with the provided input.)
 
-    <startup_info>
-    {STARTUP_INFO}
-    </startup_info>
+ 
 
     Now, you'll need to answer the following questions for B2B and B2C market:
 
@@ -210,10 +213,9 @@ analysing_jtbd:
     product/service/solution helps customers accomplish, and why they would
     "hire" this product/service/solution over other options. You will be
     provided with the following information and the buyer persona from the previous task output:
+    (Note: The input details of the startup may also be available in the cache. Please use any tool or system available to you to retrieve this data and incorporate it into your analysis.
+    Ensure that cached data, if relevant and up-to-date, is seamlessly integrated with the provided input.)
 
-    <startup_info>
-    {STARTUP_INFO}
-    </startup_info>
 
     The Jobs to be Done (JTBD) framework focuses on understanding the underlying
     motivations and desired outcomes that drive customers to hire a product or
@@ -262,9 +264,8 @@ analysing_stages_of_awareness:
     understand how aware potential customers are of their problems and the
     available solutions. Here is the information you'll be working with:
 
-    <startup_info>
-    {STARTUP_INFO}
-    </startup_info>
+    (Note: The input details of the startup may also be available in the cache. Please use any tool or system available to you to retrieve this data and incorporate it into your analysis.
+    Ensure that cached data, if relevant and up-to-date, is seamlessly integrated with the provided input.)
 
     <buyer_persona> - Buyer persona details will be provided from the output of
     the `creating_buyer_persona` task. </buyer_persona>

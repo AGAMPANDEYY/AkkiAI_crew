@@ -21,6 +21,7 @@ from pytz import timezone
 import uuid
 import requests
 import crewuserinputs
+from diskcache import Cache
 
 
 
@@ -41,6 +42,8 @@ DEEPSEEK_API= os.getenv("DEEPSEEK_API_KEY")
 ChatGPT_API=os.getenv("GPT_4O_MINI_API_KEY")
 GROK_API= os.getenv("GROK_BETA_API_KEY")
 LLAMA_3_API_KEY=os.getenv("LLAMA_31_API_KEY")
+CACHE_DIR = './prompt_cache_main'  # Cache will be stored in this directory
+cache = Cache(CACHE_DIR)
 
 #Configuration for CORS 
 
@@ -67,6 +70,7 @@ class RunInputs(BaseModel):
     SOLUTION_ID: str
     INPUT_1: str
     MODEL_NAME: str
+    PROMPT_CACHING_CREW: str
     HASH: str
 
 #Chat Endpoint Inputs
@@ -135,15 +139,17 @@ async def submit_feedback(human_feedback:FeedbackInputs):
 
     return human_feedback.HUMAN_FEEDBACK
 
+
 @app.post("/run", dependencies=[Depends(authenticate_api_key)])
 async def run(inputs: RunInputs, background_tasks: BackgroundTasks):
     try:
         solution_id=inputs.SOLUTION_ID
         input1=inputs.INPUT_1
         model_name=inputs.MODEL_NAME
+        prompt_caching_crew=inputs.PROMPT_CACHING_CREW
         received_hash=inputs.HASH
 
-        crewuserinputs.SharedRunInputs.set_shared_instance(model_name=inputs.MODEL_NAME)
+        crewuserinputs.SharedRunInputs.set_shared_instance(model_name=inputs.MODEL_NAME, prompt_cache=inputs.PROMPT_CACHING_CREW,user_input=inputs.INPUT_1)
          
         #if not (solution_id and input1 and input2 and input3 and received_hash):
         if not (solution_id and input1 and received_hash):
@@ -214,68 +220,76 @@ async def run(inputs: RunInputs, background_tasks: BackgroundTasks):
         error_details = traceback.format_exc()
         print(f"Exception in /run: {error_details}")
         raise HTTPException(status_code=500, detail=f"Error running crew: {str(e)}. Traceback: {error_details}")
+    
+async def generate_cache_input(user_input):
+    """
+    Cache the user input for prompt caching
+    """
+    try:
+        cache_key= hashlib.md5(user_input.encode()).hexdigest()
+        return cache_key
+    except Exception as e:
+        print(f"Error caching input: {e}")
+
 
 async def run_crew_bg(crew_instance, inputs, solution_id, kickoff_id ):
     try: 
+        cache_key= await generate_cache_input(inputs.INPUT_1)
+        """
+        fetching the cached input.
+        """
+        if cache_key in cache:
+            print("retrieving input from cache")
+            cached_input= cache[cache_key]
+            user_input=cached_input
+        else: 
+            user_input=inputs.INPUT_1
+
         if solution_id == "1":
             # Pass the inputs to the backend agent (replace with your actual logic)
             result = await crew_instance.kickoff_async(inputs={
-                "STARTUP_INFO": inputs.INPUT_1,
-                #"BUSINESS_DETAILS": inputs.INPUT_1,
-                #"PRODUCT_DESCRIPTION": inputs.INPUT_2
+                "STARTUP_INFO": user_input,
             })
 
         elif solution_id == "2":
              # Pass the inputs to the backend agent (replace with your actual logic)
             result = await crew_instance.kickoff_async(inputs={
-                "STARTUP_INFO": inputs.INPUT_1,
-                #"TARGET_AUDIENCE": inputs.INPUT_1,
-                #"BUSINESS_DETAILS": inputs.INPUT_2,
-                #"PRODUCT_DESCRIPTION": inputs.INPUT_3
+                "STARTUP_INFO": user_input,
             })
 
         elif solution_id == "3":
 
             result = await crew_instance.kickoff_async(inputs={
-                "STARTUP_INFO": inputs.INPUT_1,
-                #"TARGET_AUDIENCE": inputs.INPUT_2,
-                #"PRODUCT_DESCRIPTION": inputs.INPUT_3
+                "STARTUP_INFO":user_input,
             })
         
         elif solution_id == "4":
               # Pass the inputs to the backend agent (replace with your actual logic)
             result = await crew_instance.kickoff_async(inputs={
-                "STARTUP_INFO": inputs.INPUT_1,
+                "STARTUP_INFO":user_input,
             })
 
         elif solution_id == "5":
             # Pass the inputs to the backend agent (replace with your actual logic)
             result = await crew_instance.kickoff_async(inputs={
-                "STARTUP_INFO": inputs.INPUT_1,
+                "STARTUP_INFO": user_input,
             })
         elif solution_id == "6":
             # Pass the inputs to the backend agent (replace with your actual logic)
             result = await crew_instance.kickoff_async(inputs={
-                "STARTUP_INFO": inputs.INPUT_1,
+                "STARTUP_INFO":user_input,
             })
         elif solution_id == "7":
             result = await crew_instance.kickoff_async(inputs={
-                "STARTUP_INFO": inputs.INPUT_1,
+                "STARTUP_INFO": user_input,
             })
         elif solution_id == "8":
             result = await crew_instance.kickoff_async(inputs={
-                "STARTUP_INFO": inputs.INPUT_1,
+                "STARTUP_INFO": user_input,
             })
         elif solution_id == "9":
             result = await crew_instance.kickoff_async(inputs={
-                "STARTUP_INFO": inputs.INPUT_1,
-                #"BUSINESS_DETAILS": inputs.INPUT_2,
-                #"PRODUCT_DESCRIPTION": inputs.INPUT_3,
-                #"TARGET_AUDIENCE": inputs.INPUT_4,
-                #"CUSTOMER_PERSONA": inputs.INPUT_5,
-                #"VALUE_PROPOSITION": inputs.INPUT_6,
-                #"MESSAGING": inputs.INPUT_7
-
+                "STARTUP_INFO": user_input,
             })
         
         job_status = "off"
@@ -350,7 +364,6 @@ async def chat_bg( input,input_message, kickoff_id,create_date, API_NAME):
 
     if API_NAME=="claude-3-haiku-20240307":        
         conversation_history.update_user_turn(input.MESSAGE)
-        #print(conversation_history.turns)
         client= anthropic.Anthropic(api_key=ANTHROPIC_API)
         MODEL_NAME="claude-3-haiku-20240307"
         system_message="You are an experienced helpful assistant"
