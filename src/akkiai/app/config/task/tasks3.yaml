@@ -56,13 +56,12 @@ value_proposition_canvas:
 
 
   agent: ValuePropCanvasAgent
-  inputs:
-   startup_info: "{STARTUP_INFO}"
-
 
 marketing_4p_analysis: 
   description: >
-    You are a marketing analyst tasked with applying the 4Ps of Marketing framework (Product, Price, Place, Promotion) to help understand a target audience and how a product/service aligns with their needs. You will be provided with information about the target audience and the product/service, and you should use this information to answer a series of questions about each of the 4Ps.
+    You are a marketing analyst tasked with applying the 4Ps of Marketing framework (Product, Price, Place, Promotion) to help understand a target audience and how a 
+    product/service aligns with their needs. You will be provided with information about the target audience and the product/service, and you should use this information to answer 
+    a series of questions about each of the 4Ps.
 
     First, carefully read and analyze the following information about the startup
 
@@ -72,61 +71,65 @@ marketing_4p_analysis:
    
     Using the provided information, answer the following questions for each of the 4Ps. Be sure to base your answers on the specific details given about the target audience and product/service. If there isn't enough information to answer a question fully, make reasonable assumptions based on the available data and clearly state that you are making an assumption.
 
-    For each of the 4Ps, provide your analysis inside the corresponding XML tags (<product>, <price>, <place>, and <promotion>). Within each section, use subheadings (e.g., ) to separate your answers to individual questions.
+    For each of the 4Ps, provide your analysis inside the corresponding JSON Key following the pydantic. Within each key, use subheadings (e.g., ) 
+    to separate your answers to individual questions.
     Remember to base all your answers on the provided information about the target audience and product/service. 
     If you need to make any assumptions, clearly state them in your analysis.
   expected_output: >
-     <product>
-      <problem_solved>
-      [Analyze what problem the product/service solves for the target audience]
+    <marketing_4ps>
+     
+      <4p_product>
+        <problem_solved>
+        [Analyze what problem the product/service solves for the target audience]
 
-      <competitive_advantage>
-      [Explain how the product/service stands out compared to competitors' offerings]
+        <competitive_advantage>
+        [Explain how the product/service stands out compared to competitors' offerings]
 
-      <key_features_benefits>
-      [Identify the key features or benefits that are most important to the target audience]
-      </product>
+        <key_features_benefits>
+        [Identify the key features or benefits that are most important to the target audience]
+      </4p_product>
 
-      <price>
-      <pricing_model>
-      [Recommend a pricing model that would appeal most to the target audience]
+      <4p_price>
+        <pricing_model>
+        [Recommend a pricing model that would appeal most to the target audience]
 
-      <perceived_value>
-      [Analyze how the target audience perceives the value of the product/service relative to its price]
+        <perceived_value>
+        [Analyze how the target audience perceives the value of the product/service relative to its price]
 
-      <price_sensitivities>
-      [Identify any specific price sensitivities within the target audience]
-      </price>
+        <price_sensitivities>
+        [Identify any specific price sensitivities within the target audience]
+      </4p_price>
 
-      <place>
-      <solution_seeking_behavior>
-      [Describe where the target audience typically seeks solutions like this product/service]
+      <4p_place>
+        <solution_seeking_behavior>
+        [Describe where the target audience typically seeks solutions like this product/service]
 
-      <distribution_channels>
-      [Recommend which distribution channels or platforms would best reach the target audience]
+        <distribution_channels>
+        [Recommend which distribution channels or platforms would best reach the target audience]
 
-      <accessibility>
-      [Suggest how to make the product/service easily accessible to the target audience]
-      </place>
+        <accessibility>
+        [Suggest how to make the product/service easily accessible to the target audience]
+      </4p_place>
 
-      <promotion>
-      <marketing_messages>
-      [Describe what types of marketing messages and content would resonate most with the target audience]
+      <4p_promotion>
+        <marketing_messages>
+        [Describe what types of marketing messages and content would resonate most with the target audience]
 
-      <advertising_channels>
-      [Recommend which advertising channels should be focused on to capture the target audience's attention]
+        <advertising_channels>
+        [Recommend which advertising channels should be focused on to capture the target audience's attention]
 
-      <messaging_style>
-      [Suggest what tone, style, or language should be used in messaging to appeal to the target audience]
-      </promotion>
+        <messaging_style>
+        [Suggest what tone, style, or language should be used in messaging to appeal to the target audience]
+      </4p_promotion>
 
-      After completing your analysis, provide a brief summary of your key findings and recommendations inside <summary> tags.
+    </marketing_4ps>
 
   agent: Market4PAnalysisAgent
   
 swot_analysis: 
   description: >
-   You are tasked with conducting a SWOT (Strengths, Weaknesses, Opportunities, Threats) analysis for a target audience. This analysis will help create more targeted and effective marketing strategies. Follow these instructions carefully to complete the task.
+   You are tasked with conducting a SWOT (Strengths, Weaknesses, Opportunities, Threats) analysis for a target audience. 
+   This analysis will help create more targeted and effective marketing strategies. Follow these instructions carefully to complete the task.
 
     First, here is the description of the target audience you will be analyzing:
 
@@ -161,29 +164,32 @@ swot_analysis:
       - Note any industry shifts, regulations, or market trends that could negatively impact the relationship with this audience.
 
     3. Based on your analysis, fill out the following SWOT table:
+    4. For each component in the SWOT table, provide at least three detailed insights based on the target audience description. Ensure that each insight is specific, relevant, and actionable.
+
+    5. After completing the table, provide a brief summary in swot_summary json key (2-3 sentences) of the key findings from your SWOT analysis and how 
+    they can be used to create more targeted and effective marketing strategies.
+
+    Present your completed SWOT analysis, including the filled table and summary, within "swot_analysis" JSON key.
+
 
   expected_output: >
     
-    <swot_table>
+    <swot_analysis>
     | SWOT Component | Insights for Target Audience |
     |-----------------|------------------------------|
     | Strengths       |                              |
     | Weaknesses      |                              |
     | Opportunities   |                              |
     | Threats         |                              |
-    </swot_table>
-
-    4. For each component in the SWOT table, provide at least three detailed insights based on the target audience description. Ensure that each insight is specific, relevant, and actionable.
-
-    5. After completing the table, provide a brief summary (2-3 sentences) of the key findings from your SWOT analysis and how they can be used to create more targeted and effective marketing strategies.
-
-    Present your completed SWOT analysis, including the filled table and summary, within <swot_analysis> JSON key.
-
+    </swot_analysis>
+    
   agent: SWOTAnalysisAgent
   
 mapping_buyer_journey: 
   description: >
-    You are tasked with mapping out the Buyer's Journey for a specific target audience and product/service. Your goal is to provide insights into how the target audience moves through each stage of the journey, from becoming aware of their problem to purchasing the product/service and beyond.
+    You are tasked with mapping out the Buyer's Journey for a specific target audience and product/service.
+    Your goal is to provide insights into how the target audience moves through each stage of the journey, from becoming aware of their problem to purchasing 
+    the product/service and beyond.
 
     First, review the following information about the startup:
 
@@ -237,7 +243,7 @@ mapping_buyer_journey:
     </post_purchase_stage>
 
     <key_insights>
-    [List at least one key insight for each stage that can be used in a lead generation strategy]
+    [Include at least one key insight for each stage that can be used in a lead generation strategy and i need string output]
     </key_insights>
     </buyers_journey>
 
@@ -260,37 +266,35 @@ usp_rose_framework:
     idea, product, customer persona and value proposition given above.
   expected_output: >
     <rose_analysis>
-    <relevant>
+    <rose_relevant>
     [List the relevant analysis]
-    </relevant>
-    <original>
+    </rose_relevant>
+    <rose_original>
     [List the original analysis]
-    </original>
-    <simple>
+    </rose_original>
+    <rose_simple>
     [List the simple analysis]
-    </simple>
-    <emotional>
+    </rose_simple>
+    <rose_emotional>
     [List the emotional analysis]
-    </emotional>
+    </rose_emotional>
     </rose_analysis>
-    <top3_USPs>
+    <rose_USPs>
     [USP 1]
     [USP 2]
     [USP 3]
-    </top3_USPs>
-    <moat>
+    </rose_USPs>
+    <rose_moat>
     [List the Moat]
-    </moat>
-    <implementation_strategy>
+    </rose_moat>
+    <rose_implementation_strategy>
     [List the implementation strategy]
-    </implementation_strategy>
-    <success_metric>
+    </rose_implementation_strategy>
+    <rose_success_metric>
     [List the success metrics]
-    </success_metric>
-    <summary>
+    </rose_success_metric>
+    <rose_summary>
     [Summary of the USP]
-    </summary>
+    </rose_summary>
   agent: USPRoseFrameworkAgent
-  inputs:
-    startup_info: "{STARTUP_INFO}"
   

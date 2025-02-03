@@ -26,6 +26,7 @@ Upload the local files to the ec2 instances (using pem file)
 1.Run the following command in your local terminal (VsCode Git Bash)
 2.chmod 600 ec2-akkiai-key.pem
 3.scp -i ec2-akkiai-key.pem Dockerfile main2.py crew.py (all local relevangt files) ec2-user@3.87.154.144:/home/ec2-user/downloads <path so use pwd and get > (Public IP after @)
+ scp -i ec2-akkiai-key.pem -r src/akkiai/app/config/task/* ec2-user@3.87.154.144:/home/ec2-user/downloads/config/task--> sdning files from a folder add -r tag 
 4.Now build the docker image in the AWS-Linux terminal with commands
 5. sudo docker build -t image_name .
 

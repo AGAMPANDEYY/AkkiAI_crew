@@ -1,8 +1,10 @@
 from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task, before_kickoff, after_kickoff
 from crewai.tasks.task_output import TaskOutput
+from crewai.crews.crew_output import CrewOutput
 from crewai.tools import tool
 from crewai.tools import BaseTool
+from crewai.knowledge.source.string_knowledge_source import StringKnowledgeSource
 from supabase import create_client, Client
 import helpercodes.kickoff_ids as kickoff_ids
 import uuid
@@ -17,6 +19,11 @@ import hashlib
 
 CACHE_DIR = './prompt_cache_crew'
 cache=Cache((CACHE_DIR))
+
+startup_info= SharedRunInputs.get_shared_instance().INPUT_1
+string_source=StringKnowledgeSource(
+    content= startup_info,
+)
 
 class CacheFetcher(BaseTool):
     name: str = "CacheFetcher"
@@ -42,6 +49,14 @@ class crew1():
 
     agents_config = 'config/agent/agents1.yaml'
     tasks_config = 'config/task/tasks1.yaml'
+
+    @after_kickoff
+    def usage_metrics(self, result: CrewOutput) -> CrewOutput:
+        """
+        Gives usage metrics of the crew run. 
+        """
+        print("Token Usage: ", result.token_usage)
+
     def __init__(self):
         
         CACHE_DIR = './prompt_cache_crew'  # Cache will be stored in this directory
@@ -49,14 +64,24 @@ class crew1():
         self.cache = Cache(CACHE_DIR)
         self.shared_inputs= SharedRunInputs.get_shared_instance()
         self.llm_name=self.shared_inputs.MODEL_NAME
-        self.prompt_cache= self.shared_inputs.PROMPT_CACHING
         self.user_input= self.shared_inputs.INPUT_1  #have to cache this for each run.
+        self.prompt_caching= self.shared_inputs.PROMPT_CACHING
 
-        if self.llm_name=="claude-3-haiku-20240307":
+        if self.llm_name=="claude-3-haiku-20240307" and self.prompt_caching=="False":
           self.selected_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
+          self.Tool=[CacheFetcher()]
+          print("Caching Disabled: claude-3-haiku-20240307")
+
+        elif self.llm_name=="claude-3-haiku-20240307" and self.prompt_caching== "True":
+            self.selected_llm=LLM()
+            self.Tool=[] # defines empty list 
+            print("Caching Enabled: claude-3-haiku-20240307")
+
         
-        elif self.llm_name=="deepseek-chat":
+        elif self.llm_name=="deepseek-chat" and self.prompt_caching=="False":
           self.selected_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
+          self.Tool=[CacheFetcher()]
+          print("Caching Disabled-- Deepseek-chat")
     
     def validate_json_llm(self, output_task):
         system_prompt= """You are a JSON validation and correction specialist. Your task is to:
@@ -158,7 +183,8 @@ class crew1():
         return Agent(
             config=self.agents_config['TargetAudienceAgent'],
             llm=self.selected_llm,
-            tools=[CacheFetcher()]
+            knowledge_sources=[string_source]
+            #tools=[CacheFetcher()]
             #verbose=True
         )
 
@@ -166,9 +192,8 @@ class crew1():
     @task
     def TargetAudienceAgent_task(self) -> Task:
         return Task(
-            name= "TaregtTask",
             config=self.tasks_config['finding_target_audience'],
-            tools=[CacheFetcher()],
+            #tools=[CacheFetcher()],
             output_json=Task11Pydantic,
             callback=self.task_output_callback
         )
@@ -181,8 +206,12 @@ class crew1():
             tasks=self.tasks, # Automatically created by the @task decorator
             process=Process.sequential,
             verbose=True,
+
         )
-    
+
+class CachingLLM():
+    pass  
+
 @CrewBase
 class crew2():
     
@@ -191,6 +220,14 @@ class crew2():
     """
     agents_config = 'config/agent/agents2.yaml'
     tasks_config = 'config/task/tasks2.yaml'
+
+    @after_kickoff
+    def usage_metrics(self, result: CrewOutput) -> CrewOutput:
+        """
+        Gives usage metrics of the crew run. 
+        """
+        print("Token Usage: ", result.token_usage)
+
     def __init__(self):
         
         # Initialize a cache directory
@@ -200,11 +237,21 @@ class crew2():
         self.llm_name=self.shared_inputs.MODEL_NAME
         self.prompt_caching= self.shared_inputs.PROMPT_CACHING
 
-        if self.llm_name=="claude-3-haiku-20240307":
+        if self.llm_name=="claude-3-haiku-20240307" and self.prompt_caching=="False":
           self.selected_llm=LLM(api_key=os.getenv("ANTHROPIC_API_KEY"), model="anthropic/claude-3-haiku-20240307")
+          self.Tool=[CacheFetcher()]
+          print("Caching Disabled: claude-3-haiku-20240307")
+
+        elif self.llm_name=="claude-3-haiku-20240307" and self.prompt_caching== "True":
+            self.selected_llm= anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+            self.Tool=[] # defines empty list 
+            print("Caching Enabled: claude-3-haiku-20240307")
+
         
-        elif self.llm_name=="deepseek-chat":
+        elif self.llm_name=="deepseek-chat" and self.prompt_caching=="False":
           self.selected_llm=LLM(api_key=os.getenv("DEEPSEEK_API_KEY"), model="deepseek/deepseek-chat")
+          self.Tool=[CacheFetcher()]
+          print("Caching Disabled-- Deepseek-chat")
 
         
     def validate_json_llm(self, output_task):
@@ -323,6 +370,7 @@ class crew2():
         return Agent(
             config=self.agents_config['B2CPersonaAnalystAgent'],
             llm=self.selected_llm,
+            knowledge_sources=[string_source]
             #verbose=True
         )
     #Agent2
@@ -331,7 +379,8 @@ class crew2():
         return Agent(
             config=self.agents_config['B2BPersonaAnalystAgent'],
             llm=self.selected_llm,
-            tools=[CacheFetcher()],
+            knowledge_sources=[string_source]
+            #tools=self.Tool,
             #verbose=True
         )
     
@@ -341,7 +390,8 @@ class crew2():
         return Agent(
             config=self.agents_config['BuyerPersonaAgent'],
             llm=self.selected_llm,
-            tools=[CacheFetcher()],
+            knowledge_sources=[string_source]
+            #tools=self.Tool,
             #verbose=True
         )
     
@@ -351,7 +401,8 @@ class crew2():
         return Agent(
             config=self.agents_config['JTBDAnalysisAgent'],
             llm=self.selected_llm,
-            tools=[CacheFetcher()],
+            knowledge_sources=[string_source]
+            #tools=self.Tool,
             #verbose=True
         )
     #Agent5
@@ -360,7 +411,8 @@ class crew2():
         return Agent(
             config=self.agents_config['StagesofAwarenessAgent'],
             llm=self.selected_llm,
-            tools=[CacheFetcher()],
+            knowledge_sources=[string_source]
+            #tools=self.Tool,
             #verbose=True
         )
     
@@ -379,7 +431,7 @@ class crew2():
         
         return Task(
             config=self.tasks_config['creating_b2b_persona'],
-            tools=[CacheFetcher()],
+            #tools=self.Tool,
             #output_pydantic=Task23Pydantic,
             #callback=self.task_output_callback  #NO CALLBACKL FOR THIS SINCE IT IS HELPING THE BuyerPersonaAgent
         )
@@ -390,8 +442,8 @@ class crew2():
 
         return Task(
             config=self.tasks_config['creating_buyer_persona'],
-            tools=[CacheFetcher()],
-            output_pydantic=Task21Pydantic,
+            #tools=self.Tool,
+            output_pydantic=Task23Pydantic,
             callback=self.task_output_callback,
             context= [self.B2CPersonaAnalystAgent_task(), self.B2BPersonaAnalystAgent_task()]
         )
@@ -403,7 +455,7 @@ class crew2():
         return Task(
             config=self.tasks_config['analysing_jtbd'],
             context= [self.BuyerPersonaAgent_task()],
-            tools=[CacheFetcher()],
+            #tools=self.Tool,
             output_pydantic=Task24Pydantic,
             callback=self.task_output_callback
         )
@@ -414,7 +466,7 @@ class crew2():
         return Task(
             config=self.tasks_config['analysing_stages_of_awareness'],
             context= [self.BuyerPersonaAgent_task(),self.JTBDAnalysisAgent_task()],
-            tools=[CacheFetcher()],
+            #tools=self.Tool,
             output_pydantic=Task25Pydantic,
             callback=self.task_output_callback
         )
@@ -428,6 +480,7 @@ class crew2():
             tasks=self.tasks, # Automatically created by the @task decorator
             process=Process.sequential,
             verbose=True,
+            cache= True
         )
 
 @CrewBase

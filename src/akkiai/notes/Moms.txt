@@ -85,3 +85,17 @@ MoM 13th
 13th Jan 
 1. Bearer token for fastapi is the right way 
 2. After pushing solutions to ec2 work on this https://testdriven.io/tips/6840e037-4b8f-4354-a9af-6863fb1c69eb/ 
+
+
+31st Jan
+
+1. Finalise the Caching of anthropic
+2. Change the keywords of the response pydantic
+
+
+3rd Feb 
+
+1. Individual personalised knowledge base for each User
+2. Create Embeddings with OpenAI for token optimisation.  (2nd task)
+3. How to build Persoalised Dynamic-RAG for each user for Chat endpoint first. (Immediate task) (First searches rag, if no info fetch external)
+

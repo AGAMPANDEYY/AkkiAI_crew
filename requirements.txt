@@ -3,3 +3,5 @@ uvicorn
 crewai
 crewai-tools
 supabase
+diskcache
+anthropic

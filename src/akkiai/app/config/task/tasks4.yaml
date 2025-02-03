@@ -114,7 +114,9 @@ brand_message_specialist:
 
 gtm_specialist:
   description: >
-   You are an expert startup and marketing strategy consultant specializing in market entry strategies analysis. Your task is to help startups prepare compelling marketing strategies using the Market Entry Strategy framework. The objective is to evaluate the best ways to establish a market presence while minimizing risk and maximizing returns.
+   You are an expert startup and marketing strategy consultant specializing in market entry strategies analysis.
+   Your task is to help startups prepare compelling marketing strategies using the Market Entry Strategy framework. 
+   The objective is to evaluate the best ways to establish a market presence while minimizing risk and maximizing returns.
 
     First, carefully review the following startup information:
 
@@ -303,7 +305,8 @@ bab_framework:
     {STARTUP_INFO}
     </startup_info>
 
-    Before crafting the final BAB framework, analyze the startup information and consider each component of the framework. Conduct your analysis inside <startup_analysis> tags.
+    Before crafting the final BAB framework, analyze the startup information and consider each component of the framework. 
+    Conduct your analysis inside <startup_analysis> json key.
 
     <startup_analysis>
     1. Analyze the startup information:
@@ -343,6 +346,9 @@ bab_framework:
     4. Tailor the language and examples to the specific startup and its target audience.
   expected_output: >
     <bab_framework>
+    <startup_analysis>
+    [Analyze the startup information provided above. Outline key aspects such as product/service, target market, unique value proposition, main pain points, emotional triggers, and benefits.]
+    </startup_analysis>
     <before>
     [Describe the customer's current situation or problem. Outline pain points, challenges, or frustrations. Paint a relatable picture that the audience can empathize with. Focus on the negatives and struggles they're facing.]
     </before>
@@ -359,7 +365,8 @@ bab_framework:
 
 pas_story_framework:
   description:  >
-    You are an expert startup and marketing strategy consultant specializing in market entry strategies analysis. Your task is to help startups prepare compelling marketing and branding strategies using the PAS (Problem-Agitate-Solution) Storytelling Framework.
+    You are an expert startup and marketing strategy consultant specializing in market entry strategies analysis. 
+    Your task is to help startups prepare compelling marketing and branding strategies using the PAS (Problem-Agitate-Solution) Storytelling Framework.
 
     Here's the startup information to analyze:
 
@@ -367,7 +374,7 @@ pas_story_framework:
     {STARTUP_INFO}
     </startup_info>
 
-    Before creating the PAS framework, analyze the startup information provided above. Wrap your analysis inside <startup_analysis> tags, addressing the following points:
+    Before creating the PAS framework, analyze the startup information provided above. Wrap your analysis inside <startup_analysis> json key, addressing the following points:
 
     1. Summarize the key aspects of the startup (product/service, target market, unique value proposition)
     2. List the main pain points or challenges faced by the target audience
@@ -376,7 +383,9 @@ pas_story_framework:
 
     This analysis will inform your PAS framework development.
 
-    After your analysis, create a PAS (Problem-Agitate-Solution) Storytelling Framework for the startup. This powerful technique engages and persuades an audience by identifying a problem, stirring emotions around that problem (agitation), and then presenting the solution that addresses the issue.
+    After your analysis, create a PAS (Problem-Agitate-Solution) Storytelling Framework for the startup. 
+    This powerful technique engages and persuades an audience by identifying a problem, stirring emotions around that problem (agitation), 
+    and then presenting the solution that addresses the issue.
 
     Follow these steps to create the PAS framework:
 
@@ -399,6 +408,9 @@ pas_story_framework:
     - Focus on positive outcomes and the ease that the solution brings to the customer's life.
   expected_output: >
     <pas_framework>
+    <startup_analysis>
+    [Summarize the key aspects of the startup, including product/service, target market, and unique value proposition]
+    </startup_analysis>
     <problem>
     [Concise description of the problem]
     </problem>
@@ -426,11 +438,11 @@ stp:
 
     1. Segmentation
     Identify distinct groups within the market who have different needs, behaviors, or characteristics. Consider the following segmentation types:
-    - Demographic: Age, gender, income, education, etc.
-    - Geographic: Country, city, climate, etc.
-    - Psychographic: Lifestyles, values, attitudes, personality traits
-    - Behavioral: Purchasing behavior, usage patterns, brand loyalty
-    - Firmographic (for B2B): Company size, industry, other business characteristics
+    - demographic: Age, gender, income, education, etc.
+    - geographic: Country, city, climate, etc.
+    - psychographic: Lifestyles, values, attitudes, personality traits
+    - behavioral: Purchasing behavior, usage patterns, brand loyalty
+    - firmographic (for B2B): Company size, industry, other business characteristics
 
     2. Targeting
     Select which segments to focus on, based on their potential and alignment with the startup's objectives. Consider these targeting strategies:
@@ -448,27 +460,36 @@ stp:
     - Brand Messaging: Communication of unique qualities appealing to target segment
     - Positioning Statement: Concise summary of brand's market position
 
-    For each step of the STP framework, use <stp_analysis> tags to show your thought process before providing your final recommendations. In your analysis:
+    For the final STP framework , list the output in the following format:
 
     1. For Segmentation:
     - List potential segments for each segmentation type, numbering them as you go.
-    - Summarize key findings from this step.
+    - Choose the best segment and explain why.
 
     2. For Targeting:
     - Evaluate each identified segment against the factors mentioned (size, growth potential, competition, profitability).
-    - Summarize key findings and rationale for chosen segments.
+    - Choose the best target and explain why.
 
     3. For Positioning:
     - Brainstorm multiple options for each element (value proposition, differentiation, brand messaging, positioning statement).
     - Choose the best option for each and explain why.
-    - Summarize key findings from this step.
+
   expected_output: >
      <stp_strategy>
+
       <segmentation>
-      [List identified market segments]
+      <demographic> [Include analysis on Age, gender, income, education, etc.] </demographic>
+      <geographic> [Include analysis on Country, city, climate, etc.] </geographic>
+      <psychographic> [Include analysis on Lifestyles, values, attitudes, personality traits] </psychographic>
+      <behavioral> [include anakysis on Purchasing behavior, usage patterns, brand loyalty]</behavioral>
+      <firmographic>[include analysis on Company size, industry, other business characteristics]</firmographic>
       </segmentation>
 
       <targeting>
+      <undifferentiated_marketing>[ Focus on the entire market with a single product]</undifferentiated_marketing>
+      <differentiated_marketing>[Develop different products/strategies for each segment]</differentiated_marketing>
+      <concentrated_marketing>[Focus on a single, niche segment]</concentrated_marketing>
+      <micromarketing>[Target individual customers or very small segments]</micromarketing>
       [Describe selected target segments and rationale]
       </targeting>
 
@@ -478,7 +499,8 @@ stp:
       <brand_messaging>[Core brand message]</brand_messaging>
       <positioning_statement>[Concise positioning statement]</positioning_statement>
       </positioning>
-      </stp_strategy>
+
+     </stp_strategy>
   agent: STPAgent
 
 customer_journey_mapping:
@@ -503,8 +525,6 @@ customer_journey_mapping:
     6. Map the Customer Journey Stages
     7. Define Key Metrics and KPIs
     8. Create a Visual Customer Journey Map (describe the visual elements in text form)
-
-    For each step, first analyze the information in <step_analysis> tags, then provide your final output for that step in <step_output> tags.
 
     In your <step_analysis> for each step:
     - List out key information from the startup info relevant to this step
@@ -558,7 +578,8 @@ brand_archetypes_model:
     3. Rank the top 3-5 most relevant archetypes
     4. For each of these top archetypes, list pros and cons
 
-    Remember to tailor your recommendations specifically to the startup's unique characteristics and goals. Your analysis should be thorough, and your recommendations should be practical and actionable.
+    Remember to tailor your recommendations specifically to the startup's unique characteristics and goals. 
+    Your analysis should be thorough, and your recommendations should be practical and actionable.
 
     For reference, here are the 12 Brand Archetypes:
 

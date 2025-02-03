@@ -2,7 +2,7 @@
 
 This branch v6 updated on 29th January 2025.
 
-NEW UPDATE-- Cached inputs into local and used a custom tool to fetch cached inputs -Crew 1&2
+NEW UPDATE-- Updated the config files, it now takes inputs only once. Changed pydantic a bit (Not for Production)
 
 1. Added crew 1-9 for production
 2. Output pydantic only done for crew 1 and 9, have to do for others

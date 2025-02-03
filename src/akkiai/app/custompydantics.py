@@ -1,5 +1,5 @@
-from pydantic import BaseModel
-from typing import List, Optional, Dict, Any
+from pydantic import BaseModel, Field
+from typing import List, Optional, Dict, Any, Union
 '''
 The output pydantic models for eachg task
 '''
@@ -11,19 +11,6 @@ class TargetGroupsPydantic(BaseModel):
 # Define the main model that contains target_audience as a key
 class Task11Pydantic(BaseModel):
     target_audience: Dict[str,TargetGroupsPydantic]
-
-class BuyerPersonaPydantic(BaseModel):
-    name: str
-    narrative:str
-    demographic_information:str 
-    psychographic_information:str
-    behavioral_information:str
-    buying_process:str
-    consumption_patterns:str 
-    aspirations:str
-
-class Task21Pydantic(BaseModel):
-    buyer_persona: BuyerPersonaPydantic
     
 class Task22Pydantic(BaseModel):
     demographics: str
@@ -34,7 +21,7 @@ class Task22Pydantic(BaseModel):
     buying_triggers: str
     communication_preferences: str
 
-class Task23Pydantic(BaseModel):
+class Task21Pydantic(BaseModel):
     demographic_information: str
     professional_background: str
     pain_points_and_needs: str
@@ -43,6 +30,19 @@ class Task23Pydantic(BaseModel):
     communication_preferences:str 
     personal_goals_and_motivations: str
     key_influencers: str
+
+class BuyerPersonaPydantic(BaseModel):
+    bp_name: str
+    bp_narrative:str
+    bp_demography:str 
+    bp_psychography:str
+    bp_behavioral:str
+    bp_buyingprocess:str
+    bp_consumptionpattern:str 
+    bp_aspirations:str
+
+class Task23Pydantic(BaseModel):
+    buyer_persona: BuyerPersonaPydantic
 
 class Task24Pydantic(BaseModel):
     jtbd_analysis: str
@@ -56,18 +56,22 @@ class AwarenessPydantic(BaseModel):
     most_aware:str
 
 class Task25Pydantic(BaseModel):
-    stages_of_awareness_analysis:AwarenessPydantic
-    summary_and_recommendations: str
+    stages_of_awareness:AwarenessPydantic
+    awareness_summary: str
 
-class VPCPydantic(BaseModel):
-    customer_profile:str
+class CustomerProfilePydantic(BaseModel):
     customer_jobs:str
     customer_pains:str
     customer_gains:str
-    value_map:str
+
+class ValueMapPydantic(BaseModel):
     pain_relievers:str
     gain_creators:str
     products_and_services:str
+
+class VPCPydantic(BaseModel):
+    customer_profile: CustomerProfilePydantic
+    value_map: ValueMapPydantic
     fit_evaluation:str
 
 class Task31Pydantic(BaseModel):
@@ -93,51 +97,71 @@ class PromotionPydantic(BaseModel):
     advertising_channels: str
     messaging_style: str
 
+
+class Marketing4PPydantic(BaseModel):
+    p4_product: ProductPydantic = Field(alias='4p_product')
+    p4_price:PricePydantic =Field(alias='4p_price')
+    p4_place: PlacePydantic = Field(alias='4p_place')
+    promotion:PromotionPydantic = Field(alias='4p_promotion')
+    
 class Task32Pydantic(BaseModel):
-    product: ProductPydantic
-    price:PricePydantic
-    place: PlacePydantic
-    promotion:PromotionPydantic
+   marketing_4ps: Marketing4PPydantic
 
 class SWOTPydantic(BaseModel):
-    strengths: str
-    weaknesses: str
-    opportunities: str
-    threats: str
+    strengths: Union[str, list]
+    weaknesses: Union[str, list]
+    opportunities: Union[str, list]
+    threats: Union[str, list]
 
 class Task33Pydantic(BaseModel):
     swot_analysis: SWOTPydantic
-    summary: str
+    swot_summary: str
 
 class BuyerJourneyPydantic(BaseModel):
     awareness_stage:str
     consideration_stage:str
     decision_stage:str
     post_purchase_stage:str
-    key_insights:str
+    key_insights:Union[str, list]
 
 class Task34Pydantic(BaseModel):
     buyers_journey:BuyerJourneyPydantic
   
 class RoseAnalysisPydantic(BaseModel):
-    relevant:str
-    original:str 
-    simple:str 
-    emotional: str 
+    rose_relevant:Union[str, list]
+    rose_original:Union[str, list] 
+    rose_simple:Union[str, list] 
+    rose_emotional: Union[str, list] 
 
 class Task35Pydantic(BaseModel):
     rose_analysis:RoseAnalysisPydantic
-    top3_USPs: str
-    moat: str
-    implementation_strategy: str
-    success_metric: str
-    summary : str
+    rose_USPs: Union[str, list]
+    rose_moat: Union[str, list]
+    rose_implementation_strategy: Union[str, list]
+    rose_success_metric: Union[str, list]
+    rose_summary : str
+
+class ProblemPydantic(BaseModel):
+    external: str 
+    internal: str 
+    philosophical: str 
+
+class BrandGuidePydantic(BaseModel):
+    expertise:str 
+    empathy: str 
+    plan: str 
+
+class ActionPlanPydantic(BaseModel):
+    step1:str 
+    step2:str
+    step3:str
+    step4:str
 
 class MarketingStrategyPydantic(BaseModel):
     customer_hero:str
-    problem:str
-    brand_guide:str
-    action_plan:str
+    problem: ProblemPydantic
+    brand_guide: BrandGuidePydantic
+    action_plan:ActionPlanPydantic
 
 class Task41Pydantic(BaseModel):
     marketing_strategy: MarketingStrategyPydantic
@@ -161,6 +185,7 @@ class Task43Pydantic(BaseModel):
     market_entry_strategy: MarketEntryPydantic
 
 class BABFrameworkPydantic(BaseModel):
+    startup_analysis: str 
     before: str
     after: str
     bridge: str
@@ -169,6 +194,7 @@ class Task44Pydantic(BaseModel):
     bab_framework: BABFrameworkPydantic
 
 class PASFrameworkPydantic(BaseModel):
+    startup_analysis: str 
     problem: str
     agitate: str 
     solution: str 
@@ -182,10 +208,22 @@ class STPPositioningPydantic(BaseModel):
     brand_messaging: str 
     positioning_statement: str 
 
+class SegmentationPydantic(BaseModel):
+    stp_analysis: str 
+    demographic: str
+    geographic: str 
+    psychographic: str 
+    behavioral: str 
+    firmographic: str 
+class TargetingPydantic(BaseModel):
+    undifferentiated_marketing: str 
+    differentiated_marketing: str 
+    concentrated_marketing: str 
+    micromarketing: str 
 
 class STPPydantic(BaseModel):
-    segmentation: str
-    targeting: str 
+    segmentation: SegmentationPydantic
+    targeting: TargetingPydantic 
     positioning: STPPositioningPydantic 
 
 class Task46Pydantic(BaseModel):
@@ -219,7 +257,7 @@ class RecommendationPydantic(BaseModel):
     brand_strategy: str
     benefits: str
     examples: str
-    implementation: str
+    implementation: Union[str,list]
 
 class Task48Pydantic(BaseModel):
     recommendations: RecommendationPydantic

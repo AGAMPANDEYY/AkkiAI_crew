@@ -61,9 +61,8 @@ creating_b2b_persona:
     To build a clear and detailed Buyer Persona for your target audience, please
     answer the following questions based on your business and industry. 
     The startup details is below:
-    (Note: The input details of the startup may also be available in the cache. Please use any tool or system available to you to retrieve this data and incorporate it into your analysis.
-    Ensure that cached data, if relevant and up-to-date, is seamlessly integrated with the provided input.)
 
+    The input details about the Startup is given as a context to you so please use it.
     
     This persona will represent the key decision-makers and influencers within your
     target businesses. 1. Demographic Information:
@@ -132,10 +131,8 @@ creating_buyer_persona:
     This persona will help in understanding the ideal customer and tailoring
     marketing strategies effectively. Here's the information you'll
     be working with:
-    (Note: The input details of the startup may also be available in the cache. Please use any tool or system available to you to retrieve this data and incorporate it into your analysis.
-    Ensure that cached data, if relevant and up-to-date, is seamlessly integrated with the provided input.)
-
- 
+    
+    The input details about the Startup is given as a context to you so please use it.
 
     Now, you'll need to answer the following questions for B2B and B2C market:
 
@@ -174,35 +171,35 @@ creating_buyer_persona:
      Please provide the following response in strict JSON format. Ensure there are no missing commas or unmatched braces.
      Wrap all keys and strings in double quotes. Validate the JSON before returning it
      <buyer_persona>
-     <name>[Insert persona name]</name>
+     <bp_name>[Insert persona name]</bp_name>
 
-     <narrative>
+     <bp_narrative>
      [Insert brief narrative description of the persona]
-     </narrative>
+     </bp_narrative>
 
-     <demographic_information>
+     <bp_demography>
      [List demographic details]
-     </demographic_information>
+     </bp_demography>
 
-     <psychographic_information>
+     <bp_psychography>
      [List psychographic details]
-     </psychographic_information>
+     </bp_psychography>
 
-     <behavioral_information>
+     <bp_behavioral>
      [List behavioral details]
-     </behavioral_information>
+     </bp_behavioral>
 
-     <buying_process>
+     <bp_buyingprocess>
      [Describe the buying process]
-     </buying_process>
+     </bp_buyingprocess>
 
-     <consumption_patterns>
+     <bp_consumptionpattern>
      [Describe consumption patterns]
-     </consumption_patterns>
+     </bp_consumptionpattern>
 
-     <aspirations>
+     <bp_aspirations>
      [List aspirations]
-     </aspirations>
+     </bp_aspirations>
      </buyer_persona>
   agent: BuyerPersonaAgent
 
@@ -213,9 +210,8 @@ analysing_jtbd:
     product/service/solution helps customers accomplish, and why they would
     "hire" this product/service/solution over other options. You will be
     provided with the following information and the buyer persona from the previous task output:
-    (Note: The input details of the startup may also be available in the cache. Please use any tool or system available to you to retrieve this data and incorporate it into your analysis.
-    Ensure that cached data, if relevant and up-to-date, is seamlessly integrated with the provided input.)
-
+    
+    The input details about the Startup is given as a context to you so please use it.
 
     The Jobs to be Done (JTBD) framework focuses on understanding the underlying
     motivations and desired outcomes that drive customers to hire a product or
@@ -264,8 +260,7 @@ analysing_stages_of_awareness:
     understand how aware potential customers are of their problems and the
     available solutions. Here is the information you'll be working with:
 
-    (Note: The input details of the startup may also be available in the cache. Please use any tool or system available to you to retrieve this data and incorporate it into your analysis.
-    Ensure that cached data, if relevant and up-to-date, is seamlessly integrated with the provided input.)
+    The input details about the Startup is given as a context to you so please use it.
 
     <buyer_persona> - Buyer persona details will be provided from the output of
     the `creating_buyer_persona` task. </buyer_persona>
@@ -293,7 +288,7 @@ analysing_stages_of_awareness:
   expected_output: >
     Please provide the following response in strict JSON format. Ensure there are no missing commas or unmatched braces.
     Wrap all keys and strings in double quotes. Validate the JSON before returning it
-    <stages_of_awareness_analysis> 
+    <stages_of_awareness> 
     <unaware> 
     [Your analysis for the Unaware stage] 
     </unaware>
@@ -313,13 +308,13 @@ analysing_stages_of_awareness:
     <most_aware> 
     [Your analysis for the Most Aware stage]
     </most_aware>
-    </stages_of_awareness_analysis>
+    </stages_of_awareness>
 
     After completing the analysis, provide a summary of your findings and
     recommendations for marketing strategies based on the Stages of Awareness
     analysis. Include this in:
 
-    <summary_and_recommendations> 
+    <awareness_summary> 
     [Your summary and recommendations]
-    </summary_and_recommendations>
+    </awareness_summary>
   agent: StagesofAwarenessAgent

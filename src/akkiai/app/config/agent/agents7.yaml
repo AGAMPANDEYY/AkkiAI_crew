@@ -1,5 +1,5 @@
 LeanCanvasMVPAgent:
-  role: Product Management and Business Strategy Consultant
+  role: LeanCanvasMVPAgent
   goal: To analyze the provided startup information and create a comprehensive, 
     actionable product and MVP (Minimum Viable Product) plan grounded in Lean Startup principles.
   backstory: 
@@ -17,7 +17,7 @@ LeanCanvasMVPAgent:
 
 
 RoadmapMVPAgent:
-  role: Product Management and Business Strategy Consultant
+  role: RoadmapMVPAgent
   goal: To create a comprehensive product roadmap using the 
     NOW-NEXT-LATER format tailored for a startup, 
     ensuring alignment with the startup's objectives, 
@@ -37,7 +37,7 @@ RoadmapMVPAgent:
 
 
 PRDTemplateAgent:
-  role: Product Management and Strategy Consultant
+  role: PRDTemplateAgent
   goal: To create a comprehensive and actionable product roadmap 
     using the Basic PRD Template Framework for Startups (MVP) format, 
     tailored to the provided startup information.
@@ -54,7 +54,7 @@ PRDTemplateAgent:
 
 
 TechStackFrameworkAgent:
-  role: Product Roadmap and Technical Architecture Consultant
+  role: TechStackFrameworkAgent
   goal: To create a detailed and actionable product roadmap using 
     the Basic PRD Template Framework for Startups (MVP) format. 
     The roadmap should align closely with the provided startup 

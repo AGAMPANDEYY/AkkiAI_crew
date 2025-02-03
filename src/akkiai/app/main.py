@@ -1,7 +1,8 @@
 from fastapi import FastAPI, HTTPException, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from supabase import create_client, Client
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from typing import Optional
 from fastapi.staticfiles import StaticFiles
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from fastapi import Depends, Header
@@ -70,7 +71,7 @@ class RunInputs(BaseModel):
     SOLUTION_ID: str
     INPUT_1: str
     MODEL_NAME: str
-    PROMPT_CACHING_CREW: str
+    PROMPT_CACHING_CREW: Optional[str] = Field(default="False", description="Enable or disable prompt caching for the crew.")
     HASH: str
 
 #Chat Endpoint Inputs

@@ -1,5 +1,5 @@
 TamSamSomAgent:
-  role: Market Analyst for TAM, SAM, and SOM
+  role: TamSamSomAgent
   goal: 
     To analyze market data and generate a comprehensive breakdown of Total Addressable Market (TAM), 
     Serviceable Addressable Market (SAM), and Serviceable Obtainable Market (SOM), considering realistic
@@ -15,7 +15,7 @@ TamSamSomAgent:
 
 
 FutureCompetitorsAnalysisAgent:
-  role: Competitive Market Analyst
+  role: FutureCompetitorsAnalysisAgent
   goal: 
     To analyze the given data and provide a comprehensive and detailed report identifying top direct, indirect,
     and future potential competitors, including specific advantages and disadvantages against them.
@@ -31,7 +31,7 @@ FutureCompetitorsAnalysisAgent:
 
 
 BottomUpAnalysisAgent:
-  role: Bottom-Up Analysis Specialist
+  role: BottomUpAnalysisAgent
   goal: 
     To perform a detailed bottom-up analysis by identifying customer segments, calculating unit consumption, 
     and evaluating price points to derive actionable insights for business strategy.
@@ -46,7 +46,7 @@ BottomUpAnalysisAgent:
 
 
 StrategicGroupAnalysisAgent:
-  role: Strategic Group Analyst
+  role: StrategicGroupAnalysisAgent
   goal: 
     To analyze the market positioning of key competitors, assess their competitive advantages, and evaluate the 
     strategic capabilities of different market players.
@@ -60,7 +60,7 @@ StrategicGroupAnalysisAgent:
   memory: False
 
 PorterFiveForcesAgent:
-  role: Strategic Business Analyst
+  role: PorterFiveForcesAgent
   goal: 
     To assess the competitive landscape of an industry using Porter's Five Forces framework, providing insights
     into the competitive rivalry, supplier power, buyer power, threat of substitution, and threat of new entry.
@@ -75,7 +75,7 @@ PorterFiveForcesAgent:
 
 
 SWOTAnalysisAgent:
-  role: SWOT Analyst
+  role: SWOTAnalysisAgent
   goal: 
     To conduct a detailed SWOT analysis, evaluating competitors' strengths, identifying weaknesses, mapping 
     potential opportunities, and assessing threats in the market landscape.
@@ -89,7 +89,7 @@ SWOTAnalysisAgent:
   memory: False
 
 TopDownAnalysisAgent:
-  role: Industry Market Analyst
+  role: TopDownAnalysisAgent
   goal: 
     To perform a top-down analysis of the market by segmenting industry-wide data, estimating market share, and 
     projecting growth rates for different segments.
