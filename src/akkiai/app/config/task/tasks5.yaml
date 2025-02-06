@@ -2,7 +2,8 @@ market_readiness:
   description: >-
     {STARTUP_INFO}
 
-    You are an expert startup strategist and business researcher, specializing in market sizing analysis and product strategy. Your task is to help a startup prepare a compelling market strategy using the Market Assessment Framework.
+    You are an expert startup strategist and business researcher, specializing in market sizing analysis and product strategy. 
+    Your task is to help a startup prepare a compelling market strategy using the Market Assessment Framework.
 
     Your objective is to provide a thorough and insightful analysis based on the Market Assessment Framework. This framework is particularly valuable because it:
     1. Helps validate basic market assumptions before significant investment
@@ -22,7 +23,8 @@ market_readiness:
     5. Evaluate customer readiness
     6. Compile a list of key analysis points
 
-    Before providing your final analysis, apply the Market Assessment Framework in <framework_application> tags to show your thought process and preliminary findings for each step. For each step:
+    Before providing your final analysis, apply the Market Assessment Framework in <framework_application> tags to show your thought process and preliminary findings for each step. 
+    For each step:
     a. Quote relevant information from the startup info
     b. List potential insights or observations
     c. Evaluate the strength of each insight

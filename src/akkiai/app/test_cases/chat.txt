@@ -1,0 +1,46 @@
+{
+  "MESSAGE": "Hi, I'm Sarah. I'm a software engineer from San Francisco.",
+  "MODEL_NAME": "claude-3-haiku-20240307",
+  "ENTITY_ID": "sarah_tech_123",
+  "HASH": "30e3853f20c6f3ff0c5b3d7ec0f4d1759b8f83f6812eede22c511edc21916433"
+}
+
+
+{
+  "MESSAGE": "What are some trending technologies in software development that I should learn?",
+  "MODEL_NAME": "claude-3-haiku-20240307",
+  "ENTITY_ID": "sarah_tech_123",
+  "HASH": "47df5a4ac859ab75fb84516d51ebf6d1fac56fecce6633815cd894821027d812"
+}
+
+
+{
+  "MESSAGE": "Are there any good tech meetups or conferences coming up in the Bay Area?",
+  "MODEL_NAME": "claude-3-haiku-20240307",
+  "ENTITY_ID": "sarah_tech_123",
+  "HASH": "9cee2068c8ca8dc8614e8f7c540e742393293afb694b1bd5b454b8d5136ac25a"
+}
+
+
+{
+  "MESSAGE": "I'm thinking about transitioning into a machine learning role. What skills should I focus on?",
+  "MODEL_NAME": "claude-3-haiku-20240307",
+  "ENTITY_ID": "sarah_tech_123",
+  "HASH": "a754471647eaab0f2023dc2845e75d131e14a9a1ce63d3afceb712fbd0a60409"
+}
+
+
+{
+  "MESSAGE": "Besides coding, I enjoy hiking. Any recommendations for trails near San Francisco?",
+  "MODEL_NAME": "claude-3-haiku-20240307",
+  "ENTITY_ID": "sarah_tech_123",
+  "HASH": "008f8e0fb4b1ac2c2e70b0e48a41c3744bb53b69e368304e8ad56d31f1092497"
+}
+
+
+{
+  "MESSAGE": "Are there any tech companies in San Francisco that have good work-life balance and encourage outdoor activities?",
+  "MODEL_NAME": "claude-3-haiku-20240307",
+  "ENTITY_ID": "sarah_tech_123",
+  "HASH": "b22d0b4d3f963c324b361c8753f28b82ef8121146e5b617361fc5521d7f509b4"
+}

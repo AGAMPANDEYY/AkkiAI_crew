@@ -23,6 +23,7 @@ import uuid
 import requests
 import crewuserinputs
 from diskcache import Cache
+from pinecone import Pinecone
 
 
 
@@ -45,6 +46,7 @@ GROK_API= os.getenv("GROK_BETA_API_KEY")
 LLAMA_3_API_KEY=os.getenv("LLAMA_31_API_KEY")
 CACHE_DIR = './prompt_cache_main'  # Cache will be stored in this directory
 cache = Cache(CACHE_DIR)
+PINECONE_API_KEY= os.getenv("PINECONE_API_KEY")
 
 #Configuration for CORS 
 
@@ -64,7 +66,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 # Define input models for endpoints
 class RunInputs(BaseModel):
     
@@ -78,6 +79,7 @@ class RunInputs(BaseModel):
 class ChatInputs(BaseModel):
     MESSAGE: str
     MODEL_NAME: str
+    ENTITY_ID: str
     HASH: str
 
 class TrainInputs(BaseModel):
@@ -301,6 +303,11 @@ async def run_crew_bg(crew_instance, inputs, solution_id, kickoff_id ):
         error_details = traceback.format_exc()
         print(f"Exception in run_kickoff: {error_details}")
 
+
+"""
+CHAT ENDPOINT AHEAD
+"""
+
 class ConversationHistory:
     def __init__(self):
         #initialising empty list to store conversation 
@@ -360,14 +367,77 @@ class ConversationHistory:
         return list(reversed(result))
 conversation_history= ConversationHistory()
 
+
+def upsert_pc_data(pc,index,entity_id, message_id, user_input, llm_response):
+
+    """
+    Upserting the past conversation of each user with namespaces for Long term memory.
+    """
+
+    #upserting data into index with namespaces
+    embeddings = pc.inference.embed(
+    model="multilingual-e5-large",
+    inputs=[user_input],
+    parameters={"input_type": "passage", "truncate": "END"}
+    )
+
+    vectors = []
+    for d, e in zip([user_input], embeddings):
+        vectors.append({
+            "id": message_id,
+            "values": e['values'],
+            "metadata": {"user_text":user_input, "llm-response":llm_response}
+        })
+
+    index.upsert(
+        vectors=vectors,
+        namespace=entity_id
+    )
+
+
 #running all the chats simultaneously in the background
 async def chat_bg( input,input_message, kickoff_id,create_date, API_NAME):
+    
+    pc=Pinecone(api_key=PINECONE_API_KEY)
+    index=pc.Index(host="https://akkiai-chat-py172ny.svc.aped-4627-b74a.pinecone.io")
+    #generating embedding of the user input 
+    entity_id=input.ENTITY_ID
 
+    input_embeddings= pc.inference.embed(
+        model="multilingual-e5-large",
+        inputs=[input.MESSAGE],
+        parameters={"input_type": "passage", "truncate": "END"}
+    )
+
+    result=index.query(
+        namespace=entity_id,
+        vector=input_embeddings[0].values,
+        top_k=3,
+        include_values=False,
+        include_metadata=True
+    )
+
+    retrieved_contexts = []
+    for match in result.get('matches', []):
+        metadata = match.get('metadata',{})
+        if metadata:
+            user_text = metadata.get('user_text', '').strip()
+            llm_response = metadata.get('llm-response', '').strip()
+            retrieved_contexts.append(f"User: {user_text}\nAssistant: {llm_response}")
+        else:
+            retrieved_contexts="Nil"
+    
+    context_string = "\n\n".join(retrieved_contexts)
+    if retrieved_contexts=="Nil":
+        system_message="You are an experienced, helpful assistant."
+    else:
+        system_message = f"You are an experienced, helpful assistant. Here is relevant conversation history:\n{context_string}\nPlease assist the user with their query."
+    
     if API_NAME=="claude-3-haiku-20240307":        
         conversation_history.update_user_turn(input.MESSAGE)
         client= anthropic.Anthropic(api_key=ANTHROPIC_API)
         MODEL_NAME="claude-3-haiku-20240307"
-        system_message="You are an experienced helpful assistant"
+        system_message = f"You are an experienced, helpful assistant. Here is relevant conversation history:\n{context_string}\nPlease assist the user with their query."
 
         completion = client.messages.create(
                     model=MODEL_NAME,
@@ -376,8 +446,8 @@ async def chat_bg( input,input_message, kickoff_id,create_date, API_NAME):
                         "anthropic-beta":"prompt-caching-2024-07-31"
                     },
                     system=[
-                        {"type": "text", "text": system_message, "cache_control": {"type": "ephemeral"}},
-                           ],
+                        {"type": "text", "text": system_message,"cache_control": {"type": "ephemeral"}},
+                        ],
                     messages=conversation_history.get_turns(),
                 )
         
@@ -387,11 +457,12 @@ async def chat_bg( input,input_message, kickoff_id,create_date, API_NAME):
         conversation_history.update_assistant_turn(response)
 
     elif API_NAME=="deepseek-chat":
+        system_message = f"You are an experienced, helpful assistant. Here is relevant conversation history:\n{context_string}\nPlease assist the user with their query."
         conversation_history.update_user_turn(input.MESSAGE)
         client= OpenAI(api_key=DEEPSEEK_API, base_url="https://api.deepseek.com")
         completion=client.chat.completions.create(
             model="deepseek-chat",
-            messages=conversation_history.get_turns()
+            messages=conversation_history.get_turns() + [{"role":"system","content":system_message}]
         )
         response= completion.choices[0].message.content
         message_id=completion.id
@@ -404,7 +475,7 @@ async def chat_bg( input,input_message, kickoff_id,create_date, API_NAME):
             client= OpenAI(api_key=ChatGPT_API)
             completion = client.chat.completions.create(
                 model="gpt-4o-mini",
-                messages= conversation_history.get_turns()
+                messages= conversation_history.get_turns() + [{"role":"system","content":system_message}]
             )
             response= completion.choices[0].message.content
             message_id=completion.id
@@ -412,39 +483,36 @@ async def chat_bg( input,input_message, kickoff_id,create_date, API_NAME):
             conversation_history.update_assistant_turn(response)
 
     elif API_NAME=="grok-beta":
+          conversation_history.update_user_turn(input.MESSAGE)
           client= OpenAI(api_key=GROK_API, base_url="https://api.x.ai/v1")
           completion = client.chat.completions.create(
                 model="gpt-4o-mini",
-                messages=[
-                    {"role": "system", "content": "You are a helpful assistant."},
-                    {
-                        "role": "user",
-                        "content":input.MESSAGE
-                    }
-                ]
+                messages=conversation_history.get_turns() + [{"role":"system","content":system_message}]
             )
           response= completion.choices[0].message.content
           message_id=completion.id
-          task_name=completion.model 
+          task_name=completion.model
+          conversation_history.update_assistant_turn(response) 
 
     elif API_NAME=="llama3.1-70b":
+        conversation_history.update_user_turn(input.MESSAGE)
         client= OpenAI(api_key=LLAMA_3_API_KEY, base_url="https://api.llama-api.com")
         completion = client.chat.completions.create(
                 model="llama3.1-70b",
-                messages=[
-                    {"role": "system", "content": "You are a helpful assistant."},
-                    {
-                        "role": "user",
-                        "content":input.MESSAGE
-                    }
-                ]
+                messages=conversation_history.get_turns() + [{"role":"system","content":system_message}]
             )
         response= completion.choices[0].message.content
         message_id=str(uuid.uuid4())
         task_name=completion.model 
         completion.id=message_id
+        conversation_history.update_assistant_turn(response)
 
-    
+
+    """
+    Upserting the data for long term user specific menory 
+    """
+    upsert_pc_data(pc,index,entity_id, message_id,user_input=input.MESSAGE, llm_response=response)
+
     message_id=completion.id
     task_name=completion.model
     """
