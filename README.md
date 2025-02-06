@@ -1,6 +1,6 @@
 # Akkiai_crew
 
-This branch v6 updated on 7th January 2025.
+This branch v6 updated on 7th Feb 2025.
 
 NEW UPDATE-- Added Pinecone Vector DB for Personalised Chat for each entity_id (namespace) user/project --TEST--
  
